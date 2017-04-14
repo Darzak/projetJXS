@@ -1,0 +1,22 @@
+<div *ngIf="element">
+  <h2>
+    {{element.name}} details :
+  </h2>
+  <div>
+    <label>id: </label> {{element.key}}
+  </div>
+  <div>
+    <label>name: </label>
+    <input [(ngModel)]="element.name" placeholder="name">
+  </div>
+  <div>
+    <label>taille: </label> {{element.taille}}
+  </div>
+  <button (click)="deleteFile()" type="button" class="btn btn-default">
+    <span>Supprimer ce fichier</span>
+  </button>
+  <button (click)="copyFile()" type="button" class="btn btn-default">
+    <span>Copier ce fichier</span>
+  </button>
+</div>
+
