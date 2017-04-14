@@ -1,14 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="5f983f56-2c63-4537-aeb7-753ea6118bba" name="Default" comment="on essaie http">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/model/id.ts" />
+    <list default="true" id="5f983f56-2c63-4537-aeb7-753ea6118bba" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/app/app.component.html" afterPath="$PROJECT_DIR$/src/app/app.component.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/app/app.component.ts" afterPath="$PROJECT_DIR$/src/app/app.component.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/app/app.module.ts" afterPath="$PROJECT_DIR$/src/app/app.module.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/app/file-details/file-details.component.ts" afterPath="$PROJECT_DIR$/src/app/file-details/file-details.component.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/service/file.service.ts" afterPath="$PROJECT_DIR$/src/service/file.service.ts" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/dist/" />
@@ -497,7 +491,7 @@
       <workItem from="1492080240692" duration="15165000" />
       <workItem from="1492098388060" duration="21489000" />
       <workItem from="1492185344642" duration="1648000" />
-      <workItem from="1492190239546" duration="6852000" />
+      <workItem from="1492190239546" duration="7064000" />
     </task>
     <task id="LOCAL-00001" summary="on essaie http">
       <created>1492162635323</created>
@@ -506,11 +500,18 @@
       <option name="project" value="LOCAL" />
       <updated>1492162635323</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="login component et correction supprimer dossier ne supprime plus les fichiers à l'intérieur">
+      <created>1492201134393</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1492201134393</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="62341000" />
+    <option name="totallyTimeSpent" value="62553000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
@@ -543,7 +544,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="on essaie http" />
-    <option name="LAST_COMMIT_MESSAGE" value="on essaie http" />
+    <MESSAGE value="login component et correction supprimer dossier ne supprime plus les fichiers à l'intérieur" />
+    <option name="LAST_COMMIT_MESSAGE" value="login component et correction supprimer dossier ne supprime plus les fichiers à l'intérieur" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -699,6 +701,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#47#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
