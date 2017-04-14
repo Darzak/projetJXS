@@ -4,6 +4,7 @@ import { Folder } from '../model/folder';
 import {FileService} from "../service/file.service";
 import {FolderService} from "../service/folder.service";
 import { Element } from './element';
+import { Id } from '../model/id';
 
 
 @Component({
@@ -24,10 +25,12 @@ export class AppComponent implements OnInit{
     this.getFiles();
     this.getFolders();
     //this.testRequest();
+    this.login = false;
   }
 
   nRightClicks : number = 0;
-  title = 'drive!';
+  title = 'Mon drive';
+  drives = ["google", "dropbox"];
   selectedElement: Element;
   files : File[];
   folders : Folder[];
@@ -35,8 +38,8 @@ export class AppComponent implements OnInit{
   pastedFile : Element;
   paths : string[] = new Array();
   path : string = '';
-
-
+  login: boolean;
+  ids: Id[];
 
   onSelect(element: Element): void {
     this.selectedElement = element;
@@ -95,6 +98,26 @@ export class AppComponent implements OnInit{
 
   testRequest(){
     this.fileService.testRequest();
+  }
+
+  getImageSource(drive: string): string{
+    switch(drive) {
+      case "google": {
+        return "src/app/image/google_drive.jpg";
+      }
+      case "dropbox": {
+        return "src/app/image/dropbox.png";
+      }
+      default: {
+        break;
+      }
+    }
+  }
+
+  getId(log: Id){
+    this.login=true;
+    /*this.ids.push(log);*/
+
   }
 
 }

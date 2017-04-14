@@ -1,55 +1,64 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
-<h1>My Files</h1>
-<h2>{{path}}</h2>
-<div class="dropdown">
-  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-    Selectionner
-    <span class="caret"></span>
-  </button>
-  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-    <li><a>Créer fichier</a></li>
-    <li><a>Créer dossier</a></li>
-  </ul>
+<h1 align="center"> <font size="8" face="Comic Sans MS" color="green"> {{title}} </font> </h1>
+<div class="row" *ngIf="!login">
+  <div class="col-md-6" *ngFor="let drive of drives">
+    <app-login [imageSource]="getImageSource(drive)" (log)='getId($event)'></app-login>
+  </div>
 </div>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<div *ngIf="login">
+  <h1>My Files</h1>
+  <h2>{{path}}</h2>
+  <div class="dropdown">
+    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+      Selectionner
+      <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+      <li><a>Créer fichier</a></li>
+      <li><a>Créer dossier</a></li>
+    </ul>
+  </div>
 
-<div (contextmenu)="onRightClick($event)">
-  Right clicked
-  {{nRightClicks}}
-  time(s).
-<!--TODO onPaste() prend répertoire courrant -->
-  <button (click)="onPaste()" type="button" class="btn btn-default">
-    <span>Coller le fichier</span>
-  </button>
+  <div (contextmenu)="onRightClick($event)">
+    Right clicked
+    {{nRightClicks}}
+    time(s).
+    <!--TODO onPaste() prend répertoire courrant -->
+    <button (click)="onPaste()" type="button" class="btn btn-default">
+      <span>Coller le fichier</span>
+    </button>
 
-  <div class="row">
-    <div class="col-md-2" *ngFor="let folder of folders" >
-      <div class="folder"
-           [class.selected]="folder === selectedElement"
-           (click)="onSelect(folder)"
-           (dblclick)="onOpen(folder)">
+    <div class="row">
+      <div class="col-md-2" *ngFor="let folder of folders" >
+        <div class="folder"
+             [class.selected]="folder === selectedElement"
+             (click)="onSelect(folder)"
+             (dblclick)="onOpen(folder)">
 
-        <h3>{{folder.name}}</h3>
-        {{folder.key}}
+          <h3>{{folder.name}}</h3>
+          {{folder.key}}
+        </div>
       </div>
     </div>
-  </div>
 
-  <div class="row">
-    <div class="col-md-2" *ngFor="let file of files" >
-      <div class="file-icon"
-           [class.selected]="file === selectedElement"
-           (click)="onSelect(file)">
-        <h3>{{file.name}}</h3>
-        {{file.key}}
+    <div class="row">
+      <div class="col-md-2" *ngFor="let file of files" >
+        <div class="file-icon"
+             [class.selected]="file === selectedElement"
+             (click)="onSelect(file)">
+          <h3>{{file.name}}</h3>
+          {{file.key}}
+        </div>
       </div>
     </div>
-  </div>
 
   </div>
 
 
-<file-details [element]="selectedElement" (notify)='onNotify($event)'  (remove)='onRemove($event)'></file-details>
+  <file-details [element]="selectedElement" (notify)='onNotify($event)'  (remove)='onRemove($event)'></file-details>
+
+</div>
 
 

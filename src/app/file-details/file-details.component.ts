@@ -25,12 +25,12 @@ export class FileDetailsComponent implements OnInit {
   deleteFile(){
     if(this.element.isFolder){
       let folder = <Folder> this.element;
-      for(let f of folder.files){
+      /*for(let f of folder.files){
         this.fileService.deleteFile(f,folder);
-      }
+      }*/
       this.folderService.deleteFolder(folder);
     }else{
-      this.fileService.deleteFile(<File> this.element,undefined);
+      this.fileService.deleteFile(<File> this.element/*,undefined*/);
     }
     this.remove.emit(null);
   }

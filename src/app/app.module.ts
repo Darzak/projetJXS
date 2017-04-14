@@ -5,12 +5,14 @@ import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
 import { FileDetailsComponent } from './file-details/file-details.component';
+import { LoginComponent } from './login/login.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     FileDetailsComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
