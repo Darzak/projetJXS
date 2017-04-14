@@ -1,8 +1,8 @@
 /**
  * Created by Johann Durand on 13/04/2017.
  */
-import { Folder } from './folder';
-import { File } from './file';
+import { Folder } from '../model/folder';
+import { File } from '../model/file';
 
 var file1 : File = { key: 0, name: 'file1', taille: 1, isFolder: false };
 var file2 : File = { key: 1, name: 'file2', taille: 1, isFolder: false};

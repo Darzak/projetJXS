@@ -3,12 +3,12 @@
  */
 import { Injectable } from '@angular/core';
 
-import { Folder } from './folder';
-import { folders } from './mock-folders';
+import { Folder } from '../model/folder';
+import { folders } from '../app/mock-folders';
 
 @Injectable()
 export class FolderService {
-  getFolder() : Folder[] {
+  getFolders() : Folder[] {
     return folders;
   }
 
@@ -24,5 +24,12 @@ export class FolderService {
     }
   }
 
+  getFolder(name : string) : Folder {
+    for(let f of folders){
+        if(f.name == name){
+          return f;
+        }
+    }
+  }
 
 }

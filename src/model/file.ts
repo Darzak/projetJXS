@@ -1,13 +1,13 @@
 /**
- * Created by polivier on 11/04/17.
+ * Created by Johann Durand on 13/04/2017.
  */
-export class File {
-  name : string;
+import { Element } from '../app/element';
+
+export class File implements Element{
+  key: number;
+  name: string;
   taille : number;
-
-  constructor(name:string,taille:number){
-    this.name = name;
-    this.taille =taille;
-  }
-
+  isFolder = false;
 }
+
+

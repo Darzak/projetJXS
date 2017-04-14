@@ -1,9 +1,9 @@
 import { Component, Input, OnInit, Output,EventEmitter } from '@angular/core';
-import { File } from '../file';
-import { FileService } from "../file.service";
-import { FolderService} from "../folder.service";
+import { File } from '../../model/file';
+import { FileService } from "../../service/file.service";
+import { FolderService} from "../../service/folder.service";
 import { Element } from "../element";
-import { Folder } from '../folder';
+import { Folder } from '../../model/folder';
 
 
 @Component({

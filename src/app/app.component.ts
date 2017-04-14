@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import { File } from './file';
-import { Folder } from './folder';
-import {FileService} from "./file.service";
-import {FolderService} from "./folder.service";
+import { File } from '../model/file';
+import { Folder } from '../model/folder';
+import {FileService} from "../service/file.service";
+import {FolderService} from "../service/folder.service";
 import { Element } from './element';
 
 
@@ -22,7 +22,8 @@ export class AppComponent implements OnInit{
 
   ngOnInit() : void {
     this.getFiles();
-    this.getFolder();
+    this.getFolders();
+    //this.testRequest();
   }
 
   nRightClicks : number = 0;
@@ -31,8 +32,11 @@ export class AppComponent implements OnInit{
   files : File[];
   folders : Folder[];
   copiedFile : Element;
+  pastedFile : Element;
   paths : string[] = new Array();
   path : string = '';
+
+
 
   onSelect(element: Element): void {
     this.selectedElement = element;
@@ -42,8 +46,8 @@ export class AppComponent implements OnInit{
     this.files = this.fileService.getFiles();
   }
 
-  getFolder() : void {
-    this.folders = this.folderService.getFolder();
+  getFolders() : void {
+    this.folders = this.folderService.getFolders();
   }
 
   onRightClick() {
@@ -52,23 +56,25 @@ export class AppComponent implements OnInit{
   }
 
   onNotify(element: Element):void {
-    this.copiedFile= element.constructor();
-    this.copiedFile.name = element.name + " (copy)";
-    this.copiedFile.taille = element.taille;
-    this.copiedFile.isFolder = element.isFolder;
-    if(this.copiedFile.isFolder){
-      this.copiedFile.key = this.folders.length;;
-    }else{
-      this.copiedFile.key = this.files.length;
-    }
+    this.copiedFile= element;
     /* Gérer les copies de fichiers*/
   }
 
-  onPaste(folder: Folder): void {
-    if(this.copiedFile.isFolder){
-      this.folderService.addFolder(<Folder>this.copiedFile,folder);
+  onPaste(): void {
+    this.pastedFile = this.copiedFile.constructor();
+    this.pastedFile.name = this.copiedFile.name + " (copy)";
+    this.pastedFile.taille = this.copiedFile.taille;
+    this.pastedFile.isFolder = this.copiedFile.isFolder;
+    if(this.pastedFile.isFolder){
+      this.pastedFile.key = this.folders.length;
     }else{
-      this.fileService.addFile(this.copiedFile,folder);
+      this.pastedFile.key = this.files.length;
+    }
+
+    if(this.pastedFile.isFolder){
+      this.folderService.addFolder(<Folder>this.pastedFile,this.folderService.getFolder(this.paths[this.paths.length-1]));
+    }else{
+      this.fileService.addFile(this.pastedFile,this.folderService.getFolder(this.paths[this.paths.length-1]));
     }
   }
 
@@ -85,6 +91,10 @@ export class AppComponent implements OnInit{
     for(let p of this.paths){
       this.path+= " > " + p ;
     }
+  }
+
+  testRequest(){
+    this.fileService.testRequest();
   }
 
 }
