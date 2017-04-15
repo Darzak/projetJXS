@@ -1,9 +1,9 @@
 <img [src]="imageSource"/>
 <div>
   <label>identifiant: </label>
-  <input [(ngModel)]="id" >
+  <input [(ngModel)]="connection.identifiant" >
   <label>mot de passe: </label>
-  <input [(ngModel)]="mdp" >
+  <input [(ngModel)]="connection.mdp" >
 </div>
 <button (click)="connect()" type="button" class="btn btn-default">
   <span>Connection</span>

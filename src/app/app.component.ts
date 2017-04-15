@@ -4,7 +4,7 @@ import { Folder } from '../model/folder';
 import {FileService} from "../service/file.service";
 import {FolderService} from "../service/folder.service";
 import { Element } from './element';
-import { Id } from '../model/id';
+import { Log } from '../model/log';
 
 
 @Component({
@@ -30,7 +30,7 @@ export class AppComponent implements OnInit{
 
   nRightClicks : number = 0;
   title = 'Mon drive';
-  drives = ["google", "dropbox"];
+  drives: [string,string] = ["google", "dropbox"];
   selectedElement: Element;
   files : File[];
   folders : Folder[];
@@ -39,7 +39,7 @@ export class AppComponent implements OnInit{
   paths : string[] = new Array();
   path : string = '';
   login: boolean;
-  ids: Id[];
+  ids: Log[] = new Array();
 
   onSelect(element: Element): void {
     this.selectedElement = element;
@@ -114,10 +114,11 @@ export class AppComponent implements OnInit{
     }
   }
 
-  getId(log: Id){
-    this.login=true;
-    /*this.ids.push(log);*/
-
+  getId(log: Log){
+    this.ids.push(log);
+    if(this.ids.length==this.drives.length){
+      this.login=true;
+    }
   }
 
 }
