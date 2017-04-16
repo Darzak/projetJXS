@@ -3,10 +3,11 @@
  */
 import { File } from './file';
 import { Element } from '../app/element';
+
 export class Folder implements Element{
   key: number;
   name: string;
   taille : number;
-  files : File[];
+  files : Element[];
   isFolder = true;
 }

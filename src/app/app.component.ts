@@ -29,7 +29,6 @@ export class AppComponent implements OnInit{
   }
 
   nRightClicks : number = 0;
-  title = 'Mon drive';
   drives: [string,string] = ["google", "dropbox"];
   selectedElement: Element;
   files : File[];
@@ -40,6 +39,8 @@ export class AppComponent implements OnInit{
   path : string = '';
   login: boolean;
   ids: Log[] = new Array();
+  newName: string = '';
+  rightPanelStyle: Object = {};
 
   onSelect(element: Element): void {
     this.selectedElement = element;
@@ -58,27 +59,49 @@ export class AppComponent implements OnInit{
     return false;
   }
 
+  detectRightMouseClick($event) {
+    if ($event.which === 3) {
+      this.rightPanelStyle = {'display': 'block', 'left': $event.clientX + 'px', 'top': $event.clientY + 'px'};
+      return false;
+    }
+  }
+
+  closeContextMenu() {
+    this.rightPanelStyle = {'display':'none'};
+  }
+
   onNotify(element: Element):void {
     this.copiedFile= element;
     /* Gérer les copies de fichiers*/
   }
 
   onPaste(): void {
-    this.pastedFile = this.copiedFile.constructor();
-    this.pastedFile.name = this.copiedFile.name + " (copy)";
-    this.pastedFile.taille = this.copiedFile.taille;
-    this.pastedFile.isFolder = this.copiedFile.isFolder;
-    if(this.pastedFile.isFolder){
-      this.pastedFile.key = this.folders.length;
-    }else{
-      this.pastedFile.key = this.files.length;
-    }
+    if(this.pastedFile != null){
+      this.pastedFile = this.copiedFile.constructor();
+      this.pastedFile.name = this.copiedFile.name + " (copy)";
+      this.pastedFile.taille = this.copiedFile.taille;
+      this.pastedFile.isFolder = this.copiedFile.isFolder;
 
-    if(this.pastedFile.isFolder){
-      this.folderService.addFolder(<Folder>this.pastedFile,this.folderService.getFolder(this.paths[this.paths.length-1]));
-    }else{
-      this.fileService.addFile(this.pastedFile,this.folderService.getFolder(this.paths[this.paths.length-1]));
+      if(this.pastedFile.isFolder){
+        this.pastedFile.key = this.folders.length;
+        this.folderService.addFolder(<Folder>this.pastedFile,this.folderService.getFolder(this.paths[this.paths.length-1]));
+      }else{
+        this.pastedFile.key = this.files.length;
+        this.fileService.addFile(this.pastedFile,this.folderService.getFolder(this.paths[this.paths.length-1]));
+      }
     }
+  }
+
+  //Uniquement répertoire courant
+  createFile(folder: Folder){
+    let f : File = {key: this.files.length,name: this.newName,taille: 0, isFolder: false};
+    this.fileService.addFile(f,folder);
+  }
+
+  //Uniquement répertoire courant
+  createFolder(folder: Folder){
+    let f : Folder = {key: this.folders.length, name: this.newName,taille: 0,files: [], isFolder: true};
+    this.folderService.addFolder(f,folder);
   }
 
   onRemove(a : any):void {
@@ -87,6 +110,13 @@ export class AppComponent implements OnInit{
   onOpen(folder : Folder){
     this.paths.push(folder.name);
     this.concatPath();
+  }
+
+  onComeBack(){
+    if(this.paths.length>1){
+      let f: Folder = this.folderService.getFolder(this.paths.pop());
+      this.concatPath();
+    }
   }
 
   concatPath(){
@@ -116,6 +146,7 @@ export class AppComponent implements OnInit{
 
   getId(log: Log){
     this.ids.push(log);
+    //a modifier
     if(this.ids.length==this.drives.length){
       this.login=true;
     }
