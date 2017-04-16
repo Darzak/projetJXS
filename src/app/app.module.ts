@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { FileDetailsComponent } from './file-details/file-details.component';
 import { LoginComponent } from './login/login.component';
 import { ClickOutsideDirective } from './click-outside.directive';
+import { FilesComponent } from './files/files.component';
 
 
 @NgModule({
@@ -15,6 +16,7 @@ import { ClickOutsideDirective } from './click-outside.directive';
     FileDetailsComponent,
     LoginComponent,
     ClickOutsideDirective,
+    FilesComponent,
   ],
   imports: [
     BrowserModule,

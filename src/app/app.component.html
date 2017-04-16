@@ -8,71 +8,7 @@
 </div>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <div *ngIf="login">
-  <h1>Mes fichiers</h1>
-  <div class="row">
-      <h2 class="col-md-2">{{path}}</h2>
-      <button (click)="onComeBack()" type="button" class="btn btn-default">
-        <span>Retour</span>
-      </button>
-  </div>
-
- <!-- <div class="dropdown">
-    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-      Selectionner
-      <span class="caret"></span>
-    </button>
-    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-      <li><a>Créer fichier</a></li>
-      <li><a>Créer dossier</a></li>
-    </ul>
-  </div> -->
-
-  <label>Nouveau nom: </label>
-  <input [(ngModel)]="newName" placeholder="Nom pour le nouveau fichier">
-  <button (click)="createFolder()" type="button" class="btn btn-default">
-    <span>Nouveau dossier</span>
-  </button>
-  <button (click)="createFile()" type="button" class="btn btn-default">
-    <span>Nouveau fichier</span>
-  </button>
-
-  <div (contextmenu)="detectRightMouseClick($event)" style="border:1px solid #ccc;padding:15px;width:100%">
-    <!--TODO onPaste() prend répertoire courrant -->
-    <button (click)="onPaste()" type="button" class="btn btn-default">
-      <span>Coller le fichier</span>
-    </button>
-
-    <div class="row">
-      <div class="col-md-2" *ngFor="let folder of folders" >
-        <div class="folder"
-             [class.selected]="folder === selectedElement"
-             (click)="onSelect(folder)"
-             (dblclick)="onOpen(folder)">
-
-          <h3>{{folder.name}}</h3>
-          {{folder.key}}
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-md-2" *ngFor="let file of files" >
-        <div class="file-icon"
-             [class.selected]="file === selectedElement"
-             (click)="onSelect(file)">
-          <h3>{{file.name}}</h3>
-          {{file.key}}
-        </div>
-      </div>
-    </div>
-
-  </div>
-
-  <file-details [element]="selectedElement" (notify)='onNotify($event)'  (remove)='onRemove($event)'></file-details>
-
-  <div class="rightClickPanel" [ngStyle]="rightPanelStyle" (appClickOutside)="closeContextMenu()">
-    My right panel
-  </div>
+  <app-files></app-files>
 </div>
 
 
