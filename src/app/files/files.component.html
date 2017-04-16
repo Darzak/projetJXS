@@ -51,6 +51,6 @@
 
 <file-details [element]="selectedElement" (notify)='onNotify($event)'  (remove)='onRemove($event)'></file-details>
 
-<div class="rightClickPanel" [ngStyle]="rightPanelStyle" (appClickOutside)="closeContextMenu()">
+<div class="contextMenu" [ngStyle]="contextMenuPos" (appClickOutside)="closeContextMenu()">
   My right panel
 </div>

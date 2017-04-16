@@ -34,7 +34,7 @@ export class FilesComponent implements OnInit{
   paths : string[] = new Array();
   path : string = '';
   newName: string = '';
-  rightPanelStyle: Object = {};
+  contextMenuPos: Object = {};
 
   onSelect(element: Element): void {
     this.selectedElement = element;
@@ -55,13 +55,13 @@ export class FilesComponent implements OnInit{
 
   detectRightMouseClick($event) {
     if ($event.which === 3) {
-      this.rightPanelStyle = {'display': 'block', 'left': $event.clientX + 'px', 'top': $event.clientY + 'px'};
+      this.contextMenuPos = {'display': 'block', 'left': $event.clientX + 'px', 'top': $event.clientY + 'px'};
       return false;
     }
   }
 
   closeContextMenu() {
-    this.rightPanelStyle = {'display':'none'};
+    this.contextMenuPos = {'display':'none'};
   }
 
   onNotify(element: Element):void {
