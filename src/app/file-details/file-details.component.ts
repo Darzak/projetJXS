@@ -2,7 +2,7 @@ import { Component, Input, OnInit, Output,EventEmitter } from '@angular/core';
 import { File } from '../../model/file';
 import { FileService } from "../../service/file.service";
 import { FolderService} from "../../service/folder.service";
-import { Element } from "../element";
+import { Element } from "../../model/element";
 import { Folder } from '../../model/folder';
 
 
@@ -13,6 +13,8 @@ import { Folder } from '../../model/folder';
   providers: [FileService, FolderService]
 })
 export class FileDetailsComponent implements OnInit {
+  shareOpen: boolean = false;
+  newShare: string = '';
   @Input() element:Element;
   @Output() notify: EventEmitter<Element> = new EventEmitter<Element>();
   @Output() remove: EventEmitter<any> = new EventEmitter<any>();
@@ -22,12 +24,22 @@ export class FileDetailsComponent implements OnInit {
   ngOnInit() {
   }
 
+  openShare(){
+    this.shareOpen= !this.shareOpen;
+  }
+
+  addShare(){
+    if(this.element.isFolder){
+      let folder = <Folder> this.element;
+      this.folderService.addShare(folder,this.newShare);
+    }else{
+      this.fileService.addShare(<File> this.element,this.newShare);
+    }
+  }
+
   deleteFile(){
     if(this.element.isFolder){
       let folder = <Folder> this.element;
-      /*for(let f of folder.files){
-        this.fileService.deleteFile(f,folder);
-      }*/
       this.folderService.deleteFolder(folder);
     }else{
       this.fileService.deleteFile(<File> this.element/*,undefined*/);

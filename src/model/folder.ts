@@ -2,7 +2,7 @@
  * Created by Johann Durand on 13/04/2017.
  */
 import { File } from './file';
-import { Element } from '../app/element';
+import { Element } from './element';
 
 export class Folder implements Element{
   key: number;
@@ -10,4 +10,5 @@ export class Folder implements Element{
   taille : number;
   files : Element[];
   isFolder = true;
+  sharedList: string[];
 }

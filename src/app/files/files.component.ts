@@ -3,7 +3,7 @@ import { File } from '../../model/file';
 import { Folder } from '../../model/folder';
 import {FileService} from "../../service/file.service";
 import {FolderService} from "../../service/folder.service";
-import { Element } from '../element';
+import { Element } from '../../model/element';
 
 
 @Component({
@@ -75,7 +75,7 @@ export class FilesComponent implements OnInit{
       this.pastedFile.name = this.copiedFile.name + " (copy)";
       this.pastedFile.taille = this.copiedFile.taille;
       this.pastedFile.isFolder = this.copiedFile.isFolder;
-
+      this.pastedFile.sharedList = this.copiedFile.sharedList;
       if(this.pastedFile.isFolder){
         this.pastedFile.key = this.folders.length;
         this.folderService.addFolder(<Folder>this.pastedFile,this.folderService.getFolder(this.paths[this.paths.length-1]));
@@ -88,23 +88,25 @@ export class FilesComponent implements OnInit{
 
   //Uniquement répertoire courant
   createFile(folder: Folder){
-    let f : File = {key: this.files.length,name: this.newName,taille: 0, isFolder: false};
+    let f : File = {key: this.files.length,name: this.newName,taille: 0, isFolder: false, sharedList: []};
     this.fileService.addFile(f,folder);
   }
 
   //Uniquement répertoire courant
   createFolder(folder: Folder){
-    let f : Folder = {key: this.folders.length, name: this.newName,taille: 0,files: [], isFolder: true};
+    let f : Folder = {key: this.folders.length, name: this.newName,taille: 0,files: [], isFolder: true, sharedList: []};
     this.folderService.addFolder(f,folder);
   }
 
   onRemove(a : any):void {
     this.selectedElement=null;
   }
+
   onOpen(folder : Folder){
     this.paths.push(folder.name);
     this.concatPath();
   }
+
 
   onComeBack(){
     if(this.paths.length>1){

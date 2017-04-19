@@ -24,6 +24,10 @@ export class FolderService {
     }
   }
 
+  addShare(folder: Folder, share: string){
+    folder.sharedList.push(share);
+  }
+
   getFolder(name : string) : Folder {
     for(let f of folders){
         if(f.name == name){

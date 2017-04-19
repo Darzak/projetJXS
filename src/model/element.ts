@@ -6,4 +6,5 @@ export interface Element {
   name: string;
   taille : number;
   isFolder: boolean;
+  sharedList: string[];
 }

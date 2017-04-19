@@ -16,12 +16,7 @@ export class FileService {
   }
 
   deleteFile(file: File/*, folder : Folder*/) : void {
-    /*if(!folder){*/
       files.splice(files.indexOf(file),1);
-      /*
-    }else{
-      folder.files.splice((folder.files.indexOf(file),1));
-    }*/
   }
 
   addFile(file: File, folder : Folder) : void {
@@ -30,6 +25,10 @@ export class FileService {
     }else{
       folder.files.push(file);
     }
+  }
+
+  addShare(file: File, share: string){
+    file.sharedList.push(share);
   }
 
   testRequest() {
