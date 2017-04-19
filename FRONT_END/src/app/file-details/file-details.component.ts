@@ -35,6 +35,7 @@ export class FileDetailsComponent implements OnInit {
     }else{
       this.fileService.addShare(<File> this.element,this.newShare);
     }
+    this.newShare = '';
   }
 
   deleteFile(){

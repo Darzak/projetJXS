@@ -23,8 +23,8 @@
       <span>Partager</span>
     </button>
     <div *ngIf="shareOpen">
+      Liste des personnes ayant accès:
       <div *ngFor="let share of element.sharedList">
-        Liste des fichiers partagers :
         {{share}}
       </div>
       <input [(ngModel)]="newShare" placeholder="adresse mail">
