@@ -4,7 +4,6 @@ import { Folder } from '../model/folder';
 import {FileService} from "../service/file.service";
 import {FolderService} from "../service/folder.service";
 import { Element } from '../model/element';
-import { Log } from '../model/log';
 
 
 @Component({

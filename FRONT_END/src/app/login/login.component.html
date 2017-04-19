@@ -1,18 +1,10 @@
 <img [src]="imageSource"/>
 
 <div>
-  <button (click)="selectDrive(drive)" type="button" class="btn btn-default">
-    <span>Sélectionner</span>
-  </button>
-  <button *ngIf="selectedDrives.indexOf(drive)!=-1" (click)="connect()" type="button" class="btn btn-default">
+  <button (click)="connect(drive)" type="button" class="btn btn-default">
     <span>Connection</span>
   </button>
-  <div *ngIf="selectedDrives.indexOf(drive)!=-1">
-    <label>identifiant: </label>
-    <input [(ngModel)]="connection.identifiant" >
-    <label>mot de passe: </label>
-    <input [(ngModel)]="connection.mdp" >
-  </div>
+  <img *ngIf="selectedDrives.indexOf(drive)!=-1" src="src/app/image/valide.png"/>
   <label>{{urlToAllow}}</label>
 </div>
 

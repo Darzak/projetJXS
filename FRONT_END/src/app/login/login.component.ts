@@ -1,5 +1,4 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Log } from '../../model/log'
 import 'rxjs/add/operator/switchMap';
 import {LoginService} from "../../service/login.service";
 
@@ -11,17 +10,12 @@ import {LoginService} from "../../service/login.service";
   providers: [LoginService]
 })
 
-
 export class LoginComponent implements OnInit {
-
   @Input() imageSource: string;
-  connection: Log = {identifiant: '',mdp: ''};
-  @Output() log: EventEmitter<Log[]> = new EventEmitter<Log[]>();
-  drives: string[] = ["google", "dropbox"];
-  ids: Log[] = new Array();
+  @Output() log: EventEmitter<any> = new EventEmitter<any>();
   selectedDrives: string[] = new Array<string>();
 
-  urlToAllow: string = 'aaa';
+  urlToAllow: string;
   errorMessage: string;
   mode = 'Observable';
 
@@ -32,17 +26,17 @@ export class LoginComponent implements OnInit {
     console.log(this.urlToAllow);
   }
 
-  connect(): void{
-    //this.log.emit();
-	this.getUrl();
-  }
-
-  selectDrive(drive : string) {
+  connect(drive: string): void{
     if (this.selectedDrives.indexOf(drive) != -1) {
       this.selectedDrives.splice(this.selectedDrives.indexOf(drive), 1);
     } else {
       this.selectedDrives.push(drive);
     }
+	this.getUrl();
+  }
+
+  selectDrive(drive : string) {
+
   }
 
   getUrl() {
