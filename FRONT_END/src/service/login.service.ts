@@ -2,10 +2,46 @@
  * Created by Johann Durand on 13/04/2017.
  */
 import { Injectable } from '@angular/core';
+import { Http, Response } from '@angular/http';
+
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/map';
 
 @Injectable()
-export class FolderService {
+export class LoginService {
 
+  private connectionUrl = '';
+
+  constructor (private http: Http){ }
+
+  connectToDrive(){
+    return this.http.get(this.connectionUrl)
+      .map(this.getUrl)
+      .catch(this.handleError);
+  }
+
+  private getUrl(res: Response){
+    let body = res.json();
+    return body.data || { };
+  }
+
+  private handleError (error: Response | any) {
+
+    // In a real world app, you might use a remote logging infrastructure
+    let errMsg: string;
+
+    if (error instanceof Response) {
+      const body = error.json() || '';
+      const err = body.error || JSON.stringify(body);
+      errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
+    } else {
+      errMsg = error.message ? error.message : error.toString();
+    }
+
+    console.error(errMsg);
+    return Observable.throw(errMsg);
+  }
 
 }
 
