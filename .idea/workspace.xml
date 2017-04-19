@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="5f983f56-2c63-4537-aeb7-753ea6118bba" name="Default" comment="Préparation routing">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/FRONT_END/src/model/log.ts" afterPath="" />
+    <list default="true" id="5f983f56-2c63-4537-aeb7-753ea6118bba" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/FRONT_END/src/app/app.component.ts" afterPath="$PROJECT_DIR$/FRONT_END/src/app/app.component.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/FRONT_END/src/app/login/login.component.html" afterPath="$PROJECT_DIR$/FRONT_END/src/app/login/login.component.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/FRONT_END/src/app/login/login.component.ts" afterPath="$PROJECT_DIR$/FRONT_END/src/app/login/login.component.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/FRONT_END/src/model/folder.ts" afterPath="$PROJECT_DIR$/FRONT_END/src/model/folder.ts" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/dist/" />
@@ -26,8 +22,8 @@
       <file leaf-file-name="login.component.ts" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/FRONT_END/src/app/login/login.component.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="476">
-              <caret line="28" column="31" lean-forward="true" selection-start-line="28" selection-start-column="31" selection-end-line="28" selection-end-column="31" />
+            <state relative-caret-position="255">
+              <caret line="27" column="0" lean-forward="true" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
               <folding>
                 <element signature="e#0#79#0" expanded="true" />
               </folding>
@@ -525,7 +521,7 @@
       <workItem from="1492618329330" duration="609000" />
       <workItem from="1492618981341" duration="46000" />
       <workItem from="1492619060189" duration="6000" />
-      <workItem from="1492619175042" duration="956000" />
+      <workItem from="1492619175042" duration="1197000" />
     </task>
     <task id="LOCAL-00001" summary="on essaie http">
       <created>1492162635323</created>
@@ -576,11 +572,18 @@
       <option name="project" value="LOCAL" />
       <updated>1492357918291</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="azdzadaz">
+      <created>1492620200079</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1492620200079</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="86485000" />
+    <option name="totallyTimeSpent" value="86726000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
@@ -619,7 +622,8 @@
     <MESSAGE value="Menu contextuel" />
     <MESSAGE value="archi" />
     <MESSAGE value="Préparation routing" />
-    <option name="LAST_COMMIT_MESSAGE" value="Préparation routing" />
+    <MESSAGE value="azdzadaz" />
+    <option name="LAST_COMMIT_MESSAGE" value="azdzadaz" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -806,8 +810,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/FRONT_END/src/app/login/login.component.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="476">
-          <caret line="28" column="31" lean-forward="true" selection-start-line="28" selection-start-column="31" selection-end-line="28" selection-end-column="31" />
+        <state relative-caret-position="255">
+          <caret line="27" column="0" lean-forward="true" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
           <folding>
             <element signature="e#0#79#0" expanded="true" />
           </folding>

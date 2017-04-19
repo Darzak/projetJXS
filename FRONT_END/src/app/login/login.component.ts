@@ -32,7 +32,8 @@ export class LoginComponent implements OnInit {
     } else {
       this.selectedDrives.push(drive);
     }
-	this.getUrl();
+	  this.getUrl();
+    window.location.href = this.urlToAllow;
   }
 
   selectDrive(drive : string) {
