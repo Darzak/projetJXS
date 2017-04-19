@@ -1,10 +1,13 @@
 <img [src]="imageSource"/>
 
 <div>
-  <button (click)="connect(drive)" type="button" class="btn btn-default">
-    <span>Connection</span>
+  <button (click)="synchro(drive)" type="button" class="btn btn-default">
+    <span>Synchronisé</span>
   </button>
   <img *ngIf="selectedDrives.indexOf(drive)!=-1" src="src/app/image/valide.png"/>
+  <button *ngIf="selectedDrives.indexOf(drive)!=-1" (click)="connect()" type="button" class="btn btn-default">
+    <span>Connection</span>
+  </button>
   <label>{{urlToAllow}}</label>
 </div>
 

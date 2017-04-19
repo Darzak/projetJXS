@@ -15,7 +15,7 @@ export class LoginComponent implements OnInit {
   @Output() log: EventEmitter<any> = new EventEmitter<any>();
   selectedDrives: string[] = new Array<string>();
 
-  urlToAllow: string;
+  urlToAllow: string = "a";
   errorMessage: string;
   mode = 'Observable';
 
@@ -26,18 +26,18 @@ export class LoginComponent implements OnInit {
     console.log(this.urlToAllow);
   }
 
-  connect(drive: string): void{
-    if (this.selectedDrives.indexOf(drive) != -1) {
+  connect(): void{
+	  console.log(this.urlToAllow);
+    window.location.href = this.urlToAllow;
+  }
+
+  synchro(drive : string) {
+	if (this.selectedDrives.indexOf(drive) != -1) {
       this.selectedDrives.splice(this.selectedDrives.indexOf(drive), 1);
     } else {
       this.selectedDrives.push(drive);
     }
 	  this.getUrl();
-    window.location.href = this.urlToAllow;
-  }
-
-  selectDrive(drive : string) {
-
   }
 
   getUrl() {
