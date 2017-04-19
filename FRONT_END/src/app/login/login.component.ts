@@ -7,7 +7,8 @@ import {LoginService} from "../../service/login.service";
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
+  providers: [LoginService]
 })
 
 
@@ -20,13 +21,16 @@ export class LoginComponent implements OnInit {
   ids: Log[] = new Array();
   selectedDrives: string[] = new Array<string>();
 
-  urlToAllow: string;
+  urlToAllow: string = "Standby";
   errorMessage: string;
   mode = 'Observable';
 
   constructor(private loginService : LoginService) { }
 
   ngOnInit() {
+    console.log(this.urlToAllow);
+    this.getUrl();
+    console.log(this.urlToAllow);
   }
 
   connect(): void{

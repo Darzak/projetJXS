@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5f983f56-2c63-4537-aeb7-753ea6118bba" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/FRONT_END/src/app/login/login.component.html" afterPath="$PROJECT_DIR$/FRONT_END/src/app/login/login.component.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/FRONT_END/src/app/login/login.component.ts" afterPath="$PROJECT_DIR$/FRONT_END/src/app/login/login.component.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/FRONT_END/src/service/login.service.ts" afterPath="$PROJECT_DIR$/FRONT_END/src/service/login.service.ts" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/dist/" />
@@ -41,11 +41,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="login.component.ts" pinned="false" current-in-tab="true">
+      <file leaf-file-name="login.component.ts" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/FRONT_END/src/app/login/login.component.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="213">
-              <caret line="34" column="0" lean-forward="true" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
+            <state relative-caret-position="405">
+              <caret line="27" column="34" lean-forward="false" selection-start-line="27" selection-start-column="22" selection-end-line="27" selection-end-column="34" />
               <folding>
                 <element signature="e#0#79#0" expanded="true" />
               </folding>
@@ -53,14 +53,60 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="app.component.ts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/FRONT_END/src/app/app.component.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="210">
+              <caret line="20" column="47" lean-forward="false" selection-start-line="20" selection-start-column="36" selection-end-line="20" selection-end-column="47" />
+              <folding>
+                <element signature="e#0#63#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="files.component.ts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/FRONT_END/src/app/files/files.component.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="180">
+              <caret line="12" column="25" lean-forward="false" selection-start-line="12" selection-start-column="14" selection-end-line="12" selection-end-column="25" />
+              <folding>
+                <element signature="e#0#48#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="login.component.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/FRONT_END/src/app/login/login.component.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="225">
+              <caret line="15" column="35" lean-forward="false" selection-start-line="15" selection-start-column="35" selection-end-line="15" selection-end-column="35" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="login.service.ts" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/FRONT_END/src/service/login.service.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="240">
+            <state relative-caret-position="375">
               <caret line="25" column="28" lean-forward="true" selection-start-line="25" selection-start-column="28" selection-end-line="25" selection-end-column="28" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
                 <element signature="e#51#94#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="app.module.ts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/FRONT_END/src/app/app.module.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding>
+                <element signature="e#0#58#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -144,6 +190,7 @@
         <option value="$PROJECT_DIR$/src/app/app.component.ts" />
         <option value="$PROJECT_DIR$/FRONT_END/src/service/login.service.ts" />
         <option value="$PROJECT_DIR$/FRONT_END/src/app/login/login.component.ts" />
+        <option value="$PROJECT_DIR$/FRONT_END/src/app/login/login.component.html" />
       </list>
     </option>
   </component>
@@ -289,6 +336,32 @@
               <option name="myItemId" value="projetJXS" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FRONT_END" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="files" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="projetJXS" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="projetJXS" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
@@ -416,7 +489,7 @@
       <workItem from="1492278092698" duration="8903000" />
       <workItem from="1492354760326" duration="3069000" />
       <workItem from="1492375529611" duration="1132000" />
-      <workItem from="1492610081873" duration="3725000" />
+      <workItem from="1492610081873" duration="4990000" />
     </task>
     <task id="LOCAL-00001" summary="on essaie http">
       <created>1492162635323</created>
@@ -471,7 +544,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="83603000" />
+    <option name="totallyTimeSpent" value="84868000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-1" y="27" width="1368" height="742" extended-state="6" />
@@ -518,16 +591,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/environments/environment.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/app/file/file.component.html" />
-    <entry file="file://$PROJECT_DIR$/src/app/file/file.component.spec.ts" />
-    <entry file="file://$PROJECT_DIR$/src/model/directory.ts" />
     <entry file="file://$PROJECT_DIR$/src/model/file.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
@@ -842,9 +905,19 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/FRONT_END/src/app/files/files.component.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="12" column="25" lean-forward="false" selection-start-line="12" selection-start-column="14" selection-end-line="12" selection-end-column="25" />
+          <folding>
+            <element signature="e#0#48#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/FRONT_END/src/service/login.service.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
+        <state relative-caret-position="375">
           <caret line="25" column="28" lean-forward="true" selection-start-line="25" selection-start-column="28" selection-end-line="25" selection-end-column="28" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
@@ -853,13 +926,41 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/FRONT_END/src/app/app.module.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#58#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/FRONT_END/src/app/app.component.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="20" column="47" lean-forward="false" selection-start-line="20" selection-start-column="36" selection-end-line="20" selection-end-column="47" />
+          <folding>
+            <element signature="e#0#63#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/FRONT_END/src/app/login/login.component.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="213">
-          <caret line="34" column="0" lean-forward="true" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
+        <state relative-caret-position="405">
+          <caret line="27" column="34" lean-forward="false" selection-start-line="27" selection-start-column="22" selection-end-line="27" selection-end-column="34" />
           <folding>
             <element signature="e#0#79#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/FRONT_END/src/app/login/login.component.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="15" column="35" lean-forward="false" selection-start-line="15" selection-start-column="35" selection-end-line="15" selection-end-column="35" />
+          <folding />
         </state>
       </provider>
     </entry>

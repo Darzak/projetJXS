@@ -1,4 +1,5 @@
 <img [src]="imageSource"/>
+
 <div>
   <button (click)="selectDrive(drive)" type="button" class="btn btn-default">
     <span>Sélectionner</span>
@@ -12,4 +13,7 @@
     <label>mot de passe: </label>
     <input [(ngModel)]="connection.mdp" >
   </div>
+  <label [(ngModel)]= "urlToAllow"></label>
 </div>
+
+
