@@ -21,7 +21,7 @@ export class LoginComponent implements OnInit {
   ids: Log[] = new Array();
   selectedDrives: string[] = new Array<string>();
 
-  urlToAllow: string = "Standby";
+  urlToAllow: string = 'aaa';
   errorMessage: string;
   mode = 'Observable';
 
@@ -29,12 +29,12 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     console.log(this.urlToAllow);
-    this.getUrl();
     console.log(this.urlToAllow);
   }
 
   connect(): void{
-    this.log.emit();
+    //this.log.emit();
+	this.getUrl();
   }
 
   selectDrive(drive : string) {

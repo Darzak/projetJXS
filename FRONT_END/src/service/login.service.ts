@@ -11,11 +11,11 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class LoginService {
 
-  private connectionUrl = '';
+  private connectionUrl = 'http://localhost:8080/ServerREST/myWebService/Google/connection';
 
   constructor (private http: Http){ }
 
-  connectToDrive(){
+  connectToDrive(): Observable<string>{
     return this.http.get(this.connectionUrl)
       .map(this.getUrl)
       .catch(this.handleError);
@@ -23,7 +23,8 @@ export class LoginService {
 
   private getUrl(res: Response){
     let body = res.json();
-    return body.data || { };
+	console.log("SALUT", body.url);
+    return body.url || { };
   }
 
   private handleError (error: Response | any) {
