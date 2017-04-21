@@ -23,7 +23,8 @@ export class LoginService {
 
   private getUrl(res: Response){
     let body = res.json();
-	console.log("SALUT", body.url);
+	  console.log("SALUT", body.url);
+    window.location.href = body.url;
     return body.url || { };
   }
 

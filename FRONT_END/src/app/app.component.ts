@@ -15,6 +15,7 @@ import { Element } from '../model/element';
 
 export class AppComponent implements OnInit{
   drives: string[] = ["google", "dropbox"];
+  selectedDrives: string[] = new Array<string>();
   login: boolean = false;
 
   constructor(private fileService : FileService, private  folderService: FolderService) {
@@ -22,6 +23,15 @@ export class AppComponent implements OnInit{
 
   ngOnInit() : void {
     //this.testRequest();
+  }
+
+  onConnect(drive: string){
+    if (this.selectedDrives.indexOf(drive) != -1) {
+      this.selectedDrives.splice(this.selectedDrives.indexOf(drive), 1);
+    } else {
+      this.selectedDrives.push(drive);
+    }
+    console.log(this.selectedDrives);
   }
 
   getImageSource(drive: string): string{

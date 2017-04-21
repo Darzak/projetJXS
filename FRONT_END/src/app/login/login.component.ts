@@ -13,34 +13,35 @@ import {LoginService} from "../../service/login.service";
 export class LoginComponent implements OnInit {
   @Input() imageSource: string;
   @Output() log: EventEmitter<any> = new EventEmitter<any>();
-  selectedDrives: string[] = new Array<string>();
+  @Output() connect: EventEmitter<any> = new EventEmitter<any>();
 
+  connected: boolean = false;
   urlToAllow: string = "a";
   errorMessage: string;
+  code: string;
   mode = 'Observable';
 
   constructor(private loginService : LoginService) { }
 
   ngOnInit() {
-    console.log(this.urlToAllow);
-    console.log(this.urlToAllow);
-  }
-
-  connect(): void{
-	  console.log(this.urlToAllow);
-    window.location.href = this.urlToAllow;
-  }
-
-  synchro(drive : string) {
-	if (this.selectedDrives.indexOf(drive) != -1) {
-      this.selectedDrives.splice(this.selectedDrives.indexOf(drive), 1);
-    } else {
-      this.selectedDrives.push(drive);
+    let l = window.location.href;
+    if(l != "http://localhost:4200/"){
+      this.connected=true;
+      this.parse(l);
     }
-	  this.getUrl();
   }
 
-  getUrl() {
+  parse(urlToParse: string){
+    let i: number = urlToParse.indexOf("=");
+    this.code = urlToParse.substr(i+1,urlToParse.length-i);
+  }
+
+  synchro(drive: string) {
+	  this.getUrl(drive);
+	  this.connect.emit();
+  }
+
+  getUrl(drive: string) {
     this.loginService.connectToDrive().subscribe(
                                       url => this.urlToAllow = url,
                                       error => this.errorMessage = <any>error)
