@@ -28,8 +28,6 @@ export class LoginService {
     return body.url || { };
   }
 
-
-
   private handleError (error: Response | any) {
 
     // In a real world app, you might use a remote logging infrastructure

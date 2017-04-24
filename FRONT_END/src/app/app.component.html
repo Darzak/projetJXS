@@ -13,7 +13,7 @@
         </ul>
   </div>
 </nav>
-
+<!--
 <div class="row" *ngIf="!login">
   <div class="col-md-6" *ngFor="let drive of drives">
     <app-login [imageSource]="getImageSource(drive)" (log)="login = true" (connect)="onConnect(drive)"></app-login>
@@ -23,7 +23,9 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <div *ngIf="login">
   <app-files></app-files>
-</div>
+</div>-->
+
+<router-outlet></router-outlet>
 
 
 

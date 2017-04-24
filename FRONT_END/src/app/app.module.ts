@@ -28,10 +28,10 @@ import { DriveComponent } from './drive/drive.component';
     RouterModule.forRoot([
         {
           path: 'files',
-          component: FilesComponent
+          component: FilesComponent,
         },
       {
-        path: '',
+        path: 'login',
         component: LoginComponent
       }
     ])
