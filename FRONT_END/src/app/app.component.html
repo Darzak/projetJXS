@@ -1,4 +1,19 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand">
+        <img alt="Brand" src="...">
+      </a>
+      </div>
+        <ul class="nav nav-tabs">
+          <li role="presentation" class="active"><a href="#">Mes drives</a></li>
+          <li role="presentation"><a href="#">Mes fichiers</a></li>
+        </ul>
+  </div>
+</nav>
+
 <div class="row" *ngIf="!login">
   <div class="col-md-6" *ngFor="let drive of drives">
     <app-login [imageSource]="getImageSource(drive)" (log)="login = true" (connect)="onConnect(drive)"></app-login>
