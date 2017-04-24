@@ -32,7 +32,8 @@
           <div class="folder"
                [class.selected]="folder === selectedElement"
                (click)="onSelect(folder)"
-               (dblclick)="onOpen(folder)">
+               (dblclick)="onOpen(folder)"
+               (contextmenu)="detectRightMouseClick($event,folder)">
             <h3>{{folder.name}}</h3>
             {{folder.key}}
           </div>
@@ -44,16 +45,17 @@
   <div class="panel panel-default">
     <h3><span class="label label-default">Files</span></h3>
     <div class="panel-body">
-    <div class="row">
-      <div class="col-md-2" *ngFor="let file of files" >
-        <div class="file-icon"
-             [class.selected]="file === selectedElement"
-             (click)="onSelect(file)">
-          <h3>{{file.name}}</h3>
-          {{file.key}}
+      <div class="row">
+        <div class="col-md-2" *ngFor="let file of files" >
+          <div class="file-icon"
+               [class.selected]="file === selectedElement"
+               (click)="onSelect(file)"
+               (contextmenu)="detectRightMouseClick($event,file)">
+            <h3>{{file.name}}</h3>
+            {{file.key}}
+          </div>
         </div>
       </div>
-    </div>
     </div>
   </div>
 
@@ -62,5 +64,10 @@
 <file-details [element]="selectedElement" (notify)='onNotify($event)'  (remove)='onRemove($event)'></file-details>
 
 <div class="contextMenu" [ngStyle]="contextMenuPos" (appClickOutside)="closeContextMenu()">
-  My right panel
+  <button (click)="onRemove()" type="button" class="btn btn-default">
+    <span>Supprimer</span>
+  </button>
+  <button (click)="onCopy()" type="button" class="btn btn-default">
+    <span>Copier</span>
+  </button>
 </div>
