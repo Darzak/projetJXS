@@ -17,7 +17,7 @@
   <span>Nouveau fichier</span>
 </button>
 
-<div (contextmenu)="detectRightMouseClick($event)" style="border:1px solid #ccc;padding:15px;width:100%">
+<div>
   <!--TODO onPaste() prend répertoire courrant -->
   <button (click)="onPaste()" type="button" class="btn btn-default">
     <span>Coller le fichier</span>
@@ -26,7 +26,6 @@
   <div class="panel panel-default">
     <h3><span class="label label-default">Folders</span></h3>
     <div class="panel-body">
-
       <div class="row">
         <div class="col-md-2" *ngFor="let folder of folders" >
           <div class="folder"
