@@ -25,20 +25,18 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     let l = window.location.href;
-    if(l != "http://localhost:4200/"){
-      this.connected=true;
-      this.parse(l);
-    }
+    this.parse(l);
   }
 
   parse(urlToParse: string){
     let i: number = urlToParse.indexOf("=");
     this.code = urlToParse.substr(i+1,urlToParse.length-i);
+    console.log(this.code);
   }
 
   synchro(drive: string) {
 	  this.getUrl(drive);
-	  this.connect.emit();
+    this.connect.emit();
   }
 
   getUrl(drive: string) {

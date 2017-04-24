@@ -26,11 +26,12 @@ export class AppComponent implements OnInit{
   }
 
   onConnect(drive: string){
-    if (this.selectedDrives.indexOf(drive) != -1) {
+    /*if (this.selectedDrives.indexOf(drive) != -1) {
       this.selectedDrives.splice(this.selectedDrives.indexOf(drive), 1);
     } else {
       this.selectedDrives.push(drive);
-    }
+    }*/
+    this.selectedDrives.push(drive);
     console.log(this.selectedDrives);
   }
 
