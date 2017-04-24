@@ -1,3 +1,8 @@
+
+.panel {
+  border: none;
+}
+
 /*CSS Folder*/
 .folder {
   width: 150px;
@@ -27,7 +32,7 @@
   color: #FFFFFF;
 }
 
-/* fil CSS*/
+/* file CSS*/
 .file-icon {
   font-family: Arial, Tahoma, sans-serif;
   font-weight: 300;

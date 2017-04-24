@@ -23,27 +23,37 @@
     <span>Coller le fichier</span>
   </button>
 
-  <div class="row">
-    <div class="col-md-2" *ngFor="let folder of folders" >
-      <div class="folder"
-           [class.selected]="folder === selectedElement"
-           (click)="onSelect(folder)"
-           (dblclick)="onOpen(folder)">
+  <div class="panel panel-default">
+    <h3><span class="label label-default">Folders</span></h3>
+    <div class="panel-body">
 
-        <h3>{{folder.name}}</h3>
-        {{folder.key}}
+      <div class="row">
+        <div class="col-md-2" *ngFor="let folder of folders" >
+          <div class="folder"
+               [class.selected]="folder === selectedElement"
+               (click)="onSelect(folder)"
+               (dblclick)="onOpen(folder)">
+            <h3>{{folder.name}}</h3>
+            {{folder.key}}
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
-  <div class="row">
-    <div class="col-md-2" *ngFor="let file of files" >
-      <div class="file-icon"
-           [class.selected]="file === selectedElement"
-           (click)="onSelect(file)">
-        <h3>{{file.name}}</h3>
-        {{file.key}}
+  <div class="panel panel-default">
+    <h3><span class="label label-default">Files</span></h3>
+    <div class="panel-body">
+    <div class="row">
+      <div class="col-md-2" *ngFor="let file of files" >
+        <div class="file-icon"
+             [class.selected]="file === selectedElement"
+             (click)="onSelect(file)">
+          <h3>{{file.name}}</h3>
+          {{file.key}}
+        </div>
       </div>
+    </div>
     </div>
   </div>
 
