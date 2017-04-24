@@ -14,6 +14,10 @@ import { Element } from '../../model/element';
 })
 
 export class FilesComponent implements OnInit{
+  errorMessage: string;
+  mode = 'Observable';
+  files : File[];
+  folders : Folder[];
 
   constructor(private fileService : FileService, private  folderService: FolderService) {
     this.paths.push("root");
@@ -27,8 +31,7 @@ export class FilesComponent implements OnInit{
 
   rightClicked : Element;
   selectedElement: Element;
-  files : File[];
-  folders : Folder[];
+
   copiedFile : Element;
   pastedFile : Element;
   paths : string[] = new Array();
@@ -38,14 +41,6 @@ export class FilesComponent implements OnInit{
 
   onSelect(element: Element): void {
     this.selectedElement = element;
-  }
-
-  getFiles() : void {
-    this.files = this.fileService.getFiles();
-  }
-
-  getFolders() : void {
-    this.folders = this.folderService.getFolders();
   }
 
   detectRightMouseClick($event, element: Element) {
@@ -133,5 +128,24 @@ export class FilesComponent implements OnInit{
       this.path+= " > " + p ;
     }
   }
+  getFiles() {
+    this.fileService.getFiles()
+      .subscribe(
+        files => this.files = files,
+        error =>  this.errorMessage = <any>error);
+  }
+
+  /*getFolders() : void {
+   this.folders = this.folderService.getFolders();
+   }*/
+
+  getFolders() {
+    this.folderService.getFolders()
+      .subscribe(
+        folders => this.folders = folders,
+        error =>  this.errorMessage = <any>error);
+  }
+
+
 
 }
