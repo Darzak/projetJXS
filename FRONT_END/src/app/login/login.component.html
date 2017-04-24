@@ -1,7 +1,7 @@
 <img [src]="imageSource"/>
 
 <div>
-  <button *ngIf="!connected" (click)="synchro(drive)" type="button" class="btn btn-default">
+  <button (click)="synchro(drive)" type="button" class="btn btn-default">
     <span>Synchronisé</span>
   </button>
   <label>{{urlToAllow}}</label>
