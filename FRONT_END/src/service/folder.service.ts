@@ -5,12 +5,11 @@ import { Injectable } from '@angular/core';
 
 import { Folder } from '../model/folder';
 import { folders } from '../app/mock-folders';
+import {Observable} from "rxjs";
 
 @Injectable()
 export class FolderService {
-  getFolders() : Folder[] {
-    return folders;
-  }
+
 
   deleteFolder(folder: Folder) : void {
     folders.splice(folders.indexOf(folder),1);
@@ -34,6 +33,18 @@ export class FolderService {
           return f;
         }
     }
+  }
+
+  /*getFolders() : Folder[] {
+    return folders;
+  }*/
+
+  getFolders(): Observable<Folder[]> {
+    /*return this.http.get(this.connectionUrl)
+     .map(this.extractFiles)
+     .catch(this.handleError);*/
+
+    return Observable.of(folders);
   }
 
 }

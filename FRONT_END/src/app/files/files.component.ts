@@ -14,6 +14,11 @@ import { Element } from '../../model/element';
 })
 
 export class FilesComponent implements OnInit{
+  private errorMessage: string;
+  mode = 'Observable';
+  files : File[];
+  folders : Folder[];
+
 
   constructor(private fileService : FileService, private  folderService: FolderService) {
     this.paths.push("root");
@@ -27,8 +32,6 @@ export class FilesComponent implements OnInit{
 
   nRightClicks : number = 0;
   selectedElement: Element;
-  files : File[];
-  folders : Folder[];
   copiedFile : Element;
   pastedFile : Element;
   paths : string[] = new Array();
@@ -40,15 +43,11 @@ export class FilesComponent implements OnInit{
     this.selectedElement = element;
   }
 
-  getFiles() : void {
+  /*getFiles() : void {
     this.files = this.fileService.getFiles();
-  }
+  }*/
 
-  getFolders() : void {
-    this.folders = this.folderService.getFolders();
-  }
-
-  onRightClick() {
+   onRightClick() {
     this.nRightClicks++;
     return false;
   }
@@ -120,6 +119,24 @@ export class FilesComponent implements OnInit{
     for(let p of this.paths){
       this.path+= " > " + p ;
     }
+  }
+
+  getFiles() {
+    this.fileService.getFiles()
+      .subscribe(
+        files => this.files = files,
+        error =>  this.errorMessage = <any>error);
+  }
+
+  /*getFolders() : void {
+    this.folders = this.folderService.getFolders();
+  }*/
+
+  getFolders() {
+    this.folderService.getFolders()
+      .subscribe(
+        folders => this.folders = folders,
+        error =>  this.errorMessage = <any>error);
   }
 
 }

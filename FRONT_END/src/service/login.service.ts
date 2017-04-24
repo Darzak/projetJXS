@@ -18,12 +18,12 @@ export class LoginService {
   connectToDrive(): Observable<string>{
     return this.http.get(this.connectionUrl)
       .map(this.getUrl)
-      .catch(this.handleError);
+      .catch(this.handleError)
+      ;
   }
 
   private getUrl(res: Response){
     let body = res.json();
-	  console.log("SALUT", body.url);
     window.location.href = body.url;
     return body.url || { };
   }
