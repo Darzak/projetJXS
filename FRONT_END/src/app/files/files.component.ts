@@ -25,7 +25,7 @@ export class FilesComponent implements OnInit{
     this.getFolders();
   }
 
-  nRightClicks : number = 0;
+  rightClicked : Element;
   selectedElement: Element;
   files : File[];
   folders : Folder[];
@@ -48,25 +48,26 @@ export class FilesComponent implements OnInit{
     this.folders = this.folderService.getFolders();
   }
 
-  onRightClick() {
-    this.nRightClicks++;
-    return false;
-  }
-
-  detectRightMouseClick($event) {
+  detectRightMouseClick($event, element: Element) {
     if ($event.which === 3) {
       this.contextMenuPos = {'display': 'block', 'left': $event.clientX + 'px', 'top': $event.clientY + 'px'};
+      this.rightClicked = element;
       return false;
     }
   }
 
   closeContextMenu() {
     this.contextMenuPos = {'display':'none'};
+    this.rightClicked = null;
   }
 
-  onNotify(element: Element):void {
-    this.copiedFile= element;
-    /* Gérer les copies de fichiers*/
+  onCopy(element: Element):void {
+    if(this.rightClicked != null){
+      this.copiedFile = this.rightClicked;
+      this.closeContextMenu();
+    }else{
+      this.copiedFile= element;
+    }
   }
 
   onPaste(): void {
@@ -99,7 +100,18 @@ export class FilesComponent implements OnInit{
   }
 
   onRemove(a : any):void {
-    this.selectedElement=null;
+    if(this.rightClicked != null){
+      if(this.rightClicked.isFolder){
+        let folder = <Folder> this.rightClicked;
+        this.folderService.deleteFolder(folder);
+      }else{
+        this.fileService.deleteFile(<File> this.rightClicked);
+      }
+      this.rightClicked = null;
+      this.closeContextMenu();
+    }else{
+      this.selectedElement=null;
+    }
   }
 
   onOpen(folder : Folder){
