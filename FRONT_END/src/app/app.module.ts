@@ -9,6 +9,7 @@ import { FileDetailsComponent } from './file-details/file-details.component';
 import { LoginComponent } from './login/login.component';
 import { ClickOutsideDirective } from './click-outside.directive';
 import { FilesComponent } from './files/files.component';
+import { DriveComponent } from './drive/drive.component';
 
 
 @NgModule({
@@ -17,12 +18,23 @@ import { FilesComponent } from './files/files.component';
     FileDetailsComponent,
     LoginComponent,
     ClickOutsideDirective,
-    FilesComponent
+    FilesComponent,
+    DriveComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
+    RouterModule.forRoot([
+        {
+          path: 'files',
+          component: FilesComponent
+        },
+      {
+        path: '',
+        component: LoginComponent
+      }
+    ])
   ],
   providers: [],
   bootstrap: [AppComponent]

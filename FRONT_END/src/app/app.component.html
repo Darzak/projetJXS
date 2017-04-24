@@ -1,5 +1,5 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-<div class="row" *ngIf="!login">
+<!--<div class="row" *ngIf="!login">
   <div class="col-md-6" *ngFor="let drive of drives">
     <app-login [imageSource]="getImageSource(drive)" (log)="login = true" (connect)="onConnect(drive)"></app-login>
     <img *ngIf="selectedDrives.indexOf(drive)!=-1" src="src/app/image/valide.png"/>
@@ -9,6 +9,6 @@
 <div *ngIf="login">
   <app-files></app-files>
 </div>
+-->
 
-
-
+<router-outlet></router-outlet>

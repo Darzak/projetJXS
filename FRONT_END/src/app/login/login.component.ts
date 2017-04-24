@@ -11,10 +11,7 @@ import {LoginService} from "../../service/login.service";
 })
 
 export class LoginComponent implements OnInit {
-  @Input() imageSource: string;
-  @Output() log: EventEmitter<any> = new EventEmitter<any>();
-  @Output() connect: EventEmitter<any> = new EventEmitter<any>();
-
+  drives: string[] = ["google", "dropbox"];
   connected: boolean = false;
   urlToAllow: string = "a";
   errorMessage: string;
@@ -34,9 +31,13 @@ export class LoginComponent implements OnInit {
     console.log(this.code);
   }
 
-  synchro(drive: string) {
-	  this.getUrl(drive);
-    this.connect.emit();
+  onConnect(drive: string){
+    /*if (this.selectedDrives.indexOf(drive) != -1) {
+     this.selectedDrives.splice(this.selectedDrives.indexOf(drive), 1);
+     } else {
+     this.selectedDrives.push(drive);
+     }*/
+    this.getUrl(drive);
   }
 
   getUrl(drive: string) {
@@ -45,4 +46,17 @@ export class LoginComponent implements OnInit {
                                       error => this.errorMessage = <any>error)
   }
 
+  getImageSource(drive: string): string{
+    switch(drive) {
+      case "google": {
+        return "src/app/image/google_drive.jpg";
+      }
+      case "dropbox": {
+        return "src/app/image/dropbox.png";
+      }
+      default: {
+        break;
+      }
+    }
+  }
 }
