@@ -17,41 +17,51 @@
   <span>Nouveau fichier</span>
 </button>
 
-<div>
+<div (contextmenu)="detectRightMouseClick($event)" style="border:1px solid #ccc;padding:15px;width:100%">
   <!--TODO onPaste() prend répertoire courrant -->
   <button (click)="onPaste()" type="button" class="btn btn-default">
     <span>Coller le fichier</span>
   </button>
 
-  <div class="row">
-    <div class="col-md-2" *ngFor="let folder of folders" >
-      <div class="folder"
-           [class.selected]="folder === selectedElement"
-           (click)="onSelect(folder)"
-           (dblclick)="onOpen(folder)"
-           (contextmenu)="detectRightMouseClick($event,folder)">
+  <div class="panel panel-default">
+    <h3><span class="label label-default">Folders</span></h3>
+    <div class="panel-body">
 
-        <h3>{{folder.name}}</h3>
-        {{folder.key}}
+      <div class="row">
+        <div class="col-md-2" *ngFor="let folder of folders" >
+          <div class="folder"
+               [class.selected]="folder === selectedElement"
+               (click)="onSelect(folder)"
+               (dblclick)="onOpen(folder)"
+               (contextmenu)="detectRightMouseClick($event,folder)">
+            <h3>{{folder.name}}</h3>
+            {{folder.key}}
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
-  <div class="row">
-    <div class="col-md-2" *ngFor="let file of files" >
-      <div class="file-icon"
-           [class.selected]="file === selectedElement"
-           (click)="onSelect(file)"
-           (contextmenu)="detectRightMouseClick($event,file)">
-        <h3>{{file.name}}</h3>
-        {{file.key}}
+  <div class="panel panel-default">
+    <h3><span class="label label-default">Files</span></h3>
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-md-2" *ngFor="let file of files" >
+          <div class="file-icon"
+               [class.selected]="file === selectedElement"
+               (click)="onSelect(file)"
+               (contextmenu)="detectRightMouseClick($event,file)">
+            <h3>{{file.name}}</h3>
+            {{file.key}}
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
 </div>
 
-<file-details [element]="selectedElement" (notify)='onCopy($event)'  (remove)='onRemove($event)'></file-details>
+<file-details [element]="selectedElement" (notify)='onNotify($event)'  (remove)='onRemove($event)'></file-details>
 
 <div class="contextMenu" [ngStyle]="contextMenuPos" (appClickOutside)="closeContextMenu()">
   <button (click)="onRemove()" type="button" class="btn btn-default">
@@ -59,12 +69,5 @@
   </button>
   <button (click)="onCopy()" type="button" class="btn btn-default">
     <span>Copier</span>
-  </button>
-</div>
-
-
-<div class="contextMenu" [ngStyle]="contextMenuPos" (appClickOutside)="closeContextMenu()">
-  <button (click)="onRemove()" type="button" class="btn btn-default">
-    <span>Supprimer</span>
   </button>
 </div>
