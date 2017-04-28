@@ -3,23 +3,23 @@
 <h1>Mes fichiers</h1>
 <div class="row">
   <h2 class="col-md-2">{{path}}</h2>
-  <button (click)="onComeBack()" type="button" class="btn btn-default">
+  <button (click)="onComeBack()" type="button" class="btn btn-warning">
     <span>Retour</span>
   </button>
 </div>
 
 <label>Nouveau nom: </label>
 <input [(ngModel)]="newName" placeholder="Nom pour le nouveau fichier">
-<button (click)="createFolder()" type="button" class="btn btn-default">
+<button (click)="createFolder()" type="button" class="btn btn-success">
   <span>Nouveau dossier</span>
 </button>
-<button (click)="createFile()" type="button" class="btn btn-default">
+<button (click)="createFile()" type="button" class="btn btn-info">
   <span>Nouveau fichier</span>
 </button>
 
 <div>
   <!--TODO onPaste() prend répertoire courrant -->
-  <button (click)="onPaste()" type="button" class="btn btn-default">
+  <button type="button" class="btn btn-primary" (click)="onPaste()">
     <span>Coller le fichier</span>
   </button>
 
@@ -60,13 +60,13 @@
 
 </div>
 
-<file-details [element]="selectedElement" (notify)='onNotify($event)'  (remove)='onRemove($event)'></file-details>
+<file-details [element]="selectedElement" (notify)='onCopy($event)'  (remove)='onRemove($event)'></file-details>
 
 <div class="contextMenu" [ngStyle]="contextMenuPos" (appClickOutside)="closeContextMenu()">
-  <button (click)="onRemove()" type="button" class="btn btn-default">
+  <button (click)="onRemove()" type="button" class="btn btn-danger">
     <span>Supprimer</span>
   </button>
-  <button (click)="onCopy()" type="button" class="btn btn-default">
+  <button (click)="onCopy()" type="button" class="btn btn-info">
     <span>Copier</span>
   </button>
 </div>

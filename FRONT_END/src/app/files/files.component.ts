@@ -112,6 +112,15 @@ export class FilesComponent implements OnInit{
   onOpen(folder : Folder){
     this.paths.push(folder.name);
     this.concatPath();
+    this.fileService.getFiles(folder)
+      .subscribe(
+      dir => this.files = dir,
+      error =>  this.errorMessage = <any>error);
+    this.folderService.getFiles(folder)
+      .subscribe(
+        dir => this.folders = dir,
+        error =>  this.errorMessage = <any>error);
+
   }
 
 
@@ -129,7 +138,7 @@ export class FilesComponent implements OnInit{
     }
   }
   getFiles() {
-    this.fileService.getFiles()
+    this.fileService.getRoot()
       .subscribe(
         files => this.files = files,
         error =>  this.errorMessage = <any>error);
@@ -140,7 +149,7 @@ export class FilesComponent implements OnInit{
    }*/
 
   getFolders() {
-    this.folderService.getFolders()
+    this.folderService.getRoot()
       .subscribe(
         folders => this.folders = folders,
         error =>  this.errorMessage = <any>error);

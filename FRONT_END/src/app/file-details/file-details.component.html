@@ -12,14 +12,14 @@
   <div>
     <label>taille: </label> {{element.taille}}
   </div>
-  <button (click)="deleteFile()" type="button" class="btn btn-default">
+  <button (click)="deleteFile()" type="button" class="btn btn-danger">
     <span>Supprimer ce fichier</span>
   </button>
-  <button (click)="copyFile()" type="button" class="btn btn-default">
+  <button (click)="copyFile()" type="button" class="btn btn-info">
     <span>Copier ce fichier</span>
   </button>
   <div>
-    <button (click)="openShare()" type="button" class="btn btn-default">
+    <button (click)="openShare()" type="button" class="btn btn-success">
       <span>Partager</span>
     </button>
     <div *ngIf="shareOpen">
@@ -28,7 +28,7 @@
         {{share}}
       </div>
       <input [(ngModel)]="newShare" placeholder="adresse mail">
-      <button (click)="addShare()" type="button" class="btn btn-default">
+      <button (click)="addShare()" type="button" class="btn btn-success">
         <span>Ajouter</span>
       </button>
     </div>

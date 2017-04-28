@@ -14,7 +14,7 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class FileService {
 
-  private connectionUrl = 'http://localhost:8080/ServerREST/myWebService/Google/connection';
+  private url = 'http://localhost:8080/ServerREST/myWebService/Google';
 
   constructor (private http: Http){ }
 
@@ -38,24 +38,44 @@ export class FileService {
     file.sharedList.push(share);
   }
 
-  getFiles(): Observable<File[]> {
-    /*return this.http.get(this.connectionUrl)
+  getFiles(folder: Folder): Observable<File[]> {
+    /*return this.http.get(this.url+"name")
       .map(this.extractFiles)
       .catch(this.handleError);*/
+    let dir: File[] = [];
+    for(let f of folder.files){
+      if(!f.isFolder){
+        dir.push(<File> f);
+      }
+    }
+    return Observable.of(dir);
+  }
 
+  getRoot(): Observable<File[]> {
+    /*return this.http.get(this.url+"root")
+     .map(this.extractFiles)
+     .catch(this.handleError);*/
     return Observable.of(files);
   }
+
+  delete(name: string): Observable<File> {
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+
+    return this.http.post(this.url+"delete", { name }, options)
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
+
 
 
   create(name: string): Observable<File> {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
 
-    return this.http.post(this.connectionUrl, { name }, options)
+    return this.http.post(this.url+"create", { name }, options)
       .map(this.extractData)
       .catch(this.handleError);
-
-
   }
 
 
@@ -75,7 +95,6 @@ export class FileService {
   }
 
   private handleError (error: Response | any) {
-
     // In a real world app, you might use a remote logging infrastructure
     let errMsg: string;
 

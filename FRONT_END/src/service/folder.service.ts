@@ -39,7 +39,21 @@ export class FolderService {
     return folders;
   }*/
 
-  getFolders(): Observable<Folder[]> {
+  getFiles(folder: Folder): Observable<Folder[]> {
+    /*return this.http.get(this.url+"name")
+     .map(this.extractFiles)
+     .catch(this.handleError);*/
+    let dir: Folder[] = [];
+    for(let f of folder.files){
+      if(f.isFolder){
+        dir.push(<Folder> f);
+      }
+    }
+    return Observable.of(dir);
+  }
+
+
+  getRoot(): Observable<Folder[]> {
     /*return this.http.get(this.connectionUrl)
      .map(this.extractFiles)
      .catch(this.handleError);*/
