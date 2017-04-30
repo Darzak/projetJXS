@@ -77,7 +77,7 @@ public class Google {
 			googleClientWithCode.getOAuth2Details().setAccessToken(accessToken);
 			googleClientWithCode.setURLRequest("https://www.googleapis.com/drive/v2/files/root/children");
 			JSONObject files = new JSONObject(googleClientWithCode.getProtectedResource());
-			return Response.status(200).entity(files).build();
+			return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(files).build();
 		} catch (IOException e) {
 			JSONObject error = new JSONObject();
 			error.put("error", "internal error");
