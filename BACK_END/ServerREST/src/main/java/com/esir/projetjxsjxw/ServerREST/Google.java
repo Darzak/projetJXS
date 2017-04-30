@@ -9,6 +9,7 @@ import java.util.Properties;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -48,18 +49,41 @@ public class Google {
 			is = new ByteArrayInputStream(googleConfigFile.getBytes("UTF-8"));
 			Properties config = new Properties();
 			config.load(is);
-			GoogleClient googleClientWith = new GoogleClient(config);
-			System.out.println(googleClientWith);
-			URLtoSend = googleClientWith.getAuthorizationCodeURL();
-			System.out.println(URLtoSend);
+			GoogleClient googleClient = new GoogleClient(config);
+			URLtoSend = googleClient.getAuthorizationCodeURL();
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		System.out.println("on est là");
 		JSONObject res = new JSONObject();
 		res.put("url", URLtoSend);
 		return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(res.toJSONString()).build();
 	}
+	
+	@SuppressWarnings("unchecked")
+	@GET
+	@Path("/file/getRoot")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getRoot(@QueryParam("code") String code) {
+		InputStream is;
+		try {
+			is = new ByteArrayInputStream(googleConfigFile.getBytes("UTF-8"));
+			Properties config = new Properties();
+			config.load(is);
+			GoogleClient googleClientWithCode = new GoogleClient(config);
+			googleClientWithCode.setAccessCode(code);
+			String accessToken = googleClientWithCode.getAccessToken().get("access_token");
+			googleClientWithCode.getOAuth2Details().setAccessToken(accessToken);
+			googleClientWithCode.setURLRequest("https://www.googleapis.com/drive/v2/files/root/children");
+			JSONObject files = new JSONObject(googleClientWithCode.getProtectedResource());
+			return Response.status(200).entity(files).build();
+		} catch (IOException e) {
+			JSONObject error = new JSONObject();
+			error.put("error", "internal error");
+			e.printStackTrace();
+			return Response.status(500).header("Access-Control-Allow-Origin", "*").entity(error).build();
+		}
+	}
+	
 }
