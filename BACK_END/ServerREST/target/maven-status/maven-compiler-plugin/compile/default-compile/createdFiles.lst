@@ -1,12 +1,7 @@
-com\esir\projetjxsjxw\ServerREST\Files.class
-com\esir\projetjxsjxw\ServerREST\tokenHandler.class
 com\esir\projetjxsjxw\ServerREST\Google.class
 com\esir\projetjxsjxw\ServerREST\OAuth2Client.class
-com\esir\projetjxsjxw\ServerREST\Drive.class
 com\esir\projetjxsjxw\ServerREST\GoogleClient.class
 com\esir\projetjxsjxw\ServerREST\OAuthConstants.class
-com\esir\projetjxsjxw\ServerREST\FileObject.class
-com\esir\projetjxsjxw\ServerREST\MainClass.class
 com\esir\projetjxsjxw\ServerREST\DropBoxClient.class
 com\esir\projetjxsjxw\ServerREST\OAuth2Details.class
 com\esir\projetjxsjxw\ServerREST\OAuthUtils.class
