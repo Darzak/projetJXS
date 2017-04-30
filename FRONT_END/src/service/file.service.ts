@@ -14,7 +14,7 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class FileService {
 
-  private url = 'http://localhost:8080/ServerREST/myWebService/Google';
+  private url = 'http://localhost:8080/ServerREST/myWebService/Google/file';
 
   constructor (private http: Http){ }
 
@@ -38,8 +38,10 @@ export class FileService {
     file.sharedList.push(share);
   }
 
+
+  // files du dossier folder
   getFiles(folder: Folder): Observable<File[]> {
-    /*return this.http.get(this.url+"name")
+    /*return this.http.get(this.url+"/getFolder")
       .map(this.extractFiles)
       .catch(this.handleError);*/
     let dir: File[] = [];
@@ -51,8 +53,9 @@ export class FileService {
     return Observable.of(dir);
   }
 
+  // files de root
   getRoot(): Observable<File[]> {
-    /*return this.http.get(this.url+"root")
+    /*return this.http.get(this.url+"/getRoot")
      .map(this.extractFiles)
      .catch(this.handleError);*/
     return Observable.of(files);

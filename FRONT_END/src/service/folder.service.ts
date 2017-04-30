@@ -10,6 +10,7 @@ import {Observable} from "rxjs";
 @Injectable()
 export class FolderService {
 
+  private url = 'http://localhost:8080/ServerREST/myWebService/Google/folder';
 
   deleteFolder(folder: Folder) : void {
     folders.splice(folders.indexOf(folder),1);
@@ -39,8 +40,10 @@ export class FolderService {
     return folders;
   }*/
 
+
+  //
   getFiles(folder: Folder): Observable<Folder[]> {
-    /*return this.http.get(this.url+"name")
+    /*return this.http.get(this.url+"key")
      .map(this.extractFiles)
      .catch(this.handleError);*/
     let dir: Folder[] = [];
