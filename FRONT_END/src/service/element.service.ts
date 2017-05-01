@@ -7,6 +7,7 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map'
 import {Folder} from "../model/folder";
 import {File} from "../model/file";
+import {observable} from "rxjs/symbol/observable";
 
 /**
  * Created by polivier on 01/05/17.
@@ -30,10 +31,11 @@ export class ElementService{
 
     let params: URLSearchParams = new URLSearchParams();
     params.set('id', id);
-
+    console.log("getElements");
     return this.http.get(this.url+this.URL_GETELEMENTS, { search : params })
       .map(this.extractElements)
       .catch(this.handleError);
+
 
   }
 
@@ -68,29 +70,23 @@ export class ElementService{
    */
   private extractElements(res: Response) {
     let body = res.json();
-    let elements : Element[];
-
-    for(let i = 0; i<body.length; i++){
-      if(body[i].mimeType == "application/vnd.google-apps.folder"){
-
-        let tmpElement = body[i];
-        let tmpFolder = new Folder();
-        tmpFolder.key = tmpElement.id;
-        tmpFolder.name = tmpElement.title;
-        elements.push(tmpElement);
-
+    //console.log(body.items);
+    let elements : Element[] = [];
+    for(let i = 0; i<body.items.length; i++){
+      if(body.items[i].mimeType == "application/vnd.google-apps.folder"){
+        //console.log(body.items[i].title);
+        let tmpElement = body.items[i];
+        let tmpFolder: Element = {key: tmpElement.id,name: tmpElement.title,isFolder : true, taille: "1",sharedList: []};
+        elements.push(<Element>tmpFolder);
       }
       else{
-        let tmpElement = body[i];
-        let tmpFile = new Folder();
-        tmpFile.key = tmpElement.id();
-        tmpFile.name = tmpElement.title();
-        elements.push(tmpFile);
+        let tmpElement = body.items[i];
+        let tmpFile: Element = {key: tmpElement.id,name: tmpElement.title,isFolder : false, taille: "1",sharedList: []};
+        //console.log(tmpFile);
+        elements.push(<Element>tmpFile);
       }
-
-
-
     }
+    console.log("tab"+elements.length);
     return elements || { };
   }
 
