@@ -3,9 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="5f983f56-2c63-4537-aeb7-753ea6118bba" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BACK_END/ServerREST/src/main/java/com/esir/projetjxsjxw/ServerREST/Google.java" afterPath="$PROJECT_DIR$/BACK_END/ServerREST/src/main/java/com/esir/projetjxsjxw/ServerREST/Google.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/FRONT_END/src/app/login/login.component.ts" afterPath="$PROJECT_DIR$/FRONT_END/src/app/login/login.component.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/FRONT_END/src/service/login.service.ts" afterPath="$PROJECT_DIR$/FRONT_END/src/service/login.service.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/FRONT_END/src/service/file.service.ts" afterPath="$PROJECT_DIR$/FRONT_END/src/service/file.service.ts" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/dist/" />
@@ -21,10 +19,10 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="login.component.ts" pinned="false" current-in-tab="true">
+      <file leaf-file-name="login.component.ts" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/FRONT_END/src/app/login/login.component.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="208">
+            <state relative-caret-position="561">
               <caret line="33" column="52" lean-forward="false" selection-start-line="33" selection-start-column="52" selection-end-line="33" selection-end-column="52" />
               <folding>
                 <element signature="e#0#79#0" expanded="true" />
@@ -79,11 +77,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="file.service.ts" pinned="false" current-in-tab="false">
+      <file leaf-file-name="file.service.ts" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/FRONT_END/src/service/file.service.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="718">
-              <caret line="84" column="0" lean-forward="false" selection-start-line="84" selection-start-column="0" selection-end-line="84" selection-end-column="0" />
+            <state relative-caret-position="378">
+              <caret line="61" column="32" lean-forward="true" selection-start-line="61" selection-start-column="32" selection-end-line="61" selection-end-column="32" />
               <folding>
                 <element signature="e#51#94#0" expanded="true" />
               </folding>
@@ -196,9 +194,9 @@
         <option value="$PROJECT_DIR$/FRONT_END/src/app/file-details/file-details.component.html" />
         <option value="$PROJECT_DIR$/FRONT_END/src/app/files/files.component.html" />
         <option value="$PROJECT_DIR$/FRONT_END/src/service/folder.service.ts" />
-        <option value="$PROJECT_DIR$/FRONT_END/src/service/file.service.ts" />
         <option value="$PROJECT_DIR$/FRONT_END/src/service/login.service.ts" />
         <option value="$PROJECT_DIR$/FRONT_END/src/app/login/login.component.ts" />
+        <option value="$PROJECT_DIR$/FRONT_END/src/service/file.service.ts" />
       </list>
     </option>
   </component>
@@ -608,7 +606,7 @@
       <workItem from="1493014500027" duration="13829000" />
       <workItem from="1493367814976" duration="5691000" />
       <workItem from="1493557306957" duration="7884000" />
-      <workItem from="1493635495865" duration="4094000" />
+      <workItem from="1493635495865" duration="4183000" />
     </task>
     <task id="LOCAL-00001" summary="on essaie http">
       <created>1492162635323</created>
@@ -764,11 +762,18 @@
       <option name="project" value="LOCAL" />
       <updated>1493637715725</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="aj">
+      <created>1493643676082</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1493643676082</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="124442000" />
+    <option name="totallyTimeSpent" value="124531000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1612" height="876" extended-state="0" />
@@ -1088,16 +1093,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/FRONT_END/src/service/file.service.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="718">
-          <caret line="84" column="0" lean-forward="false" selection-start-line="84" selection-start-column="0" selection-end-line="84" selection-end-column="0" />
-          <folding>
-            <element signature="e#51#94#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/FRONT_END/src/service/login.service.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
@@ -1108,10 +1103,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/FRONT_END/src/app/login/login.component.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="208">
+        <state relative-caret-position="561">
           <caret line="33" column="52" lean-forward="false" selection-start-line="33" selection-start-column="52" selection-end-line="33" selection-end-column="52" />
           <folding>
             <element signature="e#0#79#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/FRONT_END/src/service/file.service.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="378">
+          <caret line="61" column="32" lean-forward="true" selection-start-line="61" selection-start-column="32" selection-end-line="61" selection-end-column="32" />
+          <folding>
+            <element signature="e#51#94#0" expanded="true" />
           </folding>
         </state>
       </provider>

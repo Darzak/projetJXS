@@ -55,11 +55,11 @@ export class FileService {
 
   // files de root
   getRoot(): Observable<File[]> {
-    console.log(this.url+"/getRoot");
+    /*console.log(this.url+"/getRoot");
     return this.http.get(this.url+"/getRoot")
      .map(this.extractFiles)
-     .catch(this.handleError);
-    //return Observable.of(files);
+     .catch(this.handleError);*/
+    return Observable.of(files);
   }
 
   delete(name: string): Observable<File> {
