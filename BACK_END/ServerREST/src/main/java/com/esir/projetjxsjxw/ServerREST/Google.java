@@ -4,6 +4,8 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Properties;
 
 import javax.ws.rs.GET;
@@ -17,6 +19,8 @@ import org.json.simple.JSONObject;
 
 @Path("/Google")
 public class Google {
+	
+	String _code ;
 		
 	String googleConfigFile = "#--------OAuth2.0 Client Configuration--------- \n" +
 			"scope=https://www.googleapis.com/auth/drive\n"+
@@ -32,7 +36,7 @@ public class Google {
 			"approval_prompt_value=auto\n"+
 			"access_type_key=access_type\n"+
 			"access_type_value=offline\n"+
-			"redirect_uri=http://localhost:4200\n"+
+			"redirect_uri=http://localhost:8080/ServerREST/myWebService/Google/getCode\n"+
 			"authentication_server_url=https://accounts.google.com/o/oauth2/auth\n"+
 			"token_endpoint_url=https://accounts.google.com/o/oauth2/token\n"+
 			"resource_server_url=https://www.googleapis.com/drive/v2/about\n"+
@@ -61,19 +65,32 @@ public class Google {
 		return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(res.toJSONString()).build();
 	}
 	
+	@GET
+	@Path("/getCode")
+	public Response getCode(@QueryParam("code") String code) {
+		_code=code;
+		URI location = null;
+		try {
+			location = new URI("http://localhost:4200");
+		} catch (URISyntaxException e) {
+			e.printStackTrace();
+		}
+		return Response.temporaryRedirect(location).build();
+	}
+	
 	
 	@SuppressWarnings("unchecked")
 	@GET
 	@Path("/file/getFolder")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getFilesFolder(@QueryParam("code") String code, @QueryParam("id") String id) {
+	public Response getFilesFolder(@QueryParam("id") String id) {
 		InputStream is;
 		try {
 			is = new ByteArrayInputStream(googleConfigFile.getBytes("UTF-8"));
 			Properties config = new Properties();
 			config.load(is);
 			GoogleClient googleClientWithCode = new GoogleClient(config);
-			googleClientWithCode.setAccessCode(code);
+			googleClientWithCode.setAccessCode(_code);
 			String accessToken = googleClientWithCode.getAccessToken().get("access_token");
 			googleClientWithCode.getOAuth2Details().setAccessToken(accessToken);
 			//TODO : si temps faire pagination avec token page
