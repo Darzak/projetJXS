@@ -21,11 +21,23 @@ export class LoginService {
       .catch(this.handleError)
       ;
   }
+  setCode(code:string){
+    console.log(this.connectionUrl + "/getCode?code="+code)
+    let res = this.http.get(this.connectionUrl + "/getCode?code="+code)
+      .map(this.extractData)
+      .catch(this.handleError);
+    //console.log(res);
+  }
 
   private getUrl(res: Response){
     let body = res.json();
     window.location.href = body.url;
     return body.url || { };
+  }
+
+  private extractData(res: Response) {
+    let body = res.json();
+    return body.data || { };
   }
 
   private handleError (error: Response | any) {

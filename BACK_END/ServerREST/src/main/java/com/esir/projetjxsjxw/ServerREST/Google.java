@@ -18,6 +18,8 @@ import org.json.simple.JSONObject;
 @Path("/Google")
 public class Google {
 	
+	String code;
+	
 	String googleConfigFile = "#--------OAuth2.0 Client Configuration--------- \n" +
 			"scope=https://www.googleapis.com/auth/drive\n"+
 			"#state=\n"+
@@ -65,7 +67,7 @@ public class Google {
 	@GET
 	@Path("/file/getRoot")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getRoot(@QueryParam("code") String code) {
+	public Response getRoot() {
 		InputStream is;
 		try {
 			is = new ByteArrayInputStream(googleConfigFile.getBytes("UTF-8"));
@@ -78,6 +80,26 @@ public class Google {
 			googleClientWithCode.setURLRequest("https://www.googleapis.com/drive/v2/files/root/children");
 			JSONObject files = new JSONObject(googleClientWithCode.getProtectedResource());
 			return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(files).build();
+		} catch (IOException e) {
+			JSONObject error = new JSONObject();
+			error.put("error", "internal error");
+			e.printStackTrace();
+			return Response.status(500).header("Access-Control-Allow-Origin", "*").entity(error).build();
+		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	@GET
+	@Path("/connection/getCode")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getCode(@QueryParam("code") String code) {
+		InputStream is;
+		try {
+			is = new ByteArrayInputStream(googleConfigFile.getBytes("UTF-8"));
+			Properties config = new Properties();
+			config.load(is);
+			this.code = code;
+			return Response.status(200).header("Access-Control-Allow-Origin", "*").build();
 		} catch (IOException e) {
 			JSONObject error = new JSONObject();
 			error.put("error", "internal error");

@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import 'rxjs/add/operator/switchMap';
 import {LoginService} from "../../service/login.service";
-import {FileService} from "../../service/file.service"
 
 
 @Component({
@@ -19,7 +18,7 @@ export class LoginComponent implements OnInit {
   code: string;
   mode = 'Observable';
 
-  constructor(private loginService : LoginService, private fileService : FileService) { }
+  constructor(private loginService : LoginService) { }
 
   ngOnInit() {
     let l = window.location.href;
@@ -30,7 +29,7 @@ export class LoginComponent implements OnInit {
     let i: number = urlToParse.indexOf("=");
     this.code = urlToParse.substr(i+1,urlToParse.length-i);
     console.log(this.code);
-    this.fileService.setCode(this.code);
+    this.loginService.setCode(this.code);
   }
 
   onConnect(drive: string){

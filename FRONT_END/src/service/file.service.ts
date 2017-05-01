@@ -15,17 +15,12 @@ import 'rxjs/add/operator/map';
 export class FileService {
 
   private url = 'http://localhost:8080/ServerREST/myWebService/Google/file';
-  private code: string;
 
   constructor (private http: Http){ }
 
   /*getFiles() : File[] {
     return files;
   }*/
-
-  setCode(code:string){
-    this.code=code;
-  }
 
   deleteFile(file: File/*, folder : Folder*/) : void {
       files.splice(files.indexOf(file),1);
@@ -60,8 +55,8 @@ export class FileService {
 
   // files de root
   getRoot(): Observable<File[]> {
-    console.log(this.url+"/getRoot?code=" + this.code);
-    return this.http.get(this.url+"/getRoot?code=" + this.code)
+    console.log(this.url+"/getRoot");
+    return this.http.get(this.url+"/getRoot")
      .map(this.extractFiles)
      .catch(this.handleError);
     //return Observable.of(files);
@@ -114,8 +109,6 @@ export class FileService {
     } else {
       errMsg = error.message ? error.message : error.toString();
     }
-
-    console.error(errMsg);
     return Observable.throw(errMsg);
   }
 
