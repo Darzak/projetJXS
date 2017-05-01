@@ -41,6 +41,9 @@ export class FileService {
   }
 
 
+
+
+
   delete(name: string): Observable<File> {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });

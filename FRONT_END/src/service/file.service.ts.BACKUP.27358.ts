@@ -41,6 +41,20 @@ export class FileService {
   }
 
 
+
+<<<<<<< HEAD
+
+=======
+  // files de root
+  getRoot(): Observable<File[]> {
+    /*console.log(this.url+"/getRoot");
+    return this.http.get(this.url+"/getRoot")
+     .map(this.extractFiles)
+     .catch(this.handleError);*/
+    return Observable.of(files);
+  }
+>>>>>>> e9469d9a31c138d070c0f6e090608fd9090c8e57
+
   delete(name: string): Observable<File> {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });

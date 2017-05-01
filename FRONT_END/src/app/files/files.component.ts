@@ -25,8 +25,8 @@ export class FilesComponent implements OnInit{
   }
 
   ngOnInit() : void {
-    this.getFiles();
-    this.getFolders();
+    this.getRootFiles();
+    this.getRootFolders();
   }
 
   rightClicked : Element;
@@ -82,17 +82,7 @@ export class FilesComponent implements OnInit{
     }
   }
 
-  //Uniquement répertoire courant
-  createFile(folder: Folder){
-    let f : File = {key: this.files.length,name: this.newName,taille: 0, isFolder: false, sharedList: []};
-    this.fileService.addFile(f,folder);
-  }
 
-  //Uniquement répertoire courant
-  createFolder(folder: Folder){
-    let f : Folder = {key: this.folders.length, name: this.newName,taille: 0,files: [], isFolder: true, sharedList: []};
-    this.folderService.addFolder(f,folder);
-  }
 
   onRemove(a : any):void {
     if(this.rightClicked != null){
@@ -116,7 +106,7 @@ export class FilesComponent implements OnInit{
       .subscribe(
       dir => this.files = dir,
       error =>  this.errorMessage = <any>error);
-    this.folderService.getFiles(folder)
+    this.folderService.getFolders(folder)
       .subscribe(
         dir => this.folders = dir,
         error =>  this.errorMessage = <any>error);
@@ -137,18 +127,54 @@ export class FilesComponent implements OnInit{
       this.path+= " > " + p ;
     }
   }
-  getFiles() {
+
+
+
+  /*
+   * Creates a file with the specified name via a post request then add the File to the File list
+   */
+  createFile(folder: Folder){
+    let f : File = {key: this.files.length,name: this.newName,taille: 0, isFolder: false, sharedList: []};
+    this.fileService.addFile(f,folder);
+
+    let dirName = folder.name;
+    let fileName = "TestCreate?"
+
+
+    this.fileService.create(dirName, fileName)
+      .subscribe(
+        file => this.files.push(file),
+        error => this.errorMessage = <any>error);
+  }
+
+  /*
+   * Creates a folder with the specified name via a post request then add the Folder to the Folder list
+   */
+  createFolder(folder: Folder){
+    let f : Folder = {key: this.folders.length, name: this.newName,taille: 0,files: [], isFolder: true, sharedList: []};
+    this.folderService.addFolder(f,folder);
+
+    let dirName = folder.name;
+    let folderName = "TestCreateFolder?"
+
+
+    this.folderService.create(dirName, folderName)
+      .subscribe(
+        folder => this.files.push(folder),
+        error => this.errorMessage = <any>error);
+  }
+
+  /*-- Methods to get data from root -- */
+  getRootFiles() {
     this.fileService.getRoot()
       .subscribe(
         files => this.files = files,
         error =>  this.errorMessage = <any>error);
   }
 
-  /*getFolders() : void {
-   this.folders = this.folderService.getFolders();
-   }*/
 
-  getFolders() {
+
+  getRootFolders() {
     this.folderService.getRoot()
       .subscribe(
         folders => this.folders = folders,
