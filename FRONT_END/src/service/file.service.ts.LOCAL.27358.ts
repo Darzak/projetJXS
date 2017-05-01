@@ -42,9 +42,6 @@ export class FileService {
 
 
 
-<<<<<<< HEAD
-
-=======
 
 
   delete(name: string): Observable<File> {

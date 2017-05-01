@@ -15,12 +15,10 @@ import 'rxjs/add/operator/map';
 export class FileService {
 
   private url = 'http://localhost:8080/ServerREST/myWebService/Google/file';
-  private URL_GETFILES = '/getFile';
-  private URL_CREATEFILE = '/create';
 
   constructor (private http: Http){ }
 
-  /*getRootFiles() : File[] {
+  /*getFiles() : File[] {
     return files;
   }*/
 
@@ -41,11 +39,28 @@ export class FileService {
   }
 
 
+  // files du dossier folder
+  getFiles(folder: Folder): Observable<File[]> {
+    /*return this.http.get(this.url+"/getFolder")
+      .map(this.extractFiles)
+      .catch(this.handleError);*/
+    let dir: File[] = [];
+    for(let f of folder.files){
+      if(!f.isFolder){
+        dir.push(<File> f);
+      }
+    }
+    return Observable.of(dir);
+  }
 
-<<<<<<< HEAD
-
-=======
-
+  // files de root
+  getRoot(): Observable<File[]> {
+    console.log(this.url+"/getRoot");
+    return this.http.get(this.url+"/getRoot")
+     .map(this.extractFiles)
+     .catch(this.handleError);
+    //return Observable.of(files);
+  }
 
   delete(name: string): Observable<File> {
     let headers = new Headers({ 'Content-Type': 'application/json' });
@@ -58,73 +73,31 @@ export class FileService {
 
 
 
-  /*
-   * Sends http post request with the name of the file to create
-   */
-  create(dirName : string , fileName: string): Observable<File> {
+  create(name: string): Observable<File> {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
 
-    return this.http.post(this.url+this.URL_CREATEFILE, { dirName , fileName }, options)
+    return this.http.post(this.url+"create", { name }, options)
       .map(this.extractData)
       .catch(this.handleError);
   }
 
 
-
-  /*
-   * Returns files du dossier folder
-    */
-  getFiles(folder: Folder): Observable<File[]> {
-
-    /*let params: URLSearchParams = new URLSearchParams();
-     params.set('foldername', folder.name);
-
-     return this.http.get(this.url+this.URL_GETFILES , { search: params })
-     .map(this.extractFiles)
-     .catch(this.handleError);
-     */
-
-    let dir: File[] = [];
-    for(let f of folder.files){
-      if(!f.isFolder){
-        dir.push(<File> f);
-      }
-    }
-    return Observable.of(dir);
-  }
-
-
-  /*
-   * Returns files de root
-   */
-  getRoot(): Observable<File[]> {
-    console.log(this.url+"/getRoot");
-    return this.http.get(this.url+"/getRoot")
-      .map(this.extractFiles)
-      .catch(this.handleError);
-    //return Observable.of(files);
-  }
-
-  /*-- Methods to use in http get or post requests--*/
-
-  /*
-   * Method to use with .map
-   */
   private extractFiles(res: Response) {
     let body = res.json();
     return body.data || { };
   }
 
+  private extractFolders(res: Response) {
+    let body = res.json();
+    return body.data || { };
+  }
 
   private extractData(res: Response) {
     let body = res.json();
     return body.data || { };
   }
 
-  /*
-   * Methods to use with .catch
-   */
   private handleError (error: Response | any) {
     // In a real world app, you might use a remote logging infrastructure
     let errMsg: string;

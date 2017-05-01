@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
     let i: number = urlToParse.indexOf("=");
     this.code = urlToParse.substr(i+1,urlToParse.length-i);
     console.log(this.code);
-    this.loginService.setCode(this.code);
+    this.loginService.setCode(this.code).subscribe();
   }
 
   onConnect(drive: string){
