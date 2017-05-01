@@ -17,7 +17,6 @@ export class FileService {
   private url = 'http://localhost:8080/ServerREST/myWebService/Google/file';
   private URL_GETFILES = '/getFile';
   private URL_CREATEFILE = '/create';
-
   constructor (private http: Http){ }
 
   /*getRootFiles() : File[] {
@@ -39,7 +38,6 @@ export class FileService {
   addShare(file: File, share: string){
     file.sharedList.push(share);
   }
-
 
   delete(name: string): Observable<File> {
     let headers = new Headers({ 'Content-Type': 'application/json' });
