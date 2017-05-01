@@ -12,7 +12,7 @@ import {el} from "@angular/platform-browser/testing/src/browser_util";
   selector: 'app-files',
   templateUrl: './files.component.html',
   styleUrls: ['./files.component.css'],
-  providers: [FileService, FolderService]
+  providers: [FileService, FolderService, ElementService]
 })
 
 export class FilesComponent implements OnInit{
