@@ -23,10 +23,9 @@ export class LoginService {
   }
   setCode(code:string){
     console.log(this.connectionUrl + "/getCode?code="+code)
-    let res = this.http.get(this.connectionUrl + "/getCode?code="+code)
+    return this.http.get(this.connectionUrl + "/getCode?code="+code)
       .map(this.extractData)
       .catch(this.handleError);
-    //console.log(res);
   }
 
   private getUrl(res: Response){
@@ -37,11 +36,12 @@ export class LoginService {
 
   private extractData(res: Response) {
     let body = res.json();
+    console.log("body"+body);
     return body.data || { };
   }
 
   private handleError (error: Response | any) {
-
+    console.log("aie");
     // In a real world app, you might use a remote logging infrastructure
     let errMsg: string;
 
@@ -52,7 +52,6 @@ export class LoginService {
     } else {
       errMsg = error.message ? error.message : error.toString();
     }
-
     console.error(errMsg);
     return Observable.throw(errMsg);
   }

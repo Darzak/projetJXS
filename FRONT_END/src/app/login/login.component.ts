@@ -22,7 +22,9 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     let l = window.location.href;
-    this.parse(l);
+    if(l!="http://localhost:4200/login"){
+      this.parse(l);
+    }
   }
 
   parse(urlToParse: string){

@@ -74,8 +74,10 @@ public class Google {
 			Properties config = new Properties();
 			config.load(is);
 			GoogleClient googleClientWithCode = new GoogleClient(config);
-			googleClientWithCode.setAccessCode(code);
+			googleClientWithCode.setAccessCode(this.code);
+			System.out.println(this.code);
 			String accessToken = googleClientWithCode.getAccessToken().get("access_token");
+			System.out.println(accessToken);
 			googleClientWithCode.getOAuth2Details().setAccessToken(accessToken);
 			googleClientWithCode.setURLRequest("https://www.googleapis.com/drive/v2/files/root/children");
 			JSONObject files = new JSONObject(googleClientWithCode.getProtectedResource());
