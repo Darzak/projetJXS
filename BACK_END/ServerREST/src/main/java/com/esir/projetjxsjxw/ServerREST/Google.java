@@ -17,9 +17,7 @@ import org.json.simple.JSONObject;
 
 @Path("/Google")
 public class Google {
-	
-	String code;
-	
+		
 	String googleConfigFile = "#--------OAuth2.0 Client Configuration--------- \n" +
 			"scope=https://www.googleapis.com/auth/drive\n"+
 			"#state=\n"+
@@ -63,25 +61,27 @@ public class Google {
 		return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(res.toJSONString()).build();
 	}
 	
+	
 	@SuppressWarnings("unchecked")
 	@GET
-	@Path("/file/getRoot")
+	@Path("/file/getFolder")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getRoot() {
+	public Response getFilesFolder(@QueryParam("code") String code, @QueryParam("id") String id) {
 		InputStream is;
 		try {
 			is = new ByteArrayInputStream(googleConfigFile.getBytes("UTF-8"));
 			Properties config = new Properties();
 			config.load(is);
 			GoogleClient googleClientWithCode = new GoogleClient(config);
-			googleClientWithCode.setAccessCode(this.code);
-			System.out.println(this.code);
+			googleClientWithCode.setAccessCode(code);
 			String accessToken = googleClientWithCode.getAccessToken().get("access_token");
-			System.out.println(accessToken);
 			googleClientWithCode.getOAuth2Details().setAccessToken(accessToken);
-			googleClientWithCode.setURLRequest("https://www.googleapis.com/drive/v2/files/root/children");
+			//TODO : si temps faire pagination avec token page
+			googleClientWithCode.setURLRequest("https://www.googleapis.com/drive/v2/files?maxResults=1000&orderBy=folder");
 			JSONObject files = new JSONObject(googleClientWithCode.getProtectedResource());
-			return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(files).build();
+			JSONObject res = new JSONObject();
+			res.put("items", files.get("items"));
+			return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(res).build();
 		} catch (IOException e) {
 			JSONObject error = new JSONObject();
 			error.put("error", "internal error");
@@ -90,25 +90,19 @@ public class Google {
 		}
 	}
 	
-	@SuppressWarnings("unchecked")
+	//TODO : 
 	@GET
-	@Path("/connection/getCode")
+	@Path("/file/createFile")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getCode(@QueryParam("code") String code) {
-		InputStream is;
-		try {
-			is = new ByteArrayInputStream(googleConfigFile.getBytes("UTF-8"));
-			Properties config = new Properties();
-			config.load(is);
-			System.out.println("code" + code);
-			this.code = code;
-			return Response.status(200).header("Access-Control-Allow-Origin", "*").build();
-		} catch (IOException e) {
-			JSONObject error = new JSONObject();
-			error.put("error", "internal error");
-			e.printStackTrace();
-			return Response.status(500).header("Access-Control-Allow-Origin", "*").entity(error).build();
-		}
+	public Response createFile( @QueryParam("code") String code, 
+								@QueryParam("id")   String id, 
+								@QueryParam("name") String name,
+								@QueryParam("type") String type ) {
+									
+		
+		return null;
+		
 	}
 	
+		
 }
