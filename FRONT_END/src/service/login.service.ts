@@ -55,6 +55,5 @@ export class LoginService {
     console.error(errMsg);
     return Observable.throw(errMsg);
   }
-
 }
 

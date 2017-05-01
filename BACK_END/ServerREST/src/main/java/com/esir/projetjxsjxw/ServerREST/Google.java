@@ -100,6 +100,7 @@ public class Google {
 			is = new ByteArrayInputStream(googleConfigFile.getBytes("UTF-8"));
 			Properties config = new Properties();
 			config.load(is);
+			System.out.println("code" + code);
 			this.code = code;
 			return Response.status(200).header("Access-Control-Allow-Origin", "*").build();
 		} catch (IOException e) {
