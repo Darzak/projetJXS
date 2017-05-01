@@ -4,6 +4,8 @@ import { Folder } from '../../model/folder';
 import {FileService} from "../../service/file.service";
 import {FolderService} from "../../service/folder.service";
 import { Element } from '../../model/element';
+import {ElementService} from "../../service/element.service";
+import {el} from "@angular/platform-browser/testing/src/browser_util";
 
 
 @Component({
@@ -19,14 +21,15 @@ export class FilesComponent implements OnInit{
   files : File[];
   folders : Folder[];
 
-  constructor(private fileService : FileService, private  folderService: FolderService) {
+  elements : Element[];
+
+  constructor(private elementService : ElementService, private fileService : FileService, private  folderService: FolderService) {
     this.paths.push("root");
     this.concatPath();
   }
 
   ngOnInit() : void {
-    this.getRootFiles();
-    this.getRootFolders();
+    this.getElements("root");
   }
 
   rightClicked : Element;
@@ -164,23 +167,41 @@ export class FilesComponent implements OnInit{
         error => this.errorMessage = <any>error);
   }
 
-  /*-- Methods to get data from root -- */
-  getRootFiles() {
-    this.fileService.getRoot()
+
+  /*-- FINAL --*/
+
+  /*
+   * Method to create file
+   */
+  createElement(userCode : string, dirId : string , elementName: string, elementType : string){
+
+    this.elementService.createElement(userCode, dirId, elementName, elementType)
       .subscribe(
-        files => this.files = files,
-        error =>  this.errorMessage = <any>error);
+        element => this.elements.push(element),
+        error => this.errorMessage = <any>error);
   }
 
 
+  /*
+   * Method to delete file
+   */
+  deleteElement(userCode : string, elementId : string ){
 
-  getRootFolders() {
-    this.folderService.getRoot()
+    this.elementService.deleteElement(userCode, elementId)
       .subscribe(
-        folders => this.folders = folders,
-        error =>  this.errorMessage = <any>error);
+        //TO DO : supprimer élément de la liste
+        element => this.elements.push(),
+        error => this.errorMessage = <any>error);
   }
 
-
+  /*
+   * Method to get files from server
+   */
+  getElements(id : string) {
+    this.elementService.getElements(id)
+      .subscribe(
+        elements => this.elements = elements,
+        error =>  this.errorMessage = <any>error);
+  }
 
 }
