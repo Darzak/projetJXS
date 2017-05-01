@@ -27,6 +27,18 @@ export class LoginService {
       .map(this.extractData)
       .catch(this.handleError);
   }
+  
+  getRoot(code): Observable<File[]> {
+    console.log('http://localhost:8080/ServerREST/myWebService/Google/file'+"/getRoot?code="+code);
+    return this.http.get('http://localhost:8080/ServerREST/myWebService/Google/file'+"/getRoot?code="+code)
+     .map(this.extractFiles)
+     .catch(this.handleError);
+    //return Observable.of(files);
+  }
+  private extractFiles(res: Response) {
+    let body = res.json();
+    return body.data || { };
+  }
 
   private getUrl(res: Response){
     let body = res.json();
