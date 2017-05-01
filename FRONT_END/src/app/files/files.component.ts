@@ -201,7 +201,7 @@ export class FilesComponent implements OnInit{
     this.elementService.getElements(id)
       .subscribe(
         elements => this.elements = elements,
-        error =>  this.errorMessage = <any>error);
-  }
+            error =>  this.errorMessage = <any>error);
+            }
 
 }

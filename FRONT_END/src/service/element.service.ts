@@ -5,6 +5,8 @@ import {Element} from "../model/element"
 
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map'
+import {Folder} from "../model/folder";
+import {File} from "../model/file";
 
 /**
  * Created by polivier on 01/05/17.
@@ -66,7 +68,30 @@ export class ElementService{
    */
   private extractElements(res: Response) {
     let body = res.json();
-    return body.items || { };
+    let elements : Element[];
+
+    for(let i = 0; i<body.length; i++){
+      if(body[i].mimeType == "application/vnd.google-apps.folder"){
+
+        let tmpElement = body[i];
+        let tmpFolder = new Folder();
+        tmpFolder.key = tmpElement.id;
+        tmpFolder.name = tmpElement.title;
+        elements.push(tmpElement);
+
+      }
+      else{
+        let tmpElement = body[i];
+        let tmpFile = new Folder();
+        tmpFile.key = tmpElement.id();
+        tmpFile.name = tmpElement.title();
+        elements.push(tmpFile);
+      }
+
+
+
+    }
+    return elements || { };
   }
 
   /*
@@ -74,6 +99,7 @@ export class ElementService{
    */
   private extractElement(res: Response) {
     let body = res.json();
+
     return body || { };
   }
 
