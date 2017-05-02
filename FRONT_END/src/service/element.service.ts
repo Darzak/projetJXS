@@ -96,10 +96,12 @@ export class ElementService{
     console.log(body.items);
     let elements : Element[] = [];
     for(let i = 0; i<body.items.length; i++){
+
       if(body.items[i].mimeType == "application/vnd.google-apps.folder"){
         //console.log(body.items[i].title);
         let tmpElement = body.items[i];
         let tmpFolder: Element = {key: tmpElement.id,name: tmpElement.title,isFolder : true, taille: "1",sharedList: [], parent : tmpElement.parents};
+        console.log("id " + tmpElement.id + " par " + tmpElement.parents[0]);
         elements.push(<Element>tmpFolder);
       }
       else{
