@@ -95,7 +95,7 @@ public class Google {
 			String accessToken = googleClientWithCode.getAccessToken().get("access_token");
 			googleClientWithCode.getOAuth2Details().setAccessToken(accessToken);
 			//TODO : si temps faire pagination avec token page
-			googleClientWithCode.setURLRequest("https://www.googleapis.com/drive/v2/files?maxResults=1000&orderBy=folder");
+			googleClientWithCode.setURLRequest("https://www.googleapis.com/drive/v2/files?maxResults=1000");
 			JSONObject files = new JSONObject(googleClientWithCode.getProtectedResource());
 			JSONObject res = new JSONObject();
 			res.put("items", files.get("items"));

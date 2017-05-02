@@ -22,8 +22,8 @@ export class ElementService{
   private URL_DELETEELEMENT = '/delete';
   private URL_COPYELEMENT ='/copy';
 
-  constructor (private http: Http){ }
 
+  constructor (private http: Http){ }
 
   /*
    * returns elements of root
