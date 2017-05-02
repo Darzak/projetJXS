@@ -41,7 +41,6 @@
       <span>Retour</span>
     </button>
   </div>
-
 </div>
 
 
@@ -67,6 +66,7 @@
              (contextmenu)="detectRightMouseClick($event,folder)">
           {{folder.name}}
         </div>
+        <file-details *ngIf="folder==selectedElement" [element]="selectedElement" (notify)='onCopy($event)' (remove)='onRemove($event)'></file-details>
       </div>
     </div>
   </div>
@@ -83,13 +83,12 @@
              (contextmenu)="detectRightMouseClick($event,file)">
           {{file.name}}
         </div>
+        <file-details *ngIf="file==selectedElement" [element]="selectedElement" (notify)='onCopy($event)' (remove)='onRemove($event)'></file-details>
       </div>
     </div>
   </div>
 </div>
 
-
-<file-details [element]="selectedElement" (notify)='onCopy($event)' (remove)='onRemove($event)'></file-details>
 
 <!--<div class="contextMenu" [ngStyle]="contextMenuPos" (appClickOutside)="closeContextMenu()">
   <button (click)="onRemove()" type="button" class="btn btn-danger">
