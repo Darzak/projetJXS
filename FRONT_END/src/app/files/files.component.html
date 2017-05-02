@@ -58,7 +58,7 @@
   <h3><span class="label label-default">Folders</span></h3>
   <div class="panel-body">
     <div class="row">
-      <div class="col-md-2" *ngFor="let folder of elements">
+      <div class="col-md-2" *ngFor="let folder of currentDirElements">
         <div *ngIf="folder.isFolder" class="folder"
              [class.selected]="folder === selectedElement"
              (click)="onSelect(folder)"
@@ -76,7 +76,7 @@
   <h3><span class="label label-default">Files</span></h3>
   <div class="panel-body">
     <div class="row">
-      <div class="col-md-2" *ngFor="let file of elements">
+      <div class="col-md-2" *ngFor="let file of currentDirElements">
         <div *ngIf="!file.isFolder" class="file-icon"
              [class.selected]="file === selectedElement"
              (click)="onSelect(file)"

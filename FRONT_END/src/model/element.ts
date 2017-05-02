@@ -6,10 +6,13 @@ export class Element {
   name: string;
   taille: string;
   isFolder: boolean;
-  sharedList: string[];
-  parent: string[];
 
-  constructor(key: string, name: string, taille: string, isFolder: boolean, sharedList: string[], parent: string[]) {
+
+
+  sharedList: string[];
+  parent: {id : string, isRoot: boolean};
+
+  constructor(key: string, name: string, taille: string, isFolder: boolean, sharedList: string[],parent: {id : string, isRoot: boolean}) {
     this.key = key;
     this.name = name;
     this.taille = taille;

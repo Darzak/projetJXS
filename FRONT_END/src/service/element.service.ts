@@ -93,25 +93,35 @@ export class ElementService{
    */
   private extractElements(res: Response) {
     let body = res.json();
-    console.log(body.items);
     let elements : Element[] = [];
+    console.log("ELEMENT SERVICE : extractElements()")
     for(let i = 0; i<body.items.length; i++){
+
+      let tmpElement = body.items[i];
+      let tmpParents = tmpElement.parents;
+
+      let tmpParent : {id : string, isRoot : boolean} = {id : "", isRoot : false};
+
+      if(tmpParents.length>=1) {
+        tmpParent.id = tmpParents[0].id;
+        tmpParent.isRoot = tmpParents[0].isRoot
+      }
+      else{
+        tmpParent.id = "undefined";
+      }
+
 
       if(body.items[i].mimeType == "application/vnd.google-apps.folder"){
         //console.log(body.items[i].title);
-        let tmpElement = body.items[i];
-        let tmpFolder: Element = {key: tmpElement.id,name: tmpElement.title,isFolder : true, taille: "1",sharedList: [], parent : tmpElement.parents};
-        console.log("id " + tmpElement.id + " par " + tmpElement.parents);
+        let tmpFolder: Element = {key: tmpElement.id,name: tmpElement.title,isFolder : true, taille: "1",sharedList: [], parent : tmpParent};
         elements.push(<Element>tmpFolder);
       }
       else{
-        let tmpElement = body.items[i];
-        let tmpFile: Element = {key: tmpElement.id,name: tmpElement.title,isFolder : false, taille: "1",sharedList: [], parent : tmpElement.parents};
-        //console.log(tmpFile);
+        let tmpFile: Element = {key: tmpElement.id,name: tmpElement.title,isFolder : false, taille: "1",sharedList: [], parent : tmpParent};
         elements.push(<Element>tmpFile);
       }
     }
-    console.log("tab"+elements.length);
+    console.log("SERVICE PARENTS RETURN");
     return elements || { };
   }
 
