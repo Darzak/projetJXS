@@ -33,7 +33,7 @@ export class ElementService{
     let params: URLSearchParams = new URLSearchParams();
     params.set('id', id);
     console.log("getElements");
-    return this.http.get(this.url+this.URL_GETELEMENTS, { search : params })
+    return this.http.get(this.url+this.URL_GETELEMENTS + "?id=" + id)
       .map(this.extractElements)
       .catch(this.handleError);
   }
@@ -93,7 +93,7 @@ export class ElementService{
    */
   private extractElements(res: Response) {
     let body = res.json();
-    //console.log(body.items);
+    console.log(body.items);
     let elements : Element[] = [];
     for(let i = 0; i<body.items.length; i++){
       if(body.items[i].mimeType == "application/vnd.google-apps.folder"){
