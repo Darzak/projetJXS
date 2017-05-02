@@ -22,18 +22,19 @@ export class FilesComponent implements OnInit {
   folders: Folder[];
 
   elements: Element[];
+  currentDirElements: Element[];
   processing : Element[];
 
 
   constructor(private elementService: ElementService, private fileService: FileService, private  folderService: FolderService) {
     this.paths.push("root");
-    this.keys.push("root");
-    this.currentDir = ("root");
     this.concatPath();
+    this.elements = [];
+    this.currentDirElements = [];
   }
 
   ngOnInit(): void {
-    this.getElements(this.currentDir);
+    this.getElements("root");
   }
 
   FOLDERTYPE = "application/vnd.google-apps.folder";
@@ -70,21 +71,20 @@ export class FilesComponent implements OnInit {
 
 
 
-
-
-
   /*-- FINAL --*/
   onComeBack() {
     if(this.paths.length>1){
-
       this.paths.pop();
       this.concatPath();
-      this.currentDir = this.keys.pop();
-      this.elementService.getElements(this.currentDir).subscribe(
+      this.keys.pop();
+      this.currentDir = this.keys[this.keys.length-1];
+      this.updateCurrentDir();
+      /*this.elementService.getElements(this.currentDir).subscribe(
         elements => console.log("RETOUR VERS LE FUTUR"),
-        error => this.errorMessage = <any>error);
+        error => this.errorMessage = <any>error);*/
 
     }
+    this.selectedElement = null;
   }
 
   onSelect(element: Element): void {
@@ -114,7 +114,7 @@ export class FilesComponent implements OnInit {
         this.copiedFile.taille,
         this.copiedFile.isFolder,
         this.copiedFile.sharedList,
-        []
+        this.copiedFile.parent
         );
 
       this.elements.push(pastedFile);
@@ -148,17 +148,21 @@ export class FilesComponent implements OnInit {
    * Method used to navigate through a folder
    */
   onOpen(folder: Element) {
+    console.log("ON OPEN" + folder.name);
     let parent = folder.key;
     let name = folder.name;
 
     this.paths.push(name);
     this.keys.push(parent);
     this.concatPath();
+    this.currentDir = parent;
+    this.updateCurrentDir();
+    this.selectedElement = null;
 
-    this.elementService.getElements(parent)
+    /*this.elementService.getElements(parent)
       .subscribe(
         dir => this.elements = dir,
-        error => this.errorMessage = <any>error);
+        error => this.errorMessage = <any>error);*/
 
   }
 
@@ -174,7 +178,7 @@ export class FilesComponent implements OnInit {
    */
   createFile() {
     console.log(this.newName + "fichier");
-    this.elements.push(new Element("", this.newName, "", false,[], []));
+    this.elements.push(new Element("", this.newName, "", false,[], undefined));
     this.createElement("fichier");
   }
 
@@ -183,7 +187,7 @@ export class FilesComponent implements OnInit {
    */
   createFolder() {
     console.log(this.newName + "dossier");
-    this.elements.push(new Element("", this.newName, "", true,[], []));
+    this.elements.push(new Element("", this.newName, "", true,[], undefined));
     this.createElement(this.FOLDERTYPE);
   }
 
@@ -208,10 +212,36 @@ export class FilesComponent implements OnInit {
     let el: Element[];
     this.elementService.getElements(id)
       .subscribe(
-        elements => this.elements = elements,
+        elements => this.initElements(elements),
         error => this.errorMessage = <any>error);
 
   }
 
+  initElements(elements: Element[]){
+    let id : string = "";
+    this.elements = elements;
+    for(let i = 0; i<this.elements.length; i++){
+      let element = this.elements[i];
+      if(element.parent.isRoot == true){
+        this.currentDirElements.push(element);
+        id = element.parent.id;
+      }
+    }
+    this.currentDir=id;
+    this.keys.push(this.currentDir);
+  }
+
+  updateCurrentDir(){
+    console.log("FILE COMPONENT : CURRENT DIR");
+    this.currentDirElements = [];
+    console.log("CURRENT DIR"+this.currentDir);
+
+    for(let i = 0; i<this.elements.length; i++){
+      let element = this.elements[i];
+      if(element.parent.id == this.currentDir){
+        this.currentDirElements.push(element);
+      }
+    }
+  }
 
 }
