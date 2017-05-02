@@ -113,11 +113,11 @@ export class ElementService{
 
       if(body.items[i].mimeType == "application/vnd.google-apps.folder"){
         //console.log(body.items[i].title);
-        let tmpFolder: Element = {key: tmpElement.id,name: tmpElement.title,isFolder : true, taille: "1",sharedList: [], parent : tmpParent};
+        let tmpFolder: Element = {key: tmpElement.id,name: tmpElement.title,isFolder : true, taille: "1",sharedList: [], parent : tmpParent,drives: ["google"]};
         elements.push(<Element>tmpFolder);
       }
       else{
-        let tmpFile: Element = {key: tmpElement.id,name: tmpElement.title,isFolder : false, taille: "1",sharedList: [], parent : tmpParent};
+        let tmpFile: Element = {key: tmpElement.id,name: tmpElement.title,isFolder : false, taille: "1",sharedList: [], parent : tmpParent,drives: ["google"]};
         elements.push(<Element>tmpFile);
       }
     }

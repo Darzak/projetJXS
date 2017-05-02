@@ -11,4 +11,5 @@ export class Folder {
   isFolder = true;
   sharedList: string[];
   parent: {id : string, isRoot: boolean};
+  drives: string[];
 }

@@ -10,6 +10,7 @@ export class File implements Element{
   isFolder = false;
   sharedList: string[];
   parent: {id : string, isRoot: boolean};
+  drives: string[];
 
 }
 

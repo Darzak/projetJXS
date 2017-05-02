@@ -114,7 +114,8 @@ export class FilesComponent implements OnInit {
         this.copiedFile.taille,
         this.copiedFile.isFolder,
         this.copiedFile.sharedList,
-        this.copiedFile.parent
+        this.copiedFile.parent,
+        this.copiedFile.drives
         );
 
       this.elements.push(pastedFile);
@@ -178,7 +179,7 @@ export class FilesComponent implements OnInit {
    */
   createFile() {
     console.log(this.newName + "fichier");
-    this.elements.push(new Element("", this.newName, "", false,[], undefined));
+    this.elements.push(new Element("", this.newName, "", false,[], undefined,["TODO : mettre un DRIVE"]));
     this.createElement("fichier");
   }
 
@@ -187,7 +188,7 @@ export class FilesComponent implements OnInit {
    */
   createFolder() {
     console.log(this.newName + "dossier");
-    this.elements.push(new Element("", this.newName, "", true,[], undefined));
+    this.elements.push(new Element("", this.newName, "", true,[], undefined,["TODO : mettre un DRIVE"]));
     this.createElement(this.FOLDERTYPE);
   }
 
