@@ -4,7 +4,17 @@
 export class Element {
   key: string;
   name: string;
-  taille : string;
+  taille: string;
   isFolder: boolean;
   sharedList: string[];
+  parent: string[];
+
+  constructor(key: string, name: string, taille: string, isFolder: boolean, sharedList: string[], parent: string[]) {
+    this.key = key;
+    this.name = name;
+    this.taille = taille;
+    this.isFolder = isFolder;
+    this.sharedList = sharedList;
+    this.parent = parent;
+  }
 }

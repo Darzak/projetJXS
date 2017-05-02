@@ -5,8 +5,9 @@
 
 /*CSS Folder*/
 .folder {
-  width: 150px;
-  height: 105px;
+  font-weight: normal;
+  width: 130px;
+  height: 85px;
   margin: 0 auto;
   margin-top: 50px;
   position: relative;
@@ -35,14 +36,13 @@
 /* file CSS*/
 .file-icon {
   font-family: Arial, Tahoma, sans-serif;
-  font-weight: 300;
+  text-weight: normal;
   display: inline-block;
   width: 70px;
   height: 90px;
   background: #018fef;
   position: relative;
   border-radius: 2px;
-  text-align: left;
   -webkit-font-smoothing: antialiased;
   text-align: center;
 }

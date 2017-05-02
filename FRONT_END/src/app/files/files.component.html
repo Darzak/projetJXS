@@ -1,72 +1,101 @@
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+      integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
 <h1>Mes fichiers</h1>
+
 <div class="row">
   <h2 class="col-md-2">{{path}}</h2>
-  <button (click)="onComeBack()" type="button" class="btn btn-warning">
-    <span>Retour</span>
-  </button>
+  <div class="col-md-10"></div>
 </div>
 
-<label>Nouveau nom: </label>
-<!--<input [(ngModel)]="newName" placeholder="Nom pour le nouveau fichier">-->
+<div class="row">
+
+  <div class="col-md-2">
+    <label>Nouveau nom: </label>
+    <input [(ngModel)]="newName" placeholder="Nom pour le nouveau fichier">
+
+  </div>
+  <div class="col-md-2 ">
+    <button type="button" class="btn btn-primary" (click)="createFile()">
+      <span>Nouveau fichier</span>
+    </button>
+  </div>
+
+  <div class="col-md-2">
+    <button type="button" class="btn btn-primary" (click)="createFolder()">
+      <span>Nouveau dossier</span>
+    </button>
+  </div>
+
+  <div class="col-md-2">
+    <button type="button" class="btn btn-primary" (click)="onPaste()">
+      <span>Coller le fichier</span>
+    </button>
+  </div>
+  <div class="col-md-2 .offset-md-2">
+    <button (click)="onComeBack()" type="button" class="btn btn-warning">
+      <span>Retour</span>
+    </button>
+  </div>
+
+</div>
+
+
+<!--<label>Nouveau nom: </label>
+<!--<input [(ngModel)]="newName" placeholder="Nom pour le nouveau fichier">-
 <button (click)="createFolder()" type="button" class="btn btn-success">
   <span>Nouveau dossier</span>
 </button>
 <button (click)="createFile()" type="button" class="btn btn-info">
   <span>Nouveau fichier</span>
-</button>
+</button>-->
 
-<div>
-  <!--TODO onPaste() prend répertoire courrant -->
-  <button type="button" class="btn btn-primary" (click)="onPaste()">
-    <span>Coller le fichier</span>
-  </button>
 
-  <div class="panel panel-default">
-    <h3><span class="label label-default">Folders</span></h3>
-    <div class="panel-body">
-      <div class="row">
-        <div class="col-md-2" *ngFor="let folder of elements" >
-          <div  *ngIf="folder.isFolder" class="folder"
-               [class.selected]="folder === selectedElement"
-               (click)="onSelect(folder)"
-               (dblclick)="onOpen(folder)"
-               (contextmenu)="detectRightMouseClick($event,folder)">
-            <h3>{{folder.name}}</h3>
-            {{folder.key}}
-          </div>
+<div class="panel panel-default">
+  <h3><span class="label label-default">Folders</span></h3>
+  <div class="panel-body">
+    <div class="row">
+      <div class="col-md-2" *ngFor="let folder of elements">
+        <div *ngIf="folder.isFolder" class="folder"
+             [class.selected]="folder === selectedElement"
+             (click)="onSelect(folder)"
+             (dblclick)="onOpen(folder)"
+             (contextmenu)="detectRightMouseClick($event,folder)">
+          {{folder.name}}
         </div>
       </div>
     </div>
   </div>
-
-  <div class="panel panel-default">
-    <h3><span class="label label-default">Files</span></h3>
-    <div class="panel-body">
-      <div class="row">
-        <div class="col-md-2" *ngFor="let file of elements" >
-          <div *ngIf="!file.isFolder" class="file-icon"
-               [class.selected]="file === selectedElement"
-               (click)="onSelect(file)"
-               (contextmenu)="detectRightMouseClick($event,file)">
-            <h3>{{file.name}}</h3>
-            {{file.key}}
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
 </div>
 
-<file-details [element]="selectedElement" (notify)='onCopy($event)'  (remove)='onRemove($event)'></file-details>
+<div class="panel panel-default">
+  <h3><span class="label label-default">Files</span></h3>
+  <div class="panel-body">
+    <div class="row">
+      <div class="col-md-2" *ngFor="let file of elements">
+        <div *ngIf="!file.isFolder" class="file-icon"
+             [class.selected]="file === selectedElement"
+             (click)="onSelect(file)"
+             (contextmenu)="detectRightMouseClick($event,file)">
+          {{file.name}}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-<div class="contextMenu" [ngStyle]="contextMenuPos" (appClickOutside)="closeContextMenu()">
+
+<file-details [element]="selectedElement" (notify)='onCopy($event)' (remove)='onRemove($event)'></file-details>
+
+<!--<div class="contextMenu" [ngStyle]="contextMenuPos" (appClickOutside)="closeContextMenu()">
   <button (click)="onRemove()" type="button" class="btn btn-danger">
     <span>Supprimer</span>
   </button>
   <button (click)="onCopy()" type="button" class="btn btn-info">
     <span>Copier</span>
   </button>
-</div>
+</div>-->

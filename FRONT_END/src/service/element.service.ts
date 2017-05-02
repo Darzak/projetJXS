@@ -20,6 +20,7 @@ export class ElementService{
   private URL_GETELEMENTS = '/getFolder';
   private URL_CREATEELEMENT = '/create';
   private URL_DELETEELEMENT = '/delete';
+  private URL_COPYELEMENT ='/copy';
 
   constructor (private http: Http){ }
 
@@ -35,19 +36,41 @@ export class ElementService{
     return this.http.get(this.url+this.URL_GETELEMENTS, { search : params })
       .map(this.extractElements)
       .catch(this.handleError);
-
-
   }
 
 
   /*
    * Sends http post request with the name of the file to create and the id of it's parent
    */
-  createElement(userCode : string, dirId : string , elementName: string, elementType : string): Observable<Element> {
-    let headers = new Headers({ 'Content-Type': 'application/json' });
-    let options = new RequestOptions({ headers: headers });
+  createElement(dirId : string , elementName: string, elementType : string): Observable<Element> {
+    //POST
+    /*let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });*/
 
-    return this.http.post(this.url+this.URL_CREATEELEMENT, JSON.stringify({code : userCode, id : dirId, name : elementName, type : elementType}), options)
+    //GET
+    let params: URLSearchParams = new URLSearchParams();
+    params.set('id', dirId);
+    params.set('name', elementName);
+    params.set('mimeType', elementType);
+
+    return this.http.post(this.url+this.URL_CREATEELEMENT, { search : params })
+      .map(this.extractElement)
+      .catch(this.handleError);
+  }
+
+  /*
+   * Sends http post request with the name of the file to create and the id of it's parent
+   */
+  copyElement(dirId : string ): Observable<Element> {
+    //POST
+    /*let headers = new Headers({ 'Content-Type': 'application/json' });
+     let options = new RequestOptions({ headers: headers });*/
+
+    //GET
+    let params: URLSearchParams = new URLSearchParams();
+    params.set('id', dirId);
+
+    return this.http.post(this.url+this.URL_COPYELEMENT, { search : params })
       .map(this.extractElement)
       .catch(this.handleError);
   }
@@ -55,11 +78,11 @@ export class ElementService{
   /*
    * Sends id of the file to delete
    */
-  deleteElement(userCode : string, elementId : string){
+  deleteElement(elementId : string){
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
 
-    return this.http.post(this.url+this.URL_DELETEELEMENT, JSON.stringify({code : userCode, id : elementId}), options)
+    return this.http.post(this.url+this.URL_DELETEELEMENT, JSON.stringify({id : elementId}), options)
       .map(this.extractElement)
       .catch(this.handleError);
   }
@@ -76,12 +99,12 @@ export class ElementService{
       if(body.items[i].mimeType == "application/vnd.google-apps.folder"){
         //console.log(body.items[i].title);
         let tmpElement = body.items[i];
-        let tmpFolder: Element = {key: tmpElement.id,name: tmpElement.title,isFolder : true, taille: "1",sharedList: []};
+        let tmpFolder: Element = {key: tmpElement.id,name: tmpElement.title,isFolder : true, taille: "1",sharedList: [], parent : tmpElement.parents};
         elements.push(<Element>tmpFolder);
       }
       else{
         let tmpElement = body.items[i];
-        let tmpFile: Element = {key: tmpElement.id,name: tmpElement.title,isFolder : false, taille: "1",sharedList: []};
+        let tmpFile: Element = {key: tmpElement.id,name: tmpElement.title,isFolder : false, taille: "1",sharedList: [], parent : tmpElement.parents};
         //console.log(tmpFile);
         elements.push(<Element>tmpFile);
       }

@@ -10,4 +10,5 @@ export class Folder implements Element{
   files : Element[];
   isFolder = true;
   sharedList: string[];
+  parent : string[];
 }

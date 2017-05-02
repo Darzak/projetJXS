@@ -9,6 +9,7 @@ export class File implements Element{
   taille : string;
   isFolder = false;
   sharedList: string[];
+  parent : string[];
 
 }
 
