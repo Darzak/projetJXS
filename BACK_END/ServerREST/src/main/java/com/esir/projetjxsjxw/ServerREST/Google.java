@@ -84,7 +84,7 @@ public class Google {
 	@GET
 	@Path("/file/getFolder")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getFilesFolder(@QueryParam("id") String id) {
+	public Response getFilesFolder() {
 		InputStream is;
 		try {
 			is = new ByteArrayInputStream(googleConfigFile.getBytes("UTF-8"));
