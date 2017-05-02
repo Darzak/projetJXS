@@ -1,10 +1,10 @@
 /**
  * Created by Johann Durand on 13/04/2017.
  */
-export interface Element {
-  key: number;
+export class Element {
+  key: string;
   name: string;
-  taille : number;
+  taille : string;
   isFolder: boolean;
   sharedList: string[];
 }

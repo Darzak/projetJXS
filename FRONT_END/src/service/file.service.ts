@@ -6,7 +6,7 @@ import {Headers, Http, RequestOptions, Response} from "@angular/http"
 
 import { File } from '../model/file';
 import { Folder } from '../model/folder';
-import { files } from '../app/mock-files';
+//import { files } from '../app/mock-files';
 import {Observable} from "rxjs";
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
@@ -24,12 +24,12 @@ export class FileService {
   }*/
 
   deleteFile(file: File/*, folder : Folder*/) : void {
-      files.splice(files.indexOf(file),1);
+    //  files.splice(files.indexOf(file),1);
   }
 
   addFile(file: File, folder : Folder) : void {
     if(!folder){
-      files.push(file);
+      //files.push(file);
     }else{
       folder.files.push(file);
     }

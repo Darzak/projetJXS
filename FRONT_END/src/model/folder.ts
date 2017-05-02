@@ -4,9 +4,9 @@
 import { Element } from './element';
 
 export class Folder implements Element{
-  key: number;
+  key: string;
   name: string;
-  taille : number;
+  taille : string;
   files : Element[];
   isFolder = true;
   sharedList: string[];

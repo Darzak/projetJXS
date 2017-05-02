@@ -69,26 +69,26 @@ export class FilesComponent implements OnInit{
   }
 
   onPaste(): void {
-    if(this.copiedFile != null){
+    /*if(this.copiedFile != null){
       this.pastedFile = this.copiedFile.constructor();
       this.pastedFile.name = this.copiedFile.name + " (copy)";
       this.pastedFile.taille = this.copiedFile.taille;
       this.pastedFile.isFolder = this.copiedFile.isFolder;
       this.pastedFile.sharedList = this.copiedFile.sharedList;
       if(this.pastedFile.isFolder){
-        this.pastedFile.key = this.folders.length;
+        this.pastedFile.key = "";
         this.folderService.addFolder(<Folder>this.pastedFile,this.folderService.getFolder(this.paths[this.paths.length-1]));
       }else{
-        this.pastedFile.key = this.files.length;
+        this.pastedFile.key = "";
         this.fileService.addFile(this.pastedFile,this.folderService.getFolder(this.paths[this.paths.length-1]));
       }
-    }
+    }*/
   }
 
 
 
   onRemove(a : any):void {
-    if(this.rightClicked != null){
+    /*if(this.rightClicked != null){
       if(this.rightClicked.isFolder){
         let folder = <Folder> this.rightClicked;
         this.folderService.deleteFolder(folder);
@@ -99,7 +99,7 @@ export class FilesComponent implements OnInit{
       this.closeContextMenu();
     }else{
       this.selectedElement=null;
-    }
+    }*/
   }
 
   onOpen(folder : Folder){
@@ -118,10 +118,10 @@ export class FilesComponent implements OnInit{
 
 
   onComeBack(){
-    if(this.paths.length>1){
+    /*if(this.paths.length>1){
       let f: Folder = this.folderService.getFolder(this.paths.pop());
       this.concatPath();
-    }
+    }*/
   }
 
   concatPath(){
@@ -137,7 +137,7 @@ export class FilesComponent implements OnInit{
    * Creates a file with the specified name via a post request then add the File to the File list
    */
   createFile(folder: Folder){
-    let f : File = {key: this.files.length,name: this.newName,taille: 0, isFolder: false, sharedList: []};
+    /*let f : File = {key: this.files.length,name: this.newName,taille: 0, isFolder: false, sharedList: []};
     this.fileService.addFile(f,folder);
 
     let dirName = folder.name;
@@ -147,14 +147,14 @@ export class FilesComponent implements OnInit{
     this.fileService.create(dirName, fileName)
       .subscribe(
         file => this.files.push(file),
-        error => this.errorMessage = <any>error);
+        error => this.errorMessage = <any>error);*/
   }
 
   /*
    * Creates a folder with the specified name via a post request then add the Folder to the Folder list
    */
   createFolder(folder: Folder){
-    let f : Folder = {key: this.folders.length, name: this.newName,taille: 0,files: [], isFolder: true, sharedList: []};
+   /* let f : Folder = {key: this.folders.length, name: this.newName,taille: 0,files: [], isFolder: true, sharedList: []};
     this.folderService.addFolder(f,folder);
 
     let dirName = folder.name;
@@ -164,7 +164,7 @@ export class FilesComponent implements OnInit{
     this.folderService.create(dirName, folderName)
       .subscribe(
         folder => this.files.push(folder),
-        error => this.errorMessage = <any>error);
+        error => this.errorMessage = <any>error);*/
   }
 
 
@@ -198,10 +198,14 @@ export class FilesComponent implements OnInit{
    * Method to get files from server
    */
   getElements(id : string) {
+    console.log("files")
+    let el : Element[];
     this.elementService.getElements(id)
       .subscribe(
-        elements => this.elements = elements,
-        error =>  this.errorMessage = <any>error);
+        elements => this.elements=elements,
+            error =>  this.errorMessage = <any>error);
+
   }
+
 
 }

@@ -4,7 +4,7 @@
 import { Injectable } from '@angular/core';
 
 import { Folder } from '../model/folder';
-import { folders } from '../app/mock-folders';
+//import { folders } from '../app/mock-folders';
 import {Observable} from "rxjs";
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
@@ -22,27 +22,27 @@ export class FolderService {
 
 
   deleteFolder(folder: Folder) : void {
-    folders.splice(folders.indexOf(folder),1);
+    //folders.splice(folders.indexOf(folder),1);
   }
 
   addFolder(folder: Folder, folderParent : Folder) : void {
-    if(!folderParent){
+  /*  if(!folderParent){
       folders.push(folder);
     }else{
       folderParent.files.push(folder);
-    }
+    }*/
   }
 
   addShare(folder: Folder, share: string){
     folder.sharedList.push(share);
   }
 
-  getFolder(name : string) : Folder {
-    for(let f of folders){
+  getFolder(name : string){
+   /* for(let f of folders){
         if(f.name == name){
           return f;
         }
-    }
+    }*/
   }
 
 
@@ -82,18 +82,6 @@ export class FolderService {
   }
 
 
-  /*
-   * returns folders of root
-   */
-  getRoot(): Observable<Folder[]> {
-
-    /*return this.http.get(this.url+"/getRoot")
-      .map(this.extractFolders)
-      .catch(this.handleError);
-      */
-
-    return Observable.of(folders);
-  }
 
   /*-- Methods to use in http get or post requests--*/
 
