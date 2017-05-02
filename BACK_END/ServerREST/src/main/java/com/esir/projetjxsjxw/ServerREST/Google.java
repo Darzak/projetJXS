@@ -20,7 +20,7 @@ import org.json.simple.JSONObject;
 @Path("/Google")
 public class Google {
 	
-	String _code ;
+	static String _code ;
 		
 	String googleConfigFile = "#--------OAuth2.0 Client Configuration--------- \n" +
 			"scope=https://www.googleapis.com/auth/drive\n"+
@@ -75,10 +75,11 @@ public class Google {
 		} catch (URISyntaxException e) {
 			e.printStackTrace();
 		}
+		System.out.println(_code);
 		return Response.temporaryRedirect(location).build();
 	}
 	
-	
+	//TODO : rajouter id dans la requete de google
 	@SuppressWarnings("unchecked")
 	@GET
 	@Path("/file/getFolder")
