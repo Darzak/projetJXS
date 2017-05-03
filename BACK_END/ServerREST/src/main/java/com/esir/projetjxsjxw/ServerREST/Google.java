@@ -108,6 +108,36 @@ public class Google {
 		}
 	}
 	
+		@SuppressWarnings("unchecked")
+		@GET
+		@Path("/getStorage")
+		@Produces(MediaType.APPLICATION_JSON)
+		public Response getStorage() {
+			InputStream is;
+			try {
+				is = new ByteArrayInputStream(googleConfigFile.getBytes("UTF-8"));
+				Properties config = new Properties();
+				config.load(is);
+				GoogleClient googleClientWithCode = new GoogleClient(config);
+				googleClientWithCode.setAccessCode(_code);
+				String accessToken = googleClientWithCode.getAccessToken().get("access_token");
+				googleClientWithCode.getOAuth2Details().setAccessToken(accessToken);
+				//TODO : si temps faire pagination avec token page
+				googleClientWithCode.setURLRequest("https://www.googleapis.com/drive/v2/about");
+				JSONObject info = new JSONObject(googleClientWithCode.getProtectedResource());
+				JSONObject res = new JSONObject();
+				res.put("storageTotal", info.get("quotaBytesTotal"));
+				res.put("storageUsed", info.get("quotaBytesUsed"));
+				return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(res).build();
+			} catch (IOException e) {
+				JSONObject error = new JSONObject();
+				error.put("error", "internal error");
+				e.printStackTrace();
+				return Response.status(500).header("Access-Control-Allow-Origin", "*").entity(error).build();
+			}
+		}
+	
+	
 	//TODO : 
 	@GET
 	@Path("/createFiles")

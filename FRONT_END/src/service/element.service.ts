@@ -20,7 +20,8 @@ export class ElementService{
   private URL_DROPBOX = 'http://localhost:8080/ServerREST/myWebService/DropBox';
 
   private URL_GETELEMENTSGOOGLE = '/getFolder';
-  private URL_GETELEMENTSDROPBOX = '/getFiles'
+  private URL_GETELEMENTSDROPBOX = '/getFiles';
+  private URL_GETSTORAGE = '/getStorage';
 
   private URL_CREATEELEMENT = '/create';
   private URL_DELETEELEMENT = '/delete';
@@ -55,7 +56,12 @@ export class ElementService{
     return this.http.get(this.URL_GOOGLE+this.URL_GETELEMENTSGOOGLE)
       .map(this.extractsElementsGoogle)
       .catch(this.handleError);
+  }
 
+  getStorageGoogle(): Observable<string[]> {
+    return this.http.get(this.URL_GOOGLE+this.URL_GETSTORAGE)
+      .map(this.extractElement)
+      .catch(this.handleError);
   }
 
 
@@ -133,11 +139,11 @@ export class ElementService{
 
       if(tmpElement.mimeType == "application/vnd.google-apps.folder"){
         //console.log(body.items[i].title);
-        let tmpFolder: Element = {key: tmpElement.id,name: tmpElement.title,isFolder : true, taille: "1",sharedList: [], parent : tmpParent,drives: ["google"]};
+        let tmpFolder: Element = {key: tmpElement.id,name: tmpElement.title,isFolder : true, taille: tmpElement.fileSize,sharedList: [], parent : tmpParent,drives: ["google"]};
         elements.push(<Element>tmpFolder);
       }
       else{
-        let tmpFile: Element = {key: tmpElement.id,name: tmpElement.title,isFolder : false, taille: "1",sharedList: [], parent : tmpParent,drives: ["google"]};
+        let tmpFile: Element = {key: tmpElement.id,name: tmpElement.title,isFolder : false, taille: tmpElement.fileSize,sharedList: [], parent : tmpParent,drives: ["google"]};
         elements.push(<Element>tmpFile);
       }
     }
