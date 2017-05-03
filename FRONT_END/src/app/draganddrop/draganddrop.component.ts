@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FileUploader } from 'ng2-file-upload';
+//import { FileUploader } from 'ng2-file-upload';
 
 // const URL = '/api/';
 const URL = 'https://evening-anchorage-3159.herokuapp.com/api/';
@@ -15,6 +15,6 @@ export class DraganddropComponent implements OnInit {
 
     ngOnInit() {
     }
-  public uploader:FileUploader = new FileUploader({url: URL});
+  //public uploader:FileUploader = new FileUploader({url: URL});
 
 }

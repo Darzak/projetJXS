@@ -16,8 +16,13 @@ import {observable} from "rxjs/symbol/observable";
 @Injectable()
 export class ElementService{
 
-  private url = 'http://localhost:8080/ServerREST/myWebService/Google/file';
-  private URL_GETELEMENTS = '/getFolder';
+  private URL_GOOGLE = 'http://localhost:8080/ServerREST/myWebService/Google';
+  private URL_DROPBOX = 'http://localhost:8080/ServerREST/myWebService/DropBox';
+
+  private URL_GETELEMENTSGOOGLE = '/getFiles';
+  private URL_GETELEMENTSDROPBOX = '/getFiles';
+  private URL_GETSTORAGE = '/getStorage';
+
   private URL_CREATEELEMENT = '/create';
   private URL_DELETEELEMENT = '/delete';
   private URL_COPYELEMENT ='/copy';
@@ -25,16 +30,37 @@ export class ElementService{
 
   constructor (private http: Http){ }
 
-  /*
-   * returns elements of root
-   */
-  getElements(id: string): Observable<Element[]> {
 
-    let params: URLSearchParams = new URLSearchParams();
-    params.set('id', id);
-    console.log("getElements");
-    return this.http.get(this.url+this.URL_GETELEMENTS + "?id=" + id)
-      .map(this.extractElements)
+
+  getElementsDropbox(id : string){
+    /*let params: URLSearchParams = new URLSearchParams();
+    params.set('path', "");*/
+
+    let path : string;
+    if(id == "root")
+      path = "?path="
+    else
+      path = "?path="+id
+
+    return  this.http.get(this.URL_DROPBOX+this.URL_GETELEMENTSDROPBOX+path)
+      .map(this.extractsElementsDropbox)
+      .catch(this.handleError);
+  }
+
+  /*
+   * returns elementsGoogle of root
+   */
+  getElementsGoogle(): Observable<Element[]> {
+
+    console.log("getElementsGoogle");
+    return this.http.get(this.URL_GOOGLE+this.URL_GETELEMENTSGOOGLE)
+      .map(this.extractsElementsGoogle)
+      .catch(this.handleError);
+  }
+
+  getStorageGoogle(): Observable<string[]> {
+    return this.http.get(this.URL_GOOGLE+this.URL_GETSTORAGE)
+      .map(this.extractElement)
       .catch(this.handleError);
   }
 
@@ -53,7 +79,7 @@ export class ElementService{
     params.set('name', elementName);
     params.set('mimeType', elementType);
 
-    return this.http.post(this.url+this.URL_CREATEELEMENT, { search : params })
+    return this.http.post(this.URL_GOOGLE+this.URL_CREATEELEMENT, { search : params })
       .map(this.extractElement)
       .catch(this.handleError);
   }
@@ -70,7 +96,7 @@ export class ElementService{
     let params: URLSearchParams = new URLSearchParams();
     params.set('id', dirId);
 
-    return this.http.post(this.url+this.URL_COPYELEMENT, { search : params })
+    return this.http.post(this.URL_GOOGLE+this.URL_COPYELEMENT, { search : params })
       .map(this.extractElement)
       .catch(this.handleError);
   }
@@ -82,7 +108,7 @@ export class ElementService{
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
 
-    return this.http.post(this.url+this.URL_DELETEELEMENT, JSON.stringify({id : elementId}), options)
+    return this.http.post(this.URL_GOOGLE+this.URL_DELETEELEMENT, JSON.stringify({id : elementId}), options)
       .map(this.extractElement)
       .catch(this.handleError);
   }
@@ -91,10 +117,10 @@ export class ElementService{
   /*
    * Method to use with .map to get data from JSON response
    */
-  private extractElements(res: Response) {
+  private extractsElementsGoogle(res: Response) {
     let body = res.json();
     let elements : Element[] = [];
-    console.log("ELEMENT SERVICE : extractElements()")
+    console.log("ELEMENT SERVICE : extractsElementsGoogle()" + body)
     for(let i = 0; i<body.items.length; i++){
 
       let tmpElement = body.items[i];
@@ -111,20 +137,45 @@ export class ElementService{
       }
 
 
-      if(body.items[i].mimeType == "application/vnd.google-apps.folder"){
-        //console.log(body.items[i].title);
-        let tmpFolder: Element = {key: tmpElement.id,name: tmpElement.title,isFolder : true, taille: "1",sharedList: [], parent : tmpParent,drives: ["google"]};
+      if(tmpElement.mimeType == "application/vnd.google-apps.folder"){
+        console.log(body.items[i].title + body.items[i].fileSize + tmpElement.quotaBytesUsed);
+        let tmpFolder: Element = {keys: {google : tmpElement.id, dropbox : undefined},name: tmpElement.title,isFolder : true, taille: tmpElement.fileSize,sharedList: [], parent : tmpParent,drives: ["google"]};
         elements.push(<Element>tmpFolder);
       }
       else{
-        let tmpFile: Element = {key: tmpElement.id,name: tmpElement.title,isFolder : false, taille: "1",sharedList: [], parent : tmpParent,drives: ["google"]};
+        let tmpFile: Element = {keys: {google : tmpElement.id, dropbox : undefined},name: tmpElement.title,isFolder : false, taille: tmpElement.fileSize,sharedList: [], parent : tmpParent,drives: ["google"]};
         elements.push(<Element>tmpFile);
       }
     }
-    console.log("SERVICE PARENTS RETURN");
+    console.log("SERVICE PARENTS RETURN GOOGLE");
     return elements || { };
   }
 
+  private extractsElementsDropbox(res: Response) {
+    console.log("ELEMENT SERVICE DROPBOX EXTRACT DEBUT");
+    let body = res.json();
+    let elements : Element[] = [];
+    for(let i = 0; i<body.entries.length; i++){
+
+      let tmpElement = body.entries[i];
+
+      let tmpParent : {id : string, isRoot : boolean} = {id : "", isRoot : false};
+
+      if(tmpElement[".tag"] == "folder"){
+        //console.log(body.items[i].title);
+        let tmpFolder: Element = {keys : {google : undefined, dropbox :tmpElement.path_display},name: tmpElement.name,isFolder : true, taille: "1",sharedList: [], parent : tmpParent,drives: ["dropbox"]};
+        elements.push(<Element>tmpFolder);
+        console.log("A FOLDER IN THE SERVICE : "+tmpElement.path_display)
+      }
+      else{
+        let tmpFile: Element = {keys : {google : undefined, dropbox :tmpElement.path_display},name: tmpElement.name,isFolder : false, taille: "1",sharedList: [], parent : tmpParent,drives: ["dropbox"]};
+        elements.push(<Element>tmpFile);
+        console.log("A FILE IN THE SERVICE : "+tmpElement.path_display)
+      }
+    }
+    console.log("SERVICE PARENTS RETURN DROPBOX");
+    return elements || { };
+  }
   /*
    * Method to use with .map to get data from JSON response
    */

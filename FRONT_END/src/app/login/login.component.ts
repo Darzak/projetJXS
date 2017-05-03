@@ -43,7 +43,7 @@ export class LoginComponent implements OnInit {
   }
 
   getUrl(drive: string) {
-    this.loginService.connectToDrive().subscribe(
+    this.loginService.connectToDrive(drive).subscribe(
                                       url => this.urlToAllow = url,
                                       error => this.errorMessage = <any>error)
   }
