@@ -9,6 +9,7 @@ import { LoginComponent } from './login/login.component';
 import { ClickOutsideDirective } from './click-outside.directive';
 import { FilesComponent } from './files/files.component';
 import { DriveComponent } from './drive/drive.component';
+import { DraganddropComponent } from './draganddrop/draganddrop.component';
 
 const appRoutes: Routes = [
   {path: 'files', component: FilesComponent },
@@ -25,7 +26,8 @@ const appRoutes: Routes = [
     LoginComponent,
     ClickOutsideDirective,
     FilesComponent,
-    DriveComponent
+    DriveComponent,
+    DraganddropComponent
   ],
   imports: [
     BrowserModule,
