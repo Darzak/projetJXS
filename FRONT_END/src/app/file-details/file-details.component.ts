@@ -14,27 +14,26 @@ import {Folder} from '../../model/folder';
 })
 export class FileDetailsComponent implements OnInit {
   shareOpen: boolean = false;
-  imagesSource: string[];
   newShare: string = '';
   @Input() element: Element;
   @Output() notify: EventEmitter<Element> = new EventEmitter<Element>();
   @Output() remove: EventEmitter<Element> = new EventEmitter<Element>();
 
   constructor(private fileService: FileService, private folderService: FolderService) {
-    this.imagesSource=[];
   }
 
   ngOnInit() {
   }
 
   getImageSource(): string[]{
+    let imagesSource: string[] = [];
     if (this.element.drives.indexOf("google")!=-1){
-      this.imagesSource.push("src/app/image/google_drive_icon.jpg");
+      imagesSource.push("src/app/image/google_drive_icon.jpg");
     }
     if (this.element.drives.indexOf("dropbox")!=-1){
-      this.imagesSource.push("src/app/image/dropbox_icon.png");
+      imagesSource.push("src/app/image/dropbox_icon.png");
     }
-    return this.imagesSource;
+    return imagesSource;
   }
 
   openShare() {

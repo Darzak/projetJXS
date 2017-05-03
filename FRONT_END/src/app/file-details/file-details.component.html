@@ -2,8 +2,8 @@
   <h3>
     {{element.name}} details :
   </h3>
-  <div class="row"> {{getImageSource()}}
-    <div class="col-md-2" *ngFor="let img of imagesSource">
+  <div class="row">
+    <div class="col-md-2" *ngFor="let img of getImageSource()">
       <img [src]="img"/>
     </div>
   </div>
