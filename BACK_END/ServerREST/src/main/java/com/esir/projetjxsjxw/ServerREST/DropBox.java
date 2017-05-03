@@ -7,7 +7,6 @@ import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.print.attribute.standard.Media;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -160,8 +159,30 @@ public class DropBox {
 	@GET
 	@Path("/rename")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response renameFile( @QueryParam("original_name") String original_name,
-								@QueryParam("new_name") 	 String new_name ) {
+	public Response renameFile( @QueryParam("input_path") String input_path,
+								@QueryParam("new_path")   String new_path ) throws JsonGenerationException, JsonMappingException, IOException {
+		
+		WebResource webResource = client.resource("https://api.dropboxapi.com/2/files/move");
+		
+		Map<String, Object> formDataToChangeName = new HashMap<String, Object>();
+		formDataToChangeName.put("from_path", input_path);
+		formDataToChangeName.put("autorename", true);
+		formDataToChangeName.put("allow_shared_folder", false);
+		formDataToChangeName.put("to_path", new_path);
+		
+		String headerArgs = new ObjectMapper().writeValueAsString(formDataToChangeName);
+		
+		ClientResponse clientResponse =
+				webResource
+				.header("Authorization", "Bearer " + token)
+				.header("Content-Type", "application/json")
+				.type(MediaType.APPLICATION_JSON_TYPE)
+				.entity(headerArgs, MediaType.APPLICATION_JSON)
+				.post(ClientResponse.class);
+		
+		System.out.println(clientResponse.getEntity(String.class));
+		
+		
 		return null;
 	}
 	
