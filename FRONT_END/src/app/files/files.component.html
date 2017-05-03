@@ -10,8 +10,7 @@
 <app-about></app-about>
 
 <div class="row">
-  <h2 class="col-md-2">{{path}}</h2>
-  <div class="col-md-10"></div>
+  <h2 class="col-md-10">{{path}}</h2>
 </div>
 
 <div class="row">
@@ -45,30 +44,59 @@
   </div>
 </div>
 
-
-<!--<label>Nouveau nom: </label>
-<!--<input [(ngModel)]="newName" placeholder="Nom pour le nouveau fichier">-
-<button (click)="createFolder()" type="button" class="btn btn-success">
-  <span>Nouveau dossier</span>
-</button>
-<button (click)="createFile()" type="button" class="btn btn-info">
-  <span>Nouveau fichier</span>
-</button>-->
-
-
 <div>
   <div class="gauche">
-    <div class="panel panel-default">
-      <h3><span class="label label-default">Folders</span></h3>
-      <div class="panel-body">
-        <div class="row">
-          <div class="col-md-4" *ngFor="let folder of currentDirElementsGoogle">
-            <div *ngIf="folder.isFolder" class="folder"
-                 [class.selected]="folder === selectedElement"
-                 (click)="onSelect(folder)"
-                 (dblclick)="onOpen(folder)"
-                 (contextmenu)="detectRightMouseClick($event,folder)">
-              {{folder.name}}
+    <h3><span class="label label-default">Folders</span></h3>
+    <div class="panel-body">
+      <div class="row">
+        <div *ngFor="let file of currentDirElementsGoogle">
+          <div class="panel-body" *ngIf="file.isFolder">
+            <div class="row">
+              <div class="col-sm-1">
+                <div class="folder"
+                     [class.selected]="file === selectedElement"
+                     (click)="onSelect(file)"
+                     (dblclick)="onOpen(file)"
+                     (contextmenu)="detectRightMouseClick($event,file)">
+                </div>
+              </div>
+              <div class="col-sm-1">
+                <div *ngFor="let img of getImageSource(file)">
+                  <div class="row">
+                    <div class="col-sm-1">
+                      <img [src]=img width="20" heigh="20">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-10" (click)="onSelect(file)"
+                   (dblclick)="onOpen(file)"
+                   (contextmenu)="detectRightMouseClick($event,file)">
+              {{file.name}}</div>
+            </div>
+          </div>
+          <div class="panel-body" *ngIf="!file.isFolder">
+            <div class="row">
+              <div class="col-sm-1">
+                <div class="file-icon"
+                     [class.selected]="file === selectedElement"
+                     (click)="onSelect(file)"
+                     (dblclick)="onOpen(file)"
+                     (contextmenu)="detectRightMouseClick($event,file)">
+                </div>
+              </div>
+              <div class="col-sm-1">
+                <div *ngFor="let img of getImageSource(file)">
+                  <div class="row">
+                    <div class="col-sm-1">
+                      <img [src]=img width="20" heigh="20">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-10" (click)="onSelect(file)"
+                   (contextmenu)="detectRightMouseClick($event,file)">
+              {{file.name}}</div>
             </div>
           </div>
         </div>
@@ -77,31 +105,6 @@
   </div>
   <div class="droite">
     <div *ngIf="selectedElement">
-      <file-details  [element]="selectedElement" (notify)='onCopy($event)' (remove)='onRemove($event)'></file-details>
-    </div>
-  </div>
-</div>
-
-<div>
-  <div class="gauche">
-    <div class="panel panel-default">
-      <h3><span class="label label-default">Files</span></h3>
-      <div class="panel-body">
-        <div class="row">
-          <div class="col-md-4" *ngFor="let file of currentDirElementsGoogle">
-            <div *ngIf="!file.isFolder" class="file-icon"
-                 [class.selected]="file === selectedElement"
-                 (click)="onSelect(file)"
-                 (contextmenu)="detectRightMouseClick($event,file)">
-              {{file.name}}
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="droite">
-    <div>
       <file-details  [element]="selectedElement" (notify)='onCopy($event)' (remove)='onRemove($event)'></file-details>
     </div>
   </div>

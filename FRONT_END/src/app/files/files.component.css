@@ -6,25 +6,22 @@
 /*CSS Folder*/
 .folder {
   font-weight: normal;
-  width: 130px;
-  height: 85px;
+  width: 45px;
+  height: 27px;
   margin: 0 auto;
-  margin-top: 50px;
   position: relative;
   background-color: #708090;
-  border-radius: 0 6px 6px 6px;
-  box-shadow: 4px 4px 7px rgba(0, 0, 0, 0.59);
   text-align: center;
 }
 
 .folder:before {
   content: '';
   width: 50%;
-  height: 12px;
+  height: 4px;
   border-radius: 0 20px 0 0;
   background-color: #708090;
   position: absolute;
-  top: -12px;
+  top: -4px;
   left: 0px;
 }
 
@@ -38,8 +35,8 @@
   font-family: Arial, Tahoma, sans-serif;
   text-weight: normal;
   display: inline-block;
-  width: 60px;
-  height: 85px;
+  width: 27px;
+  height: 35px;
   background: #018fef;
   position: relative;
   border-radius: 2px;
@@ -83,12 +80,12 @@
 }
 
 .gauche {
-  width: 70%;
+  width: 60%;
   height: 100%;
   float: left;
 }
 .droite {
-  width: 30%;
+  width: 40%;
   height: 100%;
   float: left;
 }
