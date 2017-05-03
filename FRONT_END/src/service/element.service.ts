@@ -120,7 +120,7 @@ export class ElementService{
   private extractsElementsGoogle(res: Response) {
     let body = res.json();
     let elements : Element[] = [];
-    console.log("ELEMENT SERVICE : extractsElementsGoogle()")
+    console.log("ELEMENT SERVICE : extractsElementsGoogle()" + body)
     for(let i = 0; i<body.items.length; i++){
 
       let tmpElement = body.items[i];
@@ -138,7 +138,7 @@ export class ElementService{
 
 
       if(tmpElement.mimeType == "application/vnd.google-apps.folder"){
-        //console.log(body.items[i].title);
+        console.log(body.items[i].title + body.items[i].fileSize + tmpElement.quotaBytesUsed);
         let tmpFolder: Element = {key: tmpElement.id,name: tmpElement.title,isFolder : true, taille: tmpElement.fileSize,sharedList: [], parent : tmpParent,drives: ["google"]};
         elements.push(<Element>tmpFolder);
       }

@@ -21,7 +21,7 @@ export class FilesComponent implements OnInit {
   mode = 'Observable';
   files: File[];
   folders: Folder[];
-  storage: string[];
+
 
   elementsGoogle: Element[];
   currentDirElementsGoogle: Element[];
@@ -52,6 +52,7 @@ export class FilesComponent implements OnInit {
 
   ngOnInit(): void {
     this.getElements("root");
+    console.log(this.currentDirElementsGoogle);
   }
 
   /*
@@ -204,13 +205,6 @@ export class FilesComponent implements OnInit {
     console.log(this.newName + "dossier");
     this.elementsGoogle.push(new Element("", this.newName, "", true,[], undefined,["TODO : mettre un DRIVE"]));
     this.createElement(this.FOLDERTYPE);
-  }
-
-  getStorageGoogle(){
-    this.elementService.getStorageGoogle()
-      .subscribe(
-        elements => console.log(elements),
-        error => this.errorMessage = <any>error);
   }
 
   /*
