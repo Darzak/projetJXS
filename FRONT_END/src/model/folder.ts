@@ -3,12 +3,13 @@
  */
 import { Element } from './element';
 
-export class Folder implements Element{
+export class Folder {
   key: string;
   name: string;
   taille : string;
   files : Element[];
   isFolder = true;
   sharedList: string[];
-  parent : string[];
+  parent: {id : string, isRoot: boolean};
+  drives: string[];
 }
