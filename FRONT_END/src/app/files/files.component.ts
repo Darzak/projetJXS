@@ -162,10 +162,16 @@ export class FilesComponent implements OnInit {
 
     if(folder.drives.indexOf("google")!=-1)
       this.updateCurrentDir();
-    else(folder.drives.indexOf("dropbox")!=-1){
+    else if(folder.drives.indexOf("dropbox")!=-1){
+        let thePath ="";
+        for(let i = 1; i<this.paths.length; i++){
+          thePath+="/"+this.paths[i];
+        }
+
+        this.getElementsDropbox(thePath);
 
     }
-      
+
     this.selectedElement = null;
 
     /*this.elementService.getElementsGoogle(parent)
