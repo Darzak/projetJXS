@@ -52,7 +52,6 @@ export class ElementService{
    */
   getElementsGoogle(): Observable<Element[]> {
 
-    console.log("getElementsGoogle");
     return this.http.get(this.URL_GOOGLE+this.URL_GETELEMENTSGOOGLE)
       .map(this.extractsElementsGoogle)
       .catch(this.handleError);
@@ -120,7 +119,6 @@ export class ElementService{
   private extractsElementsGoogle(res: Response) {
     let body = res.json();
     let elements : Element[] = [];
-    console.log("ELEMENT SERVICE : extractsElementsGoogle()" + body)
     for(let i = 0; i<body.items.length; i++){
 
       let tmpElement = body.items[i];
@@ -138,7 +136,6 @@ export class ElementService{
 
 
       if(tmpElement.mimeType == "application/vnd.google-apps.folder"){
-        console.log(body.items[i].title + body.items[i].fileSize + tmpElement.quotaBytesUsed);
         let tmpFolder: Element = {keys: {google : tmpElement.id, dropbox : undefined},name: tmpElement.title,isFolder : true, taille: tmpElement.fileSize,sharedList: [], parent : tmpParent,drives: ["google"]};
         elements.push(<Element>tmpFolder);
       }
@@ -147,12 +144,10 @@ export class ElementService{
         elements.push(<Element>tmpFile);
       }
     }
-    console.log("SERVICE PARENTS RETURN GOOGLE");
     return elements || { };
   }
 
   private extractsElementsDropbox(res: Response) {
-    console.log("ELEMENT SERVICE DROPBOX EXTRACT DEBUT");
     let body = res.json();
     let elements : Element[] = [];
     for(let i = 0; i<body.entries.length; i++){
@@ -165,15 +160,13 @@ export class ElementService{
         //console.log(body.items[i].title);
         let tmpFolder: Element = {keys : {google : undefined, dropbox :tmpElement.path_display},name: tmpElement.name,isFolder : true, taille: "1",sharedList: [], parent : tmpParent,drives: ["dropbox"]};
         elements.push(<Element>tmpFolder);
-        console.log("A FOLDER IN THE SERVICE : "+tmpElement.path_display)
+        console.log("DROPBOX : "+tmpElement.path_display)
       }
       else{
         let tmpFile: Element = {keys : {google : undefined, dropbox :tmpElement.path_display},name: tmpElement.name,isFolder : false, taille: "1",sharedList: [], parent : tmpParent,drives: ["dropbox"]};
         elements.push(<Element>tmpFile);
-        console.log("A FILE IN THE SERVICE : "+tmpElement.path_display)
       }
     }
-    console.log("SERVICE PARENTS RETURN DROPBOX");
     return elements || { };
   }
   /*
