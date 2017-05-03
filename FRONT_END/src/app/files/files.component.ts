@@ -165,7 +165,7 @@ export class FilesComponent implements OnInit {
     else(folder.drives.indexOf("dropbox")!=-1){
 
     }
-      
+
     this.selectedElement = null;
 
     /*this.elementService.getElementsGoogle(parent)
