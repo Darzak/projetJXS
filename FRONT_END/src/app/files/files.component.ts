@@ -5,9 +5,6 @@ import {FileService} from "../../service/file.service";
 import {FolderService} from "../../service/folder.service";
 import {Element} from '../../model/element';
 import {ElementService} from "../../service/element.service";
-import {el} from "@angular/platform-browser/testing/src/browser_util";
-import {element} from "protractor";
-import {isUndefined} from "util";
 
 
 @Component({
@@ -81,12 +78,12 @@ export class FilesComponent implements OnInit {
     this.rightClicked = null;
   }
 
-  getImageSource(element:Element): string[]{
+  getImageSource(element: Element): string[] {
     let imagesSource: string[] = [];
-    if (element.drives.indexOf("google")!=-1){
+    if (element.drives.indexOf("google") != -1) {
       imagesSource.push("/src/app/image/google_drive_icon.jpg");
     }
-    if (element.drives.indexOf("dropbox")!=-1){
+    if (element.drives.indexOf("dropbox") != -1) {
       imagesSource.push("/src/app/image/dropbox_icon.png");
     }
     return imagesSource;
@@ -292,14 +289,17 @@ export class FilesComponent implements OnInit {
   initElementsGoogle(elements: Element[]) {
     let id: string = "";
     this.elementsGoogle = elements;
+    let currentDirElements : Element [] = [];
+
     for (let i = 0; i < this.elementsGoogle.length; i++) {
       let element = this.elementsGoogle[i];
       if (element.parent.isRoot == true) {
         this.currentDirElementsGoogle.push(element);
+        currentDirElements.push(element);
         id = element.parent.id;
       }
     }
-    this.merge(elements, "google");
+    this.merge(currentDirElements, "google");
     this.googleKeys.push(id);
   }
 
@@ -314,7 +314,7 @@ export class FilesComponent implements OnInit {
   updateCurrentDir() {
     console.log("FILE COMPONENT : CURRENT DIR");
     this.currentDirElementsGoogle = [];
-    let tmpCurrentDirElementsGoogle
+    let tmpCurrentDirElementsGoogle : Element[] = [];
     let currentDir = this.googleKeys[this.googleKeys.length - 1];
 
     for (let i = 0; i < this.elementsGoogle.length; i++) {
