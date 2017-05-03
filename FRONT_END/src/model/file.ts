@@ -4,7 +4,7 @@
 import { Element } from './element';
 
 export class File implements Element{
-  key: string;
+  keys: {google : string, dropbox : string};
   name: string;
   taille : string;
   isFolder = false;
