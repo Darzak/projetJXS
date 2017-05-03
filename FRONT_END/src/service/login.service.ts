@@ -25,6 +25,7 @@ export class LoginService {
       connectionUrl = this.URL_GOOGLE
     }
     else if(drive.toString() == "dropbox"){
+      console.log("CONNECT TO DROPBOX");
       connectionUrl = this.URL_DROPBOX
     }
     return this.http.get(connectionUrl+this.URL_CONNECT)
@@ -46,7 +47,7 @@ export class LoginService {
   }
 
   private handleError (error: Response | any) {
-    console.log("aie");
+    console.log("ERROR LOGIN SERVICE");
     // In a real world app, you might use a remote logging infrastructure
     let errMsg: string;
 
