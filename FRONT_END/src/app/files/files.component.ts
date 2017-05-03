@@ -16,21 +16,23 @@ import {el} from "@angular/platform-browser/testing/src/browser_util";
 })
 
 export class FilesComponent implements OnInit {
+
   errorMessage: string;
   mode = 'Observable';
   files: File[];
   folders: Folder[];
 
-  elements: Element[];
-  currentDirElements: Element[];
+  elementsGoogle: Element[];
+  currentDirElementsGoogle: Element[];
+  currentDirElementsDropbox : Element[];
   processing : Element[];
 
 
   constructor(private elementService: ElementService, private fileService: FileService, private  folderService: FolderService) {
     this.paths.push("root");
     this.concatPath();
-    this.elements = [];
-    this.currentDirElements = [];
+    this.elementsGoogle = [];
+    this.currentDirElementsGoogle = [];
   }
 
   ngOnInit(): void {
@@ -47,7 +49,7 @@ export class FilesComponent implements OnInit {
   paths: string[] = new Array();
   path: string = '';
 
-  keys: string[] = new Array();
+  googleKeys: string[] = new Array();
   currentDir : string;
 
   newName: string = '';
@@ -76,11 +78,11 @@ export class FilesComponent implements OnInit {
     if(this.paths.length>1){
       this.paths.pop();
       this.concatPath();
-      this.keys.pop();
-      this.currentDir = this.keys[this.keys.length-1];
+      this.googleKeys.pop();
+      this.currentDir = this.googleKeys[this.googleKeys.length-1];
       this.updateCurrentDir();
-      /*this.elementService.getElements(this.currentDir).subscribe(
-        elements => console.log("RETOUR VERS LE FUTUR"),
+      /*this.elementService.getElementsGoogle(this.currentDir).subscribe(
+        elementsGoogle => console.log("RETOUR VERS LE FUTUR"),
         error => this.errorMessage = <any>error);*/
 
     }
@@ -118,7 +120,7 @@ export class FilesComponent implements OnInit {
         this.copiedFile.drives
         );
 
-      this.elements.push(pastedFile);
+      this.elementsGoogle.push(pastedFile);
 
       this.elementService.copyElement(this.copiedFile.key).subscribe(
         element => console.log("Fichier copié avec succés"),
@@ -132,7 +134,7 @@ export class FilesComponent implements OnInit {
   onRemove(element: Element) {
     let id = element.key;
 
-    this.elements.splice(this.elements.indexOf(element), 1);
+    this.elementsGoogle.splice(this.elementsGoogle.indexOf(element), 1);
     if (this.rightClicked != null) {
       this.rightClicked = null;
       this.closeContextMenu();
@@ -154,15 +156,21 @@ export class FilesComponent implements OnInit {
     let name = folder.name;
 
     this.paths.push(name);
-    this.keys.push(parent);
+    this.googleKeys.push(parent);
     this.concatPath();
     this.currentDir = parent;
-    this.updateCurrentDir();
+
+    if(folder.drives.indexOf("google")!=-1)
+      this.updateCurrentDir();
+    else(folder.drives.indexOf("dropbox")!=-1){
+
+    }
+      
     this.selectedElement = null;
 
-    /*this.elementService.getElements(parent)
+    /*this.elementService.getElementsGoogle(parent)
       .subscribe(
-        dir => this.elements = dir,
+        dir => this.elementsGoogle = dir,
         error => this.errorMessage = <any>error);*/
 
   }
@@ -179,7 +187,7 @@ export class FilesComponent implements OnInit {
    */
   createFile() {
     console.log(this.newName + "fichier");
-    this.elements.push(new Element("", this.newName, "", false,[], undefined,["TODO : mettre un DRIVE"]));
+    this.elementsGoogle.push(new Element("", this.newName, "", false,[], undefined,["TODO : mettre un DRIVE"]));
     this.createElement("fichier");
   }
 
@@ -188,7 +196,7 @@ export class FilesComponent implements OnInit {
    */
   createFolder() {
     console.log(this.newName + "dossier");
-    this.elements.push(new Element("", this.newName, "", true,[], undefined,["TODO : mettre un DRIVE"]));
+    this.elementsGoogle.push(new Element("", this.newName, "", true,[], undefined,["TODO : mettre un DRIVE"]));
     this.createElement(this.FOLDERTYPE);
   }
 
@@ -197,11 +205,9 @@ export class FilesComponent implements OnInit {
    */
   createElement(elementType: string) {
 
-
-
     this.elementService.createElement(this.currentDir, this.newName, elementType)
       .subscribe(
-        element => this.elements.push(element),
+        element => this.elementsGoogle.push(element),
         error => this.errorMessage = <any>error);
   }
 
@@ -209,38 +215,61 @@ export class FilesComponent implements OnInit {
    * Method to get files from server
    */
   getElements(id: string) {
-    console.log("files")
-    let el: Element[];
-    this.elementService.getElements(id)
-      .subscribe(
-        elements => this.initElements(elements),
-        error => this.errorMessage = <any>error);
+    //this.getElementsGoogle();
+    this.getElementsDropbox(id);
 
   }
 
-  initElements(elements: Element[]){
+  getElementsGoogle(){
+    console.log("files")
+    let el: Element[];
+    this.elementService.getElementsGoogle()
+      .subscribe(
+        elements => this.initElementsGoogle(elements),
+        error => this.errorMessage = <any>error);
+  }
+
+  getElementsDropbox(id : string){
+    console.log("GETELEMENTS DROPBOX");
+    let el: Element[];
+    this.elementService.getElementsDropbox(id)
+      .subscribe(
+        elements => this.initElementsDropbox(elements),
+        error => this.errorMessage = <any>error);
+  }
+
+
+
+  initElementsGoogle(elements: Element[]){
     let id : string = "";
-    this.elements = elements;
-    for(let i = 0; i<this.elements.length; i++){
-      let element = this.elements[i];
+    this.elementsGoogle = elements;
+    for(let i = 0; i<this.elementsGoogle.length; i++){
+      let element = this.elementsGoogle[i];
       if(element.parent.isRoot == true){
-        this.currentDirElements.push(element);
+        this.currentDirElementsGoogle.push(element);
         id = element.parent.id;
       }
     }
     this.currentDir=id;
-    this.keys.push(this.currentDir);
+    this.googleKeys.push(this.currentDir);
+  }
+
+  initElementsDropbox(elements: Element[]){
+    console.log("INITELEMENTS DROPBOX");
+    console.log("ELEMENTS" +elements);
+    let id : string = "";
+    this.currentDirElementsDropbox = elements;
   }
 
   updateCurrentDir(){
     console.log("FILE COMPONENT : CURRENT DIR");
-    this.currentDirElements = [];
+    this.currentDirElementsGoogle = [];
     console.log("CURRENT DIR"+this.currentDir);
 
-    for(let i = 0; i<this.elements.length; i++){
-      let element = this.elements[i];
+    for(let i = 0; i<this.elementsGoogle.length; i++){
+      let element = this.elementsGoogle[i];
       if(element.parent.id == this.currentDir){
-        this.currentDirElements.push(element);
+        this.currentDirElementsGoogle.push(element);
       }
     }
   }

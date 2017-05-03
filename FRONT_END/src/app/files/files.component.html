@@ -74,13 +74,14 @@
   <span>Nouveau fichier</span>
 </button>-->
 
+
 <div>
   <div class="gauche">
     <div class="panel panel-default">
       <h3><span class="label label-default">Folders</span></h3>
       <div class="panel-body">
         <div class="row">
-          <div class="col-md-4" *ngFor="let folder of currentDirElements">
+          <div class="col-md-4" *ngFor="let folder of currentDirElementsDropbox">
             <div *ngIf="folder.isFolder" class="folder"
                  [class.selected]="folder === selectedElement"
                  (click)="onSelect(folder)"
@@ -106,7 +107,7 @@
       <h3><span class="label label-default">Files</span></h3>
       <div class="panel-body">
         <div class="row">
-          <div class="col-md-4" *ngFor="let file of currentDirElements">
+          <div class="col-md-4" *ngFor="let file of currentDirElementsDropbox">
             <div *ngIf="!file.isFolder" class="file-icon"
                  [class.selected]="file === selectedElement"
                  (click)="onSelect(file)"
