@@ -2,7 +2,7 @@
  * Created by Johann Durand on 13/04/2017.
  */
 export class Element {
-  key: string;
+  keys: {google : string, dropbox : string};
   name: string;
   taille: string;
   isFolder: boolean;
@@ -14,7 +14,7 @@ export class Element {
   parent: {id : string, isRoot: boolean};
 
   constructor(key: string, name: string, taille: string, isFolder: boolean, sharedList: string[],parent: {id : string, isRoot: boolean}, drives: string[]) {
-    this.key = key;
+    this.keys = { google : undefined, dropbox : undefined};
     this.name = name;
     this.taille = taille;
     this.isFolder = isFolder;

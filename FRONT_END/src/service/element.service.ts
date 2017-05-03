@@ -139,11 +139,11 @@ export class ElementService{
 
       if(tmpElement.mimeType == "application/vnd.google-apps.folder"){
         console.log(body.items[i].title + body.items[i].fileSize + tmpElement.quotaBytesUsed);
-        let tmpFolder: Element = {key: tmpElement.id,name: tmpElement.title,isFolder : true, taille: tmpElement.fileSize,sharedList: [], parent : tmpParent,drives: ["google"]};
+        let tmpFolder: Element = {keys: {google : tmpElement.id, dropbox : undefined},name: tmpElement.title,isFolder : true, taille: tmpElement.fileSize,sharedList: [], parent : tmpParent,drives: ["google"]};
         elements.push(<Element>tmpFolder);
       }
       else{
-        let tmpFile: Element = {key: tmpElement.id,name: tmpElement.title,isFolder : false, taille: tmpElement.fileSize,sharedList: [], parent : tmpParent,drives: ["google"]};
+        let tmpFile: Element = {keys: {google : tmpElement.id, dropbox : undefined},name: tmpElement.title,isFolder : false, taille: tmpElement.fileSize,sharedList: [], parent : tmpParent,drives: ["google"]};
         elements.push(<Element>tmpFile);
       }
     }
@@ -163,12 +163,12 @@ export class ElementService{
 
       if(tmpElement[".tag"] == "folder"){
         //console.log(body.items[i].title);
-        let tmpFolder: Element = {key: tmpElement.path_display,name: tmpElement.name,isFolder : true, taille: "1",sharedList: [], parent : tmpParent,drives: ["dropbox"]};
+        let tmpFolder: Element = {keys : {google : undefined, dropbox :tmpElement.path_display},name: tmpElement.name,isFolder : true, taille: "1",sharedList: [], parent : tmpParent,drives: ["dropbox"]};
         elements.push(<Element>tmpFolder);
         console.log("A FOLDER IN THE SERVICE : "+tmpElement.path_display)
       }
       else{
-        let tmpFile: Element = {key: tmpElement.path_display,name: tmpElement.name,isFolder : false, taille: "1",sharedList: [], parent : tmpParent,drives: ["dropbox"]};
+        let tmpFile: Element = {keys : {google : undefined, dropbox :tmpElement.path_display},name: tmpElement.name,isFolder : false, taille: "1",sharedList: [], parent : tmpParent,drives: ["dropbox"]};
         elements.push(<Element>tmpFile);
         console.log("A FILE IN THE SERVICE : "+tmpElement.path_display)
       }
