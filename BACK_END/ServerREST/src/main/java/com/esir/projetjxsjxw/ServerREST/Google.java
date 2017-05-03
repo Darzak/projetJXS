@@ -82,9 +82,9 @@ public class Google {
 	//TODO : rajouter id dans la requete de google
 	@SuppressWarnings("unchecked")
 	@GET
-	@Path("/file/getFolder")
+	@Path("/getFiles")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getFilesFolder(@QueryParam("id") String id) {
+	public Response getFilesFolder() {
 		InputStream is;
 		try {
 			is = new ByteArrayInputStream(googleConfigFile.getBytes("UTF-8"));
@@ -110,7 +110,7 @@ public class Google {
 	
 	//TODO : 
 	@GET
-	@Path("/file/createFile")
+	@Path("/createFiles")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response createFile( @QueryParam("code") String code, 
 								@QueryParam("id")   String id, 

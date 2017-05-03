@@ -1,5 +1,6 @@
 package com.esir.projetjxsjxw.ServerREST;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -42,7 +43,7 @@ public class DropBox {
 	
 	
 	@GET
-	@Path("/connect")
+	@Path("/connection")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response connect() {
 		
@@ -105,7 +106,7 @@ public class DropBox {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getFiles(@QueryParam("path") String path) throws JsonGenerationException, JsonMappingException, IOException {
 		
-		Map<String, String> formDataToGetFiles = new HashMap<String, String>();
+		Map<String, Object> formDataToGetFiles = new HashMap<String, Object>();
 		formDataToGetFiles.put("path", path);
 		
 		WebResource webResource = client.resource("https://api.dropboxapi.com/2/files/list_folder");
@@ -122,6 +123,67 @@ public class DropBox {
 		String res = clientResponse.getEntity(String.class);
 		
 		return Response.status(200).entity(res).build();
+	}
+	
+	@GET
+	@Path("/createFiles")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response createFiles(@QueryParam("path") String path) throws JsonGenerationException, JsonMappingException, IOException {
+		
+		WebResource webResource = client.resource("https://content.dropboxapi.com/2/files/upload");
+		
+		Map<String, Object> formDataToCreateFile = new HashMap<String, Object>();
+		formDataToCreateFile.put("path", path);
+		formDataToCreateFile.put("autorename", true);
+		formDataToCreateFile.put("mute", false);
+		formDataToCreateFile.put("mode", "add");
+		
+		File fileToUpload = new File("empty_file");
+		fileToUpload.createNewFile();
+		
+		String headerArgs = new ObjectMapper().writeValueAsString(formDataToCreateFile);
+				
+		ClientResponse clientResponse =
+				webResource
+				.header("Authorization", "Bearer " + token)
+				.header("Dropbox-API-Arg", headerArgs)
+				.type(MediaType.APPLICATION_OCTET_STREAM_TYPE)
+				.entity(fileToUpload, MediaType.APPLICATION_OCTET_STREAM_TYPE)
+				.post(ClientResponse.class);
+		
+		String res = clientResponse.getEntity(String.class);
+				
+		return Response.status(200).entity(res).build();
+	}
+	
+	@GET
+	@Path("/rename")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response renameFile( @QueryParam("input_path") String input_path,
+								@QueryParam("new_path")   String new_path ) throws JsonGenerationException, JsonMappingException, IOException {
+		
+		WebResource webResource = client.resource("https://api.dropboxapi.com/2/files/move");
+		
+		Map<String, Object> formDataToChangeName = new HashMap<String, Object>();
+		formDataToChangeName.put("from_path", input_path);
+		formDataToChangeName.put("autorename", true);
+		formDataToChangeName.put("allow_shared_folder", false);
+		formDataToChangeName.put("to_path", new_path);
+		
+		String headerArgs = new ObjectMapper().writeValueAsString(formDataToChangeName);
+		
+		ClientResponse clientResponse =
+				webResource
+				.header("Authorization", "Bearer " + token)
+				.header("Content-Type", "application/json")
+				.type(MediaType.APPLICATION_JSON_TYPE)
+				.entity(headerArgs, MediaType.APPLICATION_JSON)
+				.post(ClientResponse.class);
+		
+		System.out.println(clientResponse.getEntity(String.class));
+		
+		
+		return null;
 	}
 	
 }
