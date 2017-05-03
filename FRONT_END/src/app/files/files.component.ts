@@ -50,6 +50,7 @@ export class FilesComponent implements OnInit {
     this.concatPath();
     this.elementsGoogle = [];
     this.currentDirElementsGoogle = [];
+    this.currentDirMerged = [];
   }
 
   ngOnInit(): void {
@@ -62,7 +63,7 @@ export class FilesComponent implements OnInit {
    */
   getElements(id: string) {
     this.getElementsGoogle();
-    //this.getElementsDropbox(id);
+    this.getElementsDropbox(id);
 
   }
 
@@ -216,7 +217,7 @@ export class FilesComponent implements OnInit {
               break;
           } // end of switch
         } // end else
-    } // end for 
+    } // end for
 
   }
 
