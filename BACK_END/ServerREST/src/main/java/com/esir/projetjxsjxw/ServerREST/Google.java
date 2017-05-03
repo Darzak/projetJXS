@@ -98,6 +98,7 @@ public class Google {
 			googleClientWithCode.setURLRequest("https://www.googleapis.com/drive/v2/files?maxResults=1000");
 			JSONObject files = new JSONObject(googleClientWithCode.getProtectedResource());
 			JSONObject res = new JSONObject();
+			System.out.println(res);
 			res.put("items", files.get("items"));
 			return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(res).build();
 		} catch (IOException e) {
@@ -128,6 +129,7 @@ public class Google {
 				JSONObject res = new JSONObject();
 				res.put("storageTotal", info.get("quotaBytesTotal"));
 				res.put("storageUsed", info.get("quotaBytesUsed"));
+				System.out.println(res);
 				return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(res).build();
 			} catch (IOException e) {
 				JSONObject error = new JSONObject();
