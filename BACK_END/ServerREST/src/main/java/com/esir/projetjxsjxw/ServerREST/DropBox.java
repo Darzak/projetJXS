@@ -1,13 +1,18 @@
 package com.esir.projetjxsjxw.ServerREST;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
@@ -27,7 +32,9 @@ import com.sun.jersey.api.client.ClientHandlerException;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.UniformInterfaceException;
 import com.sun.jersey.api.client.WebResource;
+import com.sun.jersey.core.header.FormDataContentDisposition;
 import com.sun.jersey.core.util.MultivaluedMapImpl;
+import com.sun.jersey.multipart.FormDataParam;
 
 @SuppressWarnings("unchecked")
 @Path("/DropBox")
@@ -59,10 +66,10 @@ public class DropBox {
 		WebResource webResource = client.resource("https://www.dropbox.com/1/oauth2/authorize").queryParams(formData);
 		if ( webResource.get(ClientResponse.class).getStatus() == 200 ) {
 			resSucces.put("url", webResource.getURI());
-			return Response.status(200).entity(resSucces).build();
+			return Response.status(200).entity(resSucces).header("Access-Control-Allow-Origin", "*").build();
 		}
 		else {
-			return Response.status(500).entity(resError).build();
+			return Response.status(500).entity(resError).header("Access-Control-Allow-Origin", "*").build();
 		}
 		
 		
@@ -122,7 +129,7 @@ public class DropBox {
 		
 		String res = clientResponse.getEntity(String.class);
 		
-		return Response.status(200).entity(res).build();
+		return Response.status(200).entity(res).header("Access-Control-Allow-Origin", "*").build();
 	}
 	
 	@GET
@@ -153,7 +160,7 @@ public class DropBox {
 		
 		String res = clientResponse.getEntity(String.class);
 				
-		return Response.status(200).entity(res).build();
+		return Response.status(200).entity(res).header("Access-Control-Allow-Origin", "*").build();
 	}
 	
 	@GET
@@ -180,10 +187,67 @@ public class DropBox {
 				.entity(headerArgs, MediaType.APPLICATION_JSON)
 				.post(ClientResponse.class);
 		
-		System.out.println(clientResponse.getEntity(String.class));
-		
-		
-		return null;
+		String res = clientResponse.getEntity(String.class);
+				
+		return Response.status(200).entity(res).header("Access-Control-Allow-Origin", "*").build();
 	}
+	
+	@POST
+	@Path("/uploadFiles")
+	@Consumes({MediaType.MULTIPART_FORM_DATA})
+	public Response uploadFile ( @FormDataParam("file") InputStream uploadedInputStream,
+								 @FormDataParam("file") FormDataContentDisposition fileDetail) throws Exception {
+	
+		writeToFile(uploadedInputStream, fileDetail.getFileName());
+		
+		WebResource webResource = client.resource("https://content.dropboxapi.com/2/files/upload");
+		
+		Map<String, Object> formDataToUploadFile = new HashMap<String, Object>();
+		formDataToUploadFile.put("path", "/test/test");
+		formDataToUploadFile.put("autorename", true);
+		formDataToUploadFile.put("mute", false);
+		formDataToUploadFile.put("mode", "add");
+		
+		File fileToUpload = new File(fileDetail.getFileName());
+		
+		String headerArgs = new ObjectMapper().writeValueAsString(formDataToUploadFile);
+				
+		ClientResponse clientResponse =
+				webResource
+				.header("Authorization", "Bearer " + token)
+				.header("Dropbox-API-Arg", headerArgs)
+				.type(MediaType.APPLICATION_OCTET_STREAM_TYPE)
+				.entity(fileToUpload, MediaType.APPLICATION_OCTET_STREAM_TYPE)
+				.post(ClientResponse.class);
+		
+		String res = clientResponse.getEntity(String.class);
+				
+		return Response.status(200).entity(res).header("Access-Control-Allow-Origin", "*").build();
+	}
+	
+	
+	private void writeToFile(InputStream uploadedInputStream,
+			String uploadedFileLocation) {
+
+		try {
+			OutputStream out = new FileOutputStream(new File(
+					uploadedFileLocation));
+			int read = 0;
+			byte[] bytes = new byte[1024];
+
+			out = new FileOutputStream(new File(uploadedFileLocation));
+			while ((read = uploadedInputStream.read(bytes)) != -1) {
+				out.write(bytes, 0, read);
+			}
+			out.flush();
+			out.close();
+		} catch (IOException e) {
+
+			e.printStackTrace();
+		}
+
+	}
+	
+
 	
 }
