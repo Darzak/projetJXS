@@ -21,6 +21,7 @@ export class FilesComponent implements OnInit {
   mode = 'Observable';
   files: File[];
   folders: Folder[];
+  storage: string[];
 
   elementsGoogle: Element[];
   currentDirElementsGoogle: Element[];
@@ -40,8 +41,6 @@ export class FilesComponent implements OnInit {
   }
 
   FOLDERTYPE = "application/vnd.google-apps.folder";
-
-
   rightClicked: Element;
   selectedElement: Element;
   copiedFile: Element;
@@ -54,8 +53,6 @@ export class FilesComponent implements OnInit {
 
   newName: string = '';
   contextMenuPos: Object = {};
-
-
 
   detectRightMouseClick($event, element: Element) {
     if ($event.which === 3) {
@@ -70,9 +67,6 @@ export class FilesComponent implements OnInit {
     this.rightClicked = null;
   }
 
-
-
-
   /*-- FINAL --*/
   onComeBack() {
     if(this.paths.length>1){
@@ -84,7 +78,6 @@ export class FilesComponent implements OnInit {
       /*this.elementService.getElementsGoogle(this.currentDir).subscribe(
         elementsGoogle => console.log("RETOUR VERS LE FUTUR"),
         error => this.errorMessage = <any>error);*/
-
     }
     this.selectedElement = null;
   }
@@ -167,18 +160,14 @@ export class FilesComponent implements OnInit {
         for(let i = 1; i<this.paths.length; i++){
           thePath+="/"+this.paths[i];
         }
-
         this.getElementsDropbox(thePath);
-
     }
 
     this.selectedElement = null;
-
     /*this.elementService.getElementsGoogle(parent)
       .subscribe(
         dir => this.elementsGoogle = dir,
         error => this.errorMessage = <any>error);*/
-
   }
 
   concatPath() {
@@ -206,11 +195,17 @@ export class FilesComponent implements OnInit {
     this.createElement(this.FOLDERTYPE);
   }
 
+  getStorageGoogle(){
+    this.elementService.getStorageGoogle()
+      .subscribe(
+        elements => console.log(elements),
+        error => this.errorMessage = <any>error);
+  }
+
   /*
    * Method to create file
    */
   createElement(elementType: string) {
-
     this.elementService.createElement(this.currentDir, this.newName, elementType)
       .subscribe(
         element => this.elementsGoogle.push(element),
@@ -221,8 +216,8 @@ export class FilesComponent implements OnInit {
    * Method to get files from server
    */
   getElements(id: string) {
-    //this.getElementsGoogle();
-    this.getElementsDropbox(id);
+    this.getElementsGoogle();
+    //this.getElementsDropbox(id);
 
   }
 
@@ -243,8 +238,6 @@ export class FilesComponent implements OnInit {
         elements => this.initElementsDropbox(elements),
         error => this.errorMessage = <any>error);
   }
-
-
 
   initElementsGoogle(elements: Element[]){
     let id : string = "";

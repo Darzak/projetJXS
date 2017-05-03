@@ -16,10 +16,10 @@ import {observable} from "rxjs/symbol/observable";
 @Injectable()
 export class ElementService{
 
-  private URL_GOOGLE = 'http://localhost:8080/ServerREST/myWebService/Google/file';
+  private URL_GOOGLE = 'http://localhost:8080/ServerREST/myWebService/Google';
   private URL_DROPBOX = 'http://localhost:8080/ServerREST/myWebService/DropBox';
 
-  private URL_GETELEMENTSGOOGLE = '/getFolder';
+  private URL_GETELEMENTSGOOGLE = '/getFiles';
   private URL_GETELEMENTSDROPBOX = '/getFiles';
   private URL_GETSTORAGE = '/getStorage';
 
