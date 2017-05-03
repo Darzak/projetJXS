@@ -10,7 +10,7 @@ import { ClickOutsideDirective } from './click-outside.directive';
 import { FilesComponent } from './files/files.component';
 import { DriveComponent } from './drive/drive.component';
 import { DraganddropComponent } from './draganddrop/draganddrop.component';
-//import { AboutComponent } from './about/about.component';
+import { AboutComponent } from './about/about.component';
 
 const appRoutes: Routes = [
   {path: 'files', component: FilesComponent },
@@ -29,7 +29,7 @@ const appRoutes: Routes = [
     FilesComponent,
     DriveComponent,
     DraganddropComponent,
-    //AboutComponent
+    AboutComponent
   ],
   imports: [
     BrowserModule,

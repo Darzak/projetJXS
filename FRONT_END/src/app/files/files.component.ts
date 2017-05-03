@@ -228,125 +228,104 @@ export class FilesComponent implements OnInit {
               break;
           } // end of switch
         } // end else
-    } // end for
+      } // end for
 
-  }
-
-}
-
-
-concatPath()
-{
-  this.path = ''
-  for (let p of this.paths) {
-    this.path += " > " + p;
-  }
-}
-
-/*
- * Method used to create simple file
- */
-createFile()
-{
-  console.log(this.newName + "fichier");
-  this.elementsGoogle.push(new Element("", this.newName, "", false, [], undefined, ["TODO : mettre un DRIVE"]));
-  this.createElement("fichier");
-}
-
-/*
- * Methods used to create folder
- */
-createFolder()
-{
-  console.log(this.newName + "dossier");
-  this.elementsGoogle.push(new Element("", this.newName, "", true, [], undefined, ["TODO : mettre un DRIVE"]));
-  this.createElement(this.FOLDERTYPE);
-}
-
-/*
- * Method to create file
- */
-createElement(elementType
-:
-string
-)
-{
-  this.elementService.createElement(this.googleKeys[this.googleKeys.length - 1], this.newName, elementType)
-    .subscribe(
-      element => this.elementsGoogle.push(element),
-      error => this.errorMessage = <any>error);
-}
-
-
-getElementsGoogle()
-{
-  console.log("files")
-  let el: Element[];
-  this.elementService.getElementsGoogle()
-    .subscribe(
-      elements => this.initElementsGoogle(elements),
-      error => this.errorMessage = <any>error);
-}
-
-getElementsDropbox(id
-:
-string
-)
-{
-  console.log("GETELEMENTS DROPBOX");
-  let el: Element[];
-  this.elementService.getElementsDropbox(id)
-    .subscribe(
-      elements => this.initElementsDropbox(elements),
-      error => this.errorMessage = <any>error);
-}
-
-initElementsGoogle(elements
-:
-Element[]
-)
-{
-  let id: string = "";
-  this.elementsGoogle = elements;
-  for (let i = 0; i < this.elementsGoogle.length; i++) {
-    let element = this.elementsGoogle[i];
-    if (element.parent.isRoot == true) {
-      this.currentDirElementsGoogle.push(element);
-      id = element.parent.id;
     }
+
   }
-  this.merge(elements, "google");
-  this.googleKeys.push(id);
-}
 
-initElementsDropbox(elements
-:
-Element[]
-)
-{
-  console.log("INITELEMENTS DROPBOX");
-  console.log("ELEMENTS" + elements);
 
-  this.merge(elements, "dropbox");
-  this.currentDirElementsDropbox = elements;
-}
-
-updateCurrentDir()
-{
-  console.log("FILE COMPONENT : CURRENT DIR");
-  this.currentDirElementsGoogle = [];
-  let tmpCurrentDirElementsGoogle
-  let currentDir = this.googleKeys[this.googleKeys.length - 1];
-
-  for (let i = 0; i < this.elementsGoogle.length; i++) {
-    let element = this.elementsGoogle[i];
-    if (element.parent.id == currentDir) {
-      this.currentDirElementsGoogle.push(element);
-      tmpCurrentDirElementsGoogle.push(element);
+  concatPath() {
+    this.path = ''
+    for (let p of this.paths) {
+      this.path += " > " + p;
     }
   }
 
-  this.merge(tmpCurrentDirElementsGoogle, "google");
-}
+  /*
+   * Method used to create simple file
+   */
+  createFile() {
+    console.log(this.newName + "fichier");
+    this.elementsGoogle.push(new Element("", this.newName, "", false, [], undefined, ["TODO : mettre un DRIVE"]));
+    this.createElement("fichier");
+  }
+
+  /*
+   * Methods used to create folder
+   */
+  createFolder() {
+    console.log(this.newName + "dossier");
+    this.elementsGoogle.push(new Element("", this.newName, "", true, [], undefined, ["TODO : mettre un DRIVE"]));
+    this.createElement(this.FOLDERTYPE);
+  }
+
+  /*
+   * Method to create file
+   */
+  createElement(elementType: string) {
+    this.elementService.createElement(this.googleKeys[this.googleKeys.length - 1], this.newName, elementType)
+      .subscribe(
+        element => this.elementsGoogle.push(element),
+        error => this.errorMessage = <any>error);
+  }
+
+
+  getElementsGoogle() {
+    console.log("files")
+    let el: Element[];
+    this.elementService.getElementsGoogle()
+      .subscribe(
+        elements => this.initElementsGoogle(elements),
+        error => this.errorMessage = <any>error);
+  }
+
+  getElementsDropbox(id: string) {
+    console.log("GETELEMENTS DROPBOX");
+    let el: Element[];
+    this.elementService.getElementsDropbox(id)
+      .subscribe(
+        elements => this.initElementsDropbox(elements),
+        error => this.errorMessage = <any>error);
+  }
+
+  initElementsGoogle(elements: Element[]) {
+    let id: string = "";
+    this.elementsGoogle = elements;
+    for (let i = 0; i < this.elementsGoogle.length; i++) {
+      let element = this.elementsGoogle[i];
+      if (element.parent.isRoot == true) {
+        this.currentDirElementsGoogle.push(element);
+        id = element.parent.id;
+      }
+    }
+    this.merge(elements, "google");
+    this.googleKeys.push(id);
+  }
+
+  initElementsDropbox(elements: Element[]) {
+    console.log("INITELEMENTS DROPBOX");
+    console.log("ELEMENTS" + elements);
+
+    this.merge(elements, "dropbox");
+    this.currentDirElementsDropbox = elements;
+  }
+
+  updateCurrentDir() {
+    console.log("FILE COMPONENT : CURRENT DIR");
+    this.currentDirElementsGoogle = [];
+    let tmpCurrentDirElementsGoogle
+    let currentDir = this.googleKeys[this.googleKeys.length - 1];
+
+    for (let i = 0; i < this.elementsGoogle.length; i++) {
+      let element = this.elementsGoogle[i];
+      if (element.parent.id == currentDir) {
+        this.currentDirElementsGoogle.push(element);
+        tmpCurrentDirElementsGoogle.push(element);
+      }
+    }
+
+    this.merge(tmpCurrentDirElementsGoogle, "google");
+  }
 
 }
