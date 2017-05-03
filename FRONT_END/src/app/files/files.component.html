@@ -7,7 +7,7 @@
 
 <h1>Mes fichiers</h1>
 
-<app-about></app-about>
+<!--<app-about></app-about>-->
 
 <div class="row">
   <h2 class="col-md-2">{{path}}</h2>
@@ -62,7 +62,7 @@
       <h3><span class="label label-default">Folders</span></h3>
       <div class="panel-body">
         <div class="row">
-          <div class="col-md-4" *ngFor="let folder of currentDirElementsGoogle">
+          <div class="col-md-4" *ngFor="let folder of currentDirMerged">
             <div *ngIf="folder.isFolder" class="folder"
                  [class.selected]="folder === selectedElement"
                  (click)="onSelect(folder)"
@@ -88,7 +88,7 @@
       <h3><span class="label label-default">Files</span></h3>
       <div class="panel-body">
         <div class="row">
-          <div class="col-md-4" *ngFor="let file of currentDirElementsGoogle">
+          <div class="col-md-4" *ngFor="let file of currentDirMerged">
             <div *ngIf="!file.isFolder" class="file-icon"
                  [class.selected]="file === selectedElement"
                  (click)="onSelect(file)"
