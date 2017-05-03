@@ -11,34 +11,27 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class LoginService {
 
-  private connectionUrl = 'http://localhost:8080/ServerREST/myWebService/Google/connection';
+  private URL_CONNECT = '/connection';
+  private URL_GOOGLE = 'http://localhost:8080/ServerREST/myWebService/Google';
+  private URL_DROPBOX = 'http://localhost:8080/ServerREST/myWebService/DropBox';
+
 
   constructor (private http: Http){ }
 
-  connectToDrive(): Observable<string>{
-    return this.http.get(this.connectionUrl)
+  connectToDrive(drive : string): Observable<string>{
+    let connectionUrl : string;
+
+    if(drive.toString() == "google"){
+      connectionUrl = this.URL_GOOGLE
+    }
+    else if(drive.toString() == "dropbox"){
+      connectionUrl = this.URL_DROPBOX
+    }
+    return this.http.get(connectionUrl+this.URL_CONNECT)
       .map(this.getUrl)
-      .catch(this.handleError)
-      ;
-  }
-  setCode(code:string){
-    console.log(this.connectionUrl + "/getCode?code="+code)
-    return this.http.get(this.connectionUrl + "/getCode?code="+code)
-      .map(this.extractData)
       .catch(this.handleError);
   }
-  
-  getRoot(code): Observable<File[]> {
-    console.log('http://localhost:8080/ServerREST/myWebService/Google/file'+"/getRoot?code="+code);
-    return this.http.get('http://localhost:8080/ServerREST/myWebService/Google/file'+"/getRoot?code="+code)
-     .map(this.extractFiles)
-     .catch(this.handleError);
-    //return Observable.of(files);
-  }
-  private extractFiles(res: Response) {
-    let body = res.json();
-    return body.data || { };
-  }
+
 
   private getUrl(res: Response){
     let body = res.json();
