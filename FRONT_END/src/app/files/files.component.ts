@@ -29,17 +29,6 @@ export class FilesComponent implements OnInit {
   processing : Element[];
 
 
-  constructor(private elementService: ElementService, private fileService: FileService, private  folderService: FolderService) {
-    this.paths.push("root");
-    this.concatPath();
-    this.elementsGoogle = [];
-    this.currentDirElementsGoogle = [];
-  }
-
-  ngOnInit(): void {
-    this.getElements("root");
-  }
-
   FOLDERTYPE = "application/vnd.google-apps.folder";
   rightClicked: Element;
   selectedElement: Element;
@@ -53,6 +42,28 @@ export class FilesComponent implements OnInit {
 
   newName: string = '';
   contextMenuPos: Object = {};
+
+  constructor(private elementService: ElementService, private fileService: FileService, private  folderService: FolderService) {
+    this.paths.push("root");
+    this.concatPath();
+    this.elementsGoogle = [];
+    this.currentDirElementsGoogle = [];
+  }
+
+  ngOnInit(): void {
+    this.getElements("root");
+  }
+
+  /*
+   * Method to get files from server
+   */
+  getElements(id: string) {
+    this.getElementsGoogle();
+    //this.getElementsDropbox(id);
+
+  }
+
+
 
   detectRightMouseClick($event, element: Element) {
     if ($event.which === 3) {
@@ -212,14 +223,6 @@ export class FilesComponent implements OnInit {
         error => this.errorMessage = <any>error);
   }
 
-  /*
-   * Method to get files from server
-   */
-  getElements(id: string) {
-    this.getElementsGoogle();
-    //this.getElementsDropbox(id);
-
-  }
 
   getElementsGoogle(){
     console.log("files")
