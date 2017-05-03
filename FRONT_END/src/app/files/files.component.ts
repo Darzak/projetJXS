@@ -159,7 +159,13 @@ export class FilesComponent implements OnInit {
     this.googleKeys.push(parent);
     this.concatPath();
     this.currentDir = parent;
-    this.updateCurrentDir();
+
+    if(folder.drives.indexOf("google")!=-1)
+      this.updateCurrentDir();
+    else(folder.drives.indexOf("dropbox")!=-1){
+
+    }
+      
     this.selectedElement = null;
 
     /*this.elementService.getElementsGoogle(parent)
@@ -224,7 +230,7 @@ export class FilesComponent implements OnInit {
   }
 
   getElementsDropbox(id : string){
-    console.log("GETELEMENTS DROPBOX")
+    console.log("GETELEMENTS DROPBOX");
     let el: Element[];
     this.elementService.getElementsDropbox(id)
       .subscribe(
@@ -249,6 +255,8 @@ export class FilesComponent implements OnInit {
   }
 
   initElementsDropbox(elements: Element[]){
+    console.log("INITELEMENTS DROPBOX");
+    console.log("ELEMENTS" +elements);
     let id : string = "";
     this.currentDirElementsDropbox = elements;
   }

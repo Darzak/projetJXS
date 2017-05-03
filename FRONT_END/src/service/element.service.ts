@@ -32,11 +32,10 @@ export class ElementService{
 
 
   getElementsDropbox(id : string){
+    /*let params: URLSearchParams = new URLSearchParams();
+    params.set('path', "");*/
 
-    let params: URLSearchParams = new URLSearchParams();
-    params.set('path', "");
-
-    return  this.http.get(this.URL_DROPBOX+this.URL_GETELEMENTSDROPBOX, { search : params })
+    return  this.http.get(this.URL_DROPBOX+this.URL_GETELEMENTSDROPBOX+"?path=")
       .map(this.extractsElementsDropbox)
       .catch(this.handleError);
   }
@@ -141,20 +140,22 @@ export class ElementService{
   }
 
   private extractsElementsDropbox(res: Response) {
+    console.log("ELEMENT SERVICE DROPBOX EXTRACT DEBUT");
     let body = res.json();
     let elements : Element[] = [];
     console.log("ELEMENT SERVICE : extractsElementsDropbox()")
-    for(let i = 0; i<body.items.length; i++){
+    for(let i = 0; i<body.entries.length; i++){
 
       let tmpElement = body.entries[i];
 
       let tmpParent : {id : string, isRoot : boolean} = {id : "", isRoot : false};
-
+      console.log("IS IT A FOLDER ? :"+tmpElement[".tag"])
 
       if(tmpElement[".tag"] == "folder"){
         //console.log(body.items[i].title);
-        let tmpFolder: Element = {key: tmpElement.id,name: tmpElement.name,isFolder : true, taille: "1",sharedList: [], parent : tmpParent,drives: ["dropbox"]};
+        let tmpFolder: Element = {key: tmpElement.path_display,name: tmpElement.name,isFolder : true, taille: "1",sharedList: [], parent : tmpParent,drives: ["dropbox"]};
         elements.push(<Element>tmpFolder);
+        console.log("A FOLDER IN THE SERVICE : "+tmpFolder)
       }
       else{
         let tmpFile: Element = {key: tmpElement.path_display,name: tmpElement.name,isFolder : false, taille: "1",sharedList: [], parent : tmpParent,drives: ["dropbox"]};
