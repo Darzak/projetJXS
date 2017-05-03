@@ -8,6 +8,27 @@
 <h1>Mes fichiers</h1>
 
 <div class="row">
+  <div class="col-md-5">
+    Google storage
+    <div class="progress">
+      <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" [attr.aria-valuenow]="progress" aria-valuemin="0" aria-valuemax ="100"
+           style="min-width: 2em;" [style.width]="50 + '%'">
+        {{50}}%
+      </div>
+    </div>
+  </div>
+  <div class="col-md-5">
+    Dropbox storage
+    <div class="progress">
+      <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" [attr.aria-valuenow]="progress" aria-valuemin="0" aria-valuemax ="100"
+           style="min-width: 2em;" [style.width]="50 + '%'">
+        {{50}}%
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
   <h2 class="col-md-2">{{path}}</h2>
   <div class="col-md-10"></div>
 </div>
@@ -60,7 +81,7 @@
       <h3><span class="label label-default">Folders</span></h3>
       <div class="panel-body">
         <div class="row">
-          <div class="col-md-2" *ngFor="let folder of currentDirElements">
+          <div class="col-md-4" *ngFor="let folder of currentDirElements">
             <div *ngIf="folder.isFolder" class="folder"
                  [class.selected]="folder === selectedElement"
                  (click)="onSelect(folder)"
@@ -72,12 +93,21 @@
         </div>
       </div>
     </div>
+  </div>
+  <div class="droite">
+    <div *ngIf="selectedElement">
+      <file-details  [element]="selectedElement" (notify)='onCopy($event)' (remove)='onRemove($event)'></file-details>
+    </div>
+  </div>
+</div>
 
+<div>
+  <div class="gauche">
     <div class="panel panel-default">
       <h3><span class="label label-default">Files</span></h3>
       <div class="panel-body">
         <div class="row">
-          <div class="col-md-2" *ngFor="let file of currentDirElements">
+          <div class="col-md-4" *ngFor="let file of currentDirElements">
             <div *ngIf="!file.isFolder" class="file-icon"
                  [class.selected]="file === selectedElement"
                  (click)="onSelect(file)"
@@ -90,11 +120,14 @@
     </div>
   </div>
   <div class="droite">
-    <file-details  [element]="selectedElement" (notify)='onCopy($event)' (remove)='onRemove($event)'></file-details>
+    <div>
+      <file-details  [element]="selectedElement" (notify)='onCopy($event)' (remove)='onRemove($event)'></file-details>
+    </div>
   </div>
 </div>
 
 
+<app-draganddrop></app-draganddrop>
 
 
 <div class="contextMenu" [ngStyle]="contextMenuPos" (appClickOutside)="closeContextMenu()">
