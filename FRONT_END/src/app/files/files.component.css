@@ -81,3 +81,14 @@
   position:absolute;
   display:none;
 }
+
+.gauche {
+  width: 70%;
+  height: 100%;
+  float: left;
+}
+.droite {
+  width: 30%;
+  height: 100%;
+  float: left;
+}

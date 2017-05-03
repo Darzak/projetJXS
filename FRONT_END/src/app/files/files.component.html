@@ -53,41 +53,47 @@
   <span>Nouveau fichier</span>
 </button>-->
 
-
-<div class="panel panel-default">
-  <h3><span class="label label-default">Folders</span></h3>
-  <div class="panel-body">
-    <div class="row">
-      <div class="col-md-2" *ngFor="let folder of currentDirElements">
-        <div *ngIf="folder.isFolder" class="folder"
-             [class.selected]="folder === selectedElement"
-             (click)="onSelect(folder)"
-             (dblclick)="onOpen(folder)"
-             (contextmenu)="detectRightMouseClick($event,folder)">
-          {{folder.name}}
+<div>
+  <div class="gauche">
+    <div class="panel panel-default">
+      <h3><span class="label label-default">Folders</span></h3>
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-md-2" *ngFor="let folder of currentDirElements">
+            <div *ngIf="folder.isFolder" class="folder"
+                 [class.selected]="folder === selectedElement"
+                 (click)="onSelect(folder)"
+                 (dblclick)="onOpen(folder)"
+                 (contextmenu)="detectRightMouseClick($event,folder)">
+              {{folder.name}}
+            </div>
+          </div>
         </div>
-        <file-details *ngIf="folder==selectedElement" [element]="selectedElement" (notify)='onCopy($event)' (remove)='onRemove($event)'></file-details>
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <h3><span class="label label-default">Files</span></h3>
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-md-2" *ngFor="let file of currentDirElements">
+            <div *ngIf="!file.isFolder" class="file-icon"
+                 [class.selected]="file === selectedElement"
+                 (click)="onSelect(file)"
+                 (contextmenu)="detectRightMouseClick($event,file)">
+              {{file.name}}
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-</div>
-
-<div class="panel panel-default">
-  <h3><span class="label label-default">Files</span></h3>
-  <div class="panel-body">
-    <div class="row">
-      <div class="col-md-2" *ngFor="let file of currentDirElements">
-        <div *ngIf="!file.isFolder" class="file-icon"
-             [class.selected]="file === selectedElement"
-             (click)="onSelect(file)"
-             (contextmenu)="detectRightMouseClick($event,file)">
-          {{file.name}}
-        </div>
-        <file-details *ngIf="file==selectedElement" [element]="selectedElement" (notify)='onCopy($event)' (remove)='onRemove($event)'></file-details>
-      </div>
-    </div>
+  <div class="droite">
+    <file-details  [element]="selectedElement" (notify)='onCopy($event)' (remove)='onRemove($event)'></file-details>
   </div>
 </div>
+
+
 
 
 <div class="contextMenu" [ngStyle]="contextMenuPos" (appClickOutside)="closeContextMenu()">
