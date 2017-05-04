@@ -168,12 +168,20 @@ export class FilesComponent implements OnInit {
         this.copiedFile.drives
       );
 
-      this.elementsGoogle.push(pastedFile);
+      this.currentDirMerged.push(pastedFile);
 
-      //TO DO CREATE ON ALL DRIVES
-      this.elementService.copyElement(this.copiedFile.keys.google).subscribe(
-        element => console.log("Fichier copié avec succés"),
-        error => this.errorMessage = <any>error);
+      //Si le dossier ouvert est présent sur google
+      if (pastedFile.drives.indexOf("google") != -1) {
+        this.elementService.copyElement(pastedFile.keys.google).subscribe(
+          element => alert("Fichier copié avec succés"),
+          error => this.errorMessage = <any>error);
+      }
+      //Si le dossier ouvert est présent sur dropbox
+      if (pastedFile.drives.indexOf("dropbox") != -1) {
+        this.elementService.copyElement(pastedFile.keys.dropbox).subscribe(
+          element => alert("Fichier copié avec succés"),
+          error => this.errorMessage = <any>error);
+      }
     }
   }
 
