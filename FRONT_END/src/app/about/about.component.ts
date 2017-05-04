@@ -8,19 +8,19 @@ import {AboutService} from "../../service/about.service";
   providers: [AboutService],
 })
 export class AboutComponent implements OnInit {
-  storage: string[];
   usedStorageGoogle: number;
   totalStorageGoogle: number;
   errorMessage: any;
   constructor(private aboutService: AboutService) { }
 
   ngOnInit() {
+    this.getStorageGoogle();
   }
 
   getStorageGoogle(){
      this.aboutService.getStorageGoogle()
      .subscribe(
-     elements => {console.log(elements)},
+     elements => {this.usedStorageGoogle = elements[0]; this.totalStorageGoogle = elements[1]},
      error => this.errorMessage = <any>error);
   }
 }
