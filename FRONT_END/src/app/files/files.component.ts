@@ -172,13 +172,13 @@ export class FilesComponent implements OnInit {
 
       //Si le dossier ouvert est présent sur google
       if (pastedFile.drives.indexOf("google") != -1) {
-        this.elementService.copyElement(pastedFile.keys.google).subscribe(
+        this.elementService.copyElementGoogle(pastedFile.keys.google,"").subscribe(
           element => alert("Fichier copié avec succés"),
           error => this.errorMessage = <any>error);
       }
       //Si le dossier ouvert est présent sur dropbox
       if (pastedFile.drives.indexOf("dropbox") != -1) {
-        this.elementService.copyElement(pastedFile.keys.dropbox).subscribe(
+        this.elementService.copyElementDropbox(pastedFile.keys.dropbox,this.dropboxKeys[this.dropboxKeys.length-1]).subscribe(
           element => alert("Fichier copié avec succés"),
           error => this.errorMessage = <any>error);
       }

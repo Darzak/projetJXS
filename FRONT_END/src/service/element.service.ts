@@ -92,16 +92,15 @@ export class ElementService{
   /*
    * Sends http post request with the name of the file to create and the id of it's parent
    */
-  copyElement(dirId : string ): Observable<Element> {
-    //POST
-    /*let headers = new Headers({ 'Content-Type': 'application/json' });
-     let options = new RequestOptions({ headers: headers });*/
+  copyElementGoogle(path : string, newpath: string){
+    return this.http.get(this.URL_GOOGLE+this.URL_COPYELEMENT+"?input_path=" + path +"&new_path="+ newpath)
+      .map(this.extractElement)
+      .catch(this.handleError);
+  }
 
-    //GET
-    let params: URLSearchParams = new URLSearchParams();
-    params.set('id', dirId);
-
-    return this.http.post(this.URL_GOOGLE+this.URL_COPYELEMENT, { search : params })
+  copyElementDropbox(path : string,newpath: string ){
+    console.log(this.URL_GOOGLE+this.URL_COPYELEMENT+"?input_path=" + path +"&new_path="+ newpath);
+    return this.http.get(this.URL_DROPBOX+this.URL_COPYELEMENT+"?input_path=" + path +"&new_path="+ newpath)
       .map(this.extractElement)
       .catch(this.handleError);
   }
