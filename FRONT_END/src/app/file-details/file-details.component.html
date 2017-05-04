@@ -21,7 +21,7 @@
   <button (click)="deleteFile()" type="button" class="btn btn-danger">
     <span>Supprimer ce fichier</span>
   </button>
-  <button (click)="copyFile()" type="button" class="btn btn-info">
+  <button (click)="copyFile()" type="button" class="btn "btn-success>
     <span>Copier ce fichier</span>
   </button>
   <div>
@@ -30,6 +30,12 @@
     </button>
     <span>{{link}}</span>
   </div>
+  <div>
+    <button (click)="download()" type="button" class="btn btn-success">
+      <span>Download !</span>
+    </button>
+  </div>
+
 
 </div>
 
