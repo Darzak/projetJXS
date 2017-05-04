@@ -1,4 +1,5 @@
-<form action="http://localhost:8080/ServerREST/myWebService/Dropbox/uploadFiles" method="post" enctype="multipart/form-data">
-  Selectionner un fichier : <input type="file" name="fichier">
-  <input type="submit" value="Envoyer" class="glyphicon glyphicon-upload">
+<form [action]=url method="post" enctype="multipart/form-data">
+  Selectionner un fichier : <input type="file" name="fichier" (change)="fileEvent($event)">
+  <span class="glyphicon glyphicon-upload"></span>
+  <input type="submit" value="Envoyer" (click)="getPath()" >
 </form>

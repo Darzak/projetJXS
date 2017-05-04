@@ -28,10 +28,10 @@ export class FileDetailsComponent implements OnInit {
   getImageSource(): string[]{
     let imagesSource: string[] = [];
     if (this.element.drives.indexOf("google")!=-1){
-      imagesSource.push("src/app/image/google_drive.jpg");
+      imagesSource.push("src/app/image/google_drive_icon.jpg");
     }
     if (this.element.drives.indexOf("dropbox")!=-1){
-      imagesSource.push("src/app/image/dropbox.png");
+      imagesSource.push("src/app/image/dropbox_icon.png");
     }
     return imagesSource;
   }

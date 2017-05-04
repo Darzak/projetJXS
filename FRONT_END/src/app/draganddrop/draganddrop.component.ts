@@ -12,19 +12,28 @@ const URL = 'https://evening-anchorage-3159.herokuapp.com/api/';
 export class DraganddropComponent implements OnInit {
     @Input() paths: string[];
     @Input() name: string;
+    url: string;
     constructor() { }
 
     ngOnInit() {
     }
 
     getPath (){
-      let res:string = "";
+      let res:string = "/";
       for(let p of this.paths){
-        res+=p;
+        if(p!="root"){
+          res+=p+"/";
+        }
       }
       res+=this.name;
-      console.log(res);
-      return res;
+      this.url="http://localhost:8080/ServerREST/myWebService/Dropbox/uploadFiles?path=";
+      this.url= this.url +res;
+      console.log(this.url);
+    }
+
+    fileEvent(fileInput: any){
+      let file = fileInput.target.files[0];
+      this.name = file.name;
     }
   //public uploader:FileUploader = new FileUploader({url: URL});
 
