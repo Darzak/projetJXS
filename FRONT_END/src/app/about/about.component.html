@@ -12,8 +12,8 @@
     <h3>Dropbox storage</h3>
     <div class="progress">
       <div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" [attr.aria-valuenow]="progress" aria-valuemin="0" aria-valuemax ="100"
-           style="min-width: 2em;" [style.width]="50 + '%'">
-        {{50}}%
+           style="min-width: 2em;" [style.width]="usedStorageDropbox/totalStorageDropbox*100 + '%'">
+        {{usedStorageDropbox/totalStorageDropbox*100 | number: '1.2-2'}}%
       </div>
     </div>
   </div>

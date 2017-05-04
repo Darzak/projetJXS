@@ -16,7 +16,6 @@ import {Folder} from '../../model/folder';
 export class FileDetailsComponent implements OnInit {
   name: string;
   errorMessage: any;
-  shareOpen: boolean = false;
   newShare: string = '';
   @Input() element: Element;
   @Input() paths: string[];
@@ -30,7 +29,7 @@ export class FileDetailsComponent implements OnInit {
     this.name=this.element.name;
   }
 
-  getPath (){
+  getPath(){
     let res:string = "/";
     for(let p of this.paths){
       if(p!="root"){
@@ -63,8 +62,11 @@ export class FileDetailsComponent implements OnInit {
     return imagesSource;
   }
 
-  openShare() {
-    this.shareOpen = !this.shareOpen;
+  share() {
+    let path = this.getPath();
+    this.elementDetailsService.shareDropbox(path+this.name).subscribe(
+      element => alert("Fichier renommé avec succés"),
+      error => this.errorMessage = <any>error)
   }
 
   addShare() {

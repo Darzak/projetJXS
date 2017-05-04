@@ -25,19 +25,9 @@
     <span>Copier ce fichier</span>
   </button>
   <div>
-    <button (click)="openShare()" type="button" class="btn btn-success">
-      <span>Partager</span>
+    <button (click)="share()" type="button" class="btn btn-success">
+      <span>Partager ! {{link}}</span>
     </button>
-    <div *ngIf="shareOpen">
-      Liste des personnes ayant accès:
-      <div *ngFor="let share of element.sharedList">
-        {{share}}
-      </div>
-      <input [(ngModel)]="newShare" placeholder="adresse mail">
-      <button (click)="addShare()" type="button" class="btn btn-success">
-        <span>Ajouter</span>
-      </button>
-    </div>
   </div>
 
 </div>

@@ -37,9 +37,8 @@ export class AboutService {
   }
 
   private extractElementDropbox(res: Response) {
-    console.log(res);
     let body = res.json();
-    return body || { };
+    return [body.used,body.allocation.allocated] || { };
   }
 
   private handleError (error: Response | any) {

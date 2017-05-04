@@ -76,14 +76,12 @@ export class ElementService{
   }
 
   createFileDropbox(path : string){
-    console.log("CREATE SERVICE DROPBOX -- ENVOI DE LA REQUETE"+path);
     return this.http.get(this.URL_DROPBOX+this.URL_CREATEELEMENTFILE+"?path="+path)
       .map(this.extractElement)
       .catch(this.handleError);
   }
 
   createFolderDropbox(path : string){
-    console.log("CREATE SERVICE DROPBOX -- ENVOI DE LA REQUETE"+path);
     return this.http.get(this.URL_DROPBOX+this.URL_CREATEELEMENTFOLDER+"?path="+path)
       .map(this.extractElement)
       .catch(this.handleError);

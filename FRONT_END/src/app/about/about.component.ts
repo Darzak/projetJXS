@@ -30,7 +30,7 @@ export class AboutComponent implements OnInit {
   getStorageDropbox(){
     this.aboutService.getStorageDropbox()
       .subscribe(
-        elements => {console.log(elements)},
+        elements => {this.usedStorageDropbox = elements[0]; this.totalStorageDropbox = elements[1]},
         error => this.errorMessage = <any>error);
   }
   //this.usedStorageDropbox = elements[0]; this.totalStorageDropbox = elements[1]

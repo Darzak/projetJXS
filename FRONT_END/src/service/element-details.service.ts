@@ -14,8 +14,9 @@ export class ElementDetailsService {
 
   private URL_GOOGLE = 'http://localhost:8080/ServerREST/myWebService/Google';
   private URL_DROPBOX = 'http://localhost:8080/ServerREST/myWebService/DropBox';
-  private URL_RENAMEELEMENT = "/rename"
-  private URL_DELETEELEMENT = "/downloadFiles"
+  private URL_RENAMEELEMENT = "/rename";
+  private URL_DOWNLOADELEMENT = "/download";
+  private URL_SHAREELEMENT = "/shared_link";
 
   constructor(private http: Http) {
   }
@@ -26,9 +27,16 @@ export class ElementDetailsService {
       .catch(this.handleError);
   }
 
+  shareDropbox(path: string){
+    console.log(this.URL_DROPBOX+this.URL_SHAREELEMENT+"?path=" + path );
+    return this.http.get(this.URL_DROPBOX+this.URL_SHAREELEMENT+"?path=" + path)
+      .map(this.extractElement)
+      .catch(this.handleError);
+  }
+
   download(path: string){
-      console.log(this.URL_DROPBOX+this.URL_DELETEELEMENT+"?path=" + path );
-      return this.http.get(this.URL_DROPBOX+this.URL_DELETEELEMENT+"?path=" + path)
+      console.log(this.URL_DROPBOX+this.URL_DOWNLOADELEMENT+"?path=" + path );
+      return this.http.get(this.URL_DROPBOX+this.URL_DOWNLOADELEMENT+"?path=" + path)
         .map(this.extractElement)
         .catch(this.handleError);
     }
