@@ -102,6 +102,26 @@ public class Google {
 		return Response.status(200).entity(res.get("items")).header("Access-Control-Allow-Origin", "*").build();
 	}
 	
+	
+	@GET
+	@Path("/getStorage")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getStorage() throws JSONException {
+		WebResource webResource = client.resource("https://www.googleapis.com/drive/v2/about");
+				
+		ClientResponse clientResponse = webResource
+			.header("Authorization", "Bearer " + _token)
+			.get(ClientResponse.class);
+		org.codehaus.jettison.json.JSONObject payload = new org.codehaus.jettison.json.JSONObject(clientResponse.getEntity(String.class));
+		System.out.println(payload.toString());
+		org.codehaus.jettison.json.JSONObject res = new org.codehaus.jettison.json.JSONObject();
+		res.put("quotaBytesTotal", payload.get("quotaBytesTotal"));
+		res.put("quotaBytesUsed", payload.get("quotaBytesUsed"));
+		System.out.println(res);
+		return Response.status(200).entity(res).header("Access-Control-Allow-Origin", "*").build();
+	}
+	
+	
 	//TODO : 
 	@GET
 	@Path("/createFiles")

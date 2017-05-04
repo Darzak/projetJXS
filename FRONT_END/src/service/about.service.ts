@@ -10,25 +10,24 @@ import {observable} from "rxjs/symbol/observable";
 
 
 @Injectable()
-export class ElementDetailsService {
+export class AboutService {
 
   private URL_GOOGLE = 'http://localhost:8080/ServerREST/myWebService/Google';
   private URL_DROPBOX = 'http://localhost:8080/ServerREST/myWebService/DropBox';
-  private URL_RENAMEELEMENT = "/rename"
+  private URL_GETSTORAGE = '/getStorage';
 
   constructor(private http: Http) {
   }
 
-  renameElementDropbox(path: string,newpath: string){
-    console.log(this.URL_GOOGLE+this.URL_RENAMEELEMENT+"?input_path=" + path +"&new_path="+ newpath);
-    return this.http.get(this.URL_DROPBOX+this.URL_RENAMEELEMENT+"?input_path=" + path +"&new_path="+ newpath)
+  getStorageGoogle(): Observable<number[]> {
+    return this.http.get(this.URL_GOOGLE+this.URL_GETSTORAGE)
       .map(this.extractElement)
       .catch(this.handleError);
   }
 
   private extractElement(res: Response) {
     let body = res.json();
-    return body || { };
+    return [body.quotaBytesUsed,body.quotaBytesTotal] || { };
   }
 
   private handleError (error: Response | any) {
