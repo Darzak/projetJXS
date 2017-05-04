@@ -21,10 +21,8 @@ export class FilesComponent implements OnInit {
   files: File[];
   folders: Folder[];
 
-
+  //Contains all the elements from google
   elementsGoogle: Element[];
-  currentDirElementsGoogle: Element[];
-  currentDirElementsDropbox: Element[];
   currentDirMerged: Element [];
   processing: Element[];
 
@@ -38,21 +36,21 @@ export class FilesComponent implements OnInit {
   path: string = '';
 
   googleKeys: string[] = new Array();
+  dropboxKeys: string[] = new Array();
 
   newName: string = '';
   contextMenuPos: Object = {};
 
   constructor(private elementService: ElementService, private fileService: FileService, private  folderService: FolderService) {
     this.paths.push("root");
+    this.dropboxKeys.push("root");
     this.concatPath();
     this.elementsGoogle = [];
-    this.currentDirElementsGoogle = [];
     this.currentDirMerged = [];
   }
 
   ngOnInit(): void {
     this.getElements("root");
-    console.log(this.currentDirElementsGoogle);
   }
 
   /*
@@ -89,19 +87,55 @@ export class FilesComponent implements OnInit {
     return imagesSource;
   }
 
+  update() {
+    this.currentDirMerged = [];
+    let dropboxLength: number = this.dropboxKeys.length;
+    let googleLength: number = this.googleKeys.length;
+    
+    if (dropboxLength == googleLength) {
+      this.updateDropBox();
+      this.updateGoogle()
+    }
+    else if (dropboxLength > googleLength) {
+      this.updateDropBox();
+    }
+    else if (googleLength > dropboxLength) {
+      this.updateGoogle();
+    }
+  }
+
   /*-- FINAL --*/
   onComeBack() {
+
     if (this.paths.length > 1) {
+
       this.paths.pop();
       this.concatPath();
-      this.googleKeys.pop();
-      this.updateCurrentDir();
-      /*this.elementService.getElementsGoogle(this.currentDir).subscribe(
-       elementsGoogle => console.log("RETOUR VERS LE FUTUR"),
-       error => this.errorMessage = <any>error);*/
+
+      let dropboxLength: number = this.dropboxKeys.length;
+      let googleLength: number = this.googleKeys.length;
+
+      console.log("ON COME BACK [LENGTH] DROPBOX :" + dropboxLength + "--- GOOGLE :" + googleLength);
+      if (dropboxLength == googleLength) {
+        this.googleKeys.pop();
+        this.dropboxKeys.pop();
+
+        this.update();
+      }
+      else if (dropboxLength > googleLength) {
+        this.dropboxKeys.pop();
+        this.update();
+      }
+      else if (googleLength > dropboxLength) {
+        this.googleKeys.pop();
+        this.update();
+      }
     }
+
+
     this.selectedElement = null;
   }
+
 
   onSelect(element: Element): void {
     this.selectedElement = element;
@@ -164,52 +198,57 @@ export class FilesComponent implements OnInit {
       error => this.errorMessage = <any>error);
   }
 
+
   /*
    * Method used to navigate through a folder
    */
   onOpen(folder: Element) {
-    console.log("ON OPEN" + folder.name);
+    this.currentDirMerged = [];
     let parent = folder.keys;
     let name = folder.name;
 
     this.paths.push(name);
-    //TO DO CHECK WHAT you open bro
-    this.googleKeys.push(parent.google);
     this.concatPath();
 
-    if (folder.drives.indexOf("google") != -1)
-      this.updateCurrentDir();
-    else if (folder.drives.indexOf("dropbox") != -1) {
-      let thePath = "";
-      for (let i = 1; i < this.paths.length; i++) {
-        thePath += "/" + this.paths[i];
-      }
-      this.getElementsDropbox(thePath);
+    //Si le dossier ouvert est présent sur google
+    if (folder.drives.indexOf("google") != -1) {
+      this.googleKeys.push(parent.google);
+      this.updateGoogle();
     }
-
+    //Si le dossier ouvert est présent sur dropbox
+    if (folder.drives.indexOf("dropbox") != -1) {
+      this.dropboxKeys.push(parent.dropbox);
+      this.updateDropBox();
+    }
     this.selectedElement = null;
-    /*this.elementService.getElementsGoogle(parent)
-     .subscribe(
-     dir => this.elementsGoogle = dir,
-     error => this.errorMessage = <any>error);*/
   }
 
   merge(elements: Element[], drive: string) {
 
-    if (this.currentDirMerged.length == 0) {
-      for (let i = 0; i < elements.length; i++) {
-        this.currentDirMerged.push(elements[i]);
+    /*//Si le tableau d'éléments est vide, on ajoute tout
+     if (this.currentDirMerged.length == 0) {
+     for (let i = 0; i < elements.length; i++) {
+     this.currentDirMerged.push(elements[i]);
+     }
+     }*/
+
+    //Sinon on merge les folders de même nom
+
+    for (let i = 0; i < elements.length; i++) {
+      let tmpElement = elements[i];
+
+      //Si c'est pas un folder, on s'en fiiiiche
+      if (!tmpElement.isFolder) {
+        this.currentDirMerged.push(tmpElement);
       }
-    }
-    else {
-      for (let i = 0; i < elements.length; i++) {
-        let tmpElement = elements[i];
+      //On merge les folders
+      else {
         let inDir = this.currentDirMerged.find(elem => elem.name == tmpElement.name);
         if (inDir === undefined) {
           this.currentDirMerged.push(elements[i]);
         } else {
 
-          inDir.drives.push(tmpElement.drives.pop());
+          inDir.drives.push(tmpElement.drives[0]);
 
           switch (drive) {
             case "google": {
@@ -226,8 +265,8 @@ export class FilesComponent implements OnInit {
           } // end of switch
         } // end else
       } // end for
-
     }
+
 
   }
 
@@ -269,7 +308,6 @@ export class FilesComponent implements OnInit {
 
 
   getElementsGoogle() {
-    console.log("files")
     let el: Element[];
     this.elementService.getElementsGoogle()
       .subscribe(
@@ -278,7 +316,6 @@ export class FilesComponent implements OnInit {
   }
 
   getElementsDropbox(id: string) {
-    console.log("GETELEMENTS DROPBOX");
     let el: Element[];
     this.elementService.getElementsDropbox(id)
       .subscribe(
@@ -289,12 +326,11 @@ export class FilesComponent implements OnInit {
   initElementsGoogle(elements: Element[]) {
     let id: string = "";
     this.elementsGoogle = elements;
-    let currentDirElements : Element [] = [];
+    let currentDirElements: Element [] = [];
 
     for (let i = 0; i < this.elementsGoogle.length; i++) {
       let element = this.elementsGoogle[i];
       if (element.parent.isRoot == true) {
-        this.currentDirElementsGoogle.push(element);
         currentDirElements.push(element);
         id = element.parent.id;
       }
@@ -304,28 +340,28 @@ export class FilesComponent implements OnInit {
   }
 
   initElementsDropbox(elements: Element[]) {
-    console.log("INITELEMENTS DROPBOX");
-    console.log("ELEMENTS" + elements);
-
     this.merge(elements, "dropbox");
-    this.currentDirElementsDropbox = elements;
   }
 
-  updateCurrentDir() {
-    console.log("FILE COMPONENT : CURRENT DIR");
-    this.currentDirElementsGoogle = [];
-    let tmpCurrentDirElementsGoogle : Element[] = [];
-    let currentDir = this.googleKeys[this.googleKeys.length - 1];
+  updateGoogle() {
+    let tmpCurrentDirElementsGoogle: Element[] = [];
+    let currentDirId = this.googleKeys[this.googleKeys.length - 1];
 
     for (let i = 0; i < this.elementsGoogle.length; i++) {
       let element = this.elementsGoogle[i];
-      if (element.parent.id == currentDir) {
-        this.currentDirElementsGoogle.push(element);
+      if (element.parent.id == currentDirId) {
         tmpCurrentDirElementsGoogle.push(element);
+
       }
     }
-
     this.merge(tmpCurrentDirElementsGoogle, "google");
+  }
+
+  updateDropBox() {
+    let thePath = this.dropboxKeys[this.dropboxKeys.length - 1];
+
+    console.log("DROPBOX PATH :" + thePath)
+    this.getElementsDropbox(thePath);
   }
 
 }
