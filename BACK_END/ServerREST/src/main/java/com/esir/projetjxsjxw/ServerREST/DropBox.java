@@ -41,9 +41,9 @@ import com.sun.jersey.multipart.FormDataParam;
 public class DropBox {
 	
 	private static Client client = Client.create();
-	private static String APP_SECRET = "20639kgnd1ptrvt";
-	private static String APP_KEY = "dcye7rd3rthjeum";
-	private static String REDIRECT_URI = "http://localhost:8080/ServerREST/myWebService/DropBox/getCode";
+	private static final String APP_SECRET = "20639kgnd1ptrvt";
+	private static final String APP_KEY = "dcye7rd3rthjeum";
+	private static final String REDIRECT_URI = "http://localhost:8080/ServerREST/myWebService/DropBox/getCode";
 	private static String _code = null;
 	private static String token = null;
 	
@@ -196,14 +196,15 @@ public class DropBox {
 	@Path("/uploadFiles")
 	@Consumes({MediaType.MULTIPART_FORM_DATA})
 	public Response uploadFile ( @FormDataParam("file") InputStream uploadedInputStream,
-								 @FormDataParam("file") FormDataContentDisposition fileDetail) throws Exception {
+								 @FormDataParam("file") FormDataContentDisposition fileDetail,
+								 @QueryParam("path")    String path ) throws Exception {
 	
 		writeToFile(uploadedInputStream, fileDetail.getFileName());
 		
 		WebResource webResource = client.resource("https://content.dropboxapi.com/2/files/upload");
 		
 		Map<String, Object> formDataToUploadFile = new HashMap<String, Object>();
-		formDataToUploadFile.put("path", "/test/test");
+		formDataToUploadFile.put("path", path);
 		formDataToUploadFile.put("autorename", true);
 		formDataToUploadFile.put("mute", false);
 		formDataToUploadFile.put("mode", "add");
