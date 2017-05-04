@@ -15,6 +15,7 @@ import javax.ws.rs.core.Response;
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jettison.json.JSONException;
 import org.json.simple.JSONObject;
 
 import com.sun.jersey.api.client.Client;
@@ -89,15 +90,16 @@ public class Google {
 		
 	@GET
 	@Path("/getFiles")
-	public Response getFiles() {
-		WebResource webResource = client.resource("https://www.googleapis.com/drive/v2/files");
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getFiles() throws JSONException {
+		WebResource webResource = client.resource("https://www.googleapis.com/drive/v2/files?maxResults=1000");
 				
 		ClientResponse clientResponse = webResource
 			.header("Authorization", "Bearer " + _token)
 			.get(ClientResponse.class);
 		
-		String res = clientResponse.getEntity(String.class);
-		return Response.status(200).entity(res).header("Access-Control-Allow-Origin", "*").build();
+		org.codehaus.jettison.json.JSONObject res = new org.codehaus.jettison.json.JSONObject(clientResponse.getEntity(String.class));
+		return Response.status(200).entity(res.get("items")).header("Access-Control-Allow-Origin", "*").build();
 	}
 	
 	//TODO : 
