@@ -1,2 +1,2 @@
-<input #fileInput type="file"/>
+<input #fileInput type="file" (change)="fileEvent($event)"/>
 <button (click)="post()">Add</button>

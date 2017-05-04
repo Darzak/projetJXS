@@ -38,8 +38,10 @@ export class DraganddropComponent implements OnInit {
 
     post(){
       let fi = this.fileInput.nativeElement;
+      console.log(fi)
+      console.log(fi.files + fi.files[0])
       if (fi.files && fi.files[0]) {
-        this.uploadService.uploadDropbox(this.getPath()).subscribe(
+        this.uploadService.uploadDropbox(this.getPath(),fi.files[0]).subscribe(
           element => {alert("Fichier upload avec succés"); console.log(element)},
           error => this.errorMessage = <any>error);
       }
