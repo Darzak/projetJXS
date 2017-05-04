@@ -15,6 +15,7 @@ import javax.ws.rs.core.Response;
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jettison.json.JSONException;
 import org.json.simple.JSONObject;
 
 import com.sun.jersey.api.client.Client;
@@ -24,6 +25,7 @@ import com.sun.jersey.core.util.MultivaluedMapImpl;
 
 
 @Path("/Google")
+@SuppressWarnings("unchecked")
 public class Google {
 	
 	private static Client client = Client.create();
@@ -34,9 +36,10 @@ public class Google {
 	private static String _code = null;
 	private static String _token = null;
 		
+	
 	@GET
 	@Path("/connection")
-	@Produces(MediaType.TEXT_HTML)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response connect() {
 		
 		MultivaluedMap<String, String> formData = new MultivaluedMapImpl();
@@ -46,7 +49,9 @@ public class Google {
 		formData.add("scope", SCOPE);
 				
 		WebResource webResource = client.resource("https://accounts.google.com/o/oauth2/auth").queryParams(formData);
-		String res = webResource.get(ClientResponse.class).getEntity(String.class);
+		
+		JSONObject res = new JSONObject();
+		res.put("url", webResource.getURI());
 		
 		return Response.status(200).entity(res).header("Access-Control-Allow-Origin", "*").build();
 	}
@@ -86,15 +91,15 @@ public class Google {
 	@GET
 	@Path("/getFiles")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getFiles() {
-		WebResource webResource = client.resource("https://www.googleapis.com/drive/v2/files");
+	public Response getFiles() throws JSONException {
+		WebResource webResource = client.resource("https://www.googleapis.com/drive/v2/files?maxResults=1000");
 				
 		ClientResponse clientResponse = webResource
 			.header("Authorization", "Bearer " + _token)
 			.get(ClientResponse.class);
 		
-		String res = clientResponse.getEntity(String.class);
-		return Response.status(200).entity(res).header("Access-Control-Allow-Origin", "*").build();
+		org.codehaus.jettison.json.JSONObject res = new org.codehaus.jettison.json.JSONObject(clientResponse.getEntity(String.class));
+		return Response.status(200).entity(res.get("items")).header("Access-Control-Allow-Origin", "*").build();
 	}
 	
 	//TODO : 
