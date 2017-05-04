@@ -292,11 +292,12 @@ export class FilesComponent implements OnInit {
     let dropboxLength: number = this.dropboxKeys.length;
     let googleLength: number = this.googleKeys.length;
 
-    console.log("ON COME BACK [LENGTH] DROPBOX :" + dropboxLength + "--- GOOGLE :" + googleLength);
+    console.log("ON CREATE [LENGTH] DROPBOX :" + dropboxLength + "--- GOOGLE :" + googleLength);
     //On crée sur les deux ?
     if (dropboxLength == googleLength) {
+      console.log(isFolder);
       if (isFolder) {
-
+          this.createFolderOnDropbox()
       }
       else {
         this.createFileOnDropbox();
