@@ -57,7 +57,7 @@ export class FilesComponent implements OnInit {
    * Method to get files from server
    */
   getElements(id: string) {
-    this.getElementsGoogle();
+    //this.getElementsGoogle();
     this.getElementsDropbox(id);
 
   }
@@ -159,7 +159,7 @@ export class FilesComponent implements OnInit {
   onPaste(): void {
     if (this.copiedFile != null) {
       let pastedFile = new Element(
-        "",
+        {google:"", dropbox:""},
         this.copiedFile.name + " (copy)",
         this.copiedFile.taille,
         this.copiedFile.isFolder,
@@ -278,13 +278,70 @@ export class FilesComponent implements OnInit {
     }
   }
 
+  onCreate(isFolder: boolean) {
+    let dropboxLength: number = this.dropboxKeys.length;
+    let googleLength: number = this.googleKeys.length;
+
+    console.log("ON COME BACK [LENGTH] DROPBOX :" + dropboxLength + "--- GOOGLE :" + googleLength);
+    //On crée sur les deux ?
+    if (dropboxLength == googleLength) {
+      if (isFolder) {
+
+      }
+      else {
+        this.createFileOnDropbox();
+        this.createFileOnGoogle();
+      }
+
+    }
+    //On crée sur dropbox
+    else if (dropboxLength > googleLength) {
+      if (isFolder) {
+
+      }
+      else {
+        this.createFileOnDropbox();
+      }
+    }
+
+    //on crée sur google
+    else if (googleLength > dropboxLength) {
+      if (isFolder) {
+
+      }
+      else {
+        this.createFileOnGoogle();
+      }
+    }
+  }
+
+
   /*
    * Method used to create simple file
    */
-  createFile() {
+  createFileOnDropbox() {
     console.log(this.newName + "fichier");
-    this.elementsGoogle.push(new Element("", this.newName, "", false, [], undefined, ["TODO : mettre un DRIVE"]));
-    this.createElement("fichier");
+    let key : string;
+    if(this.dropboxKeys.length>1){
+      key = this.dropboxKeys[this.dropboxKeys.length-1];
+    }
+    else{
+      key="";
+    }
+
+    let name = "/"+this.newName;
+
+    let newElement = {keys : {google : "", dropbox : key+name}, name : this.newName, taille :"", isFolder :false, sharedList :[], parent : undefined,drives: ["dropbox"]};
+    this.currentDirMerged.push(newElement);
+    console.log("FICHIER ENVOYE AU SERVICE :")
+    this.elementService.createFileDropbox(name).subscribe(
+      element => console.log("FICHIER CREE :"),
+      error => this.errorMessage = <any>error);
+  }
+
+  //TODO
+  createFileOnGoogle() {
+
   }
 
   /*
@@ -292,7 +349,7 @@ export class FilesComponent implements OnInit {
    */
   createFolder() {
     console.log(this.newName + "dossier");
-    this.elementsGoogle.push(new Element("", this.newName, "", true, [], undefined, ["TODO : mettre un DRIVE"]));
+    //this.elementsGoogle.push(new Element("", this.newName, "", true, [], undefined, ["TODO : mettre un DRIVE"]));
     this.createElement(this.FOLDERTYPE);
   }
 
