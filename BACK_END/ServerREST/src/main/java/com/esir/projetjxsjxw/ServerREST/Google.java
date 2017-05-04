@@ -1,73 +1,59 @@
 package com.esir.projetjxsjxw.ServerREST;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Properties;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 
+import org.codehaus.jackson.JsonParseException;
+import org.codehaus.jackson.map.JsonMappingException;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.json.simple.JSONObject;
+
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.ClientResponse;
+import com.sun.jersey.api.client.WebResource;
+import com.sun.jersey.core.util.MultivaluedMapImpl;
+
 
 @Path("/Google")
 public class Google {
 	
-	static String _code ;
+	private static Client client = Client.create();
+	private static final String CLIENT_ID = "927355833541-2sm1rvjbn75e2ai86umn197vfmse5dse.apps.googleusercontent.com";
+	private static final String CLIENT_SECRET = "XSlr_yogrmX6VUnOlXx9AUq7";
+	private static final String SCOPE = "https://www.googleapis.com/auth/drive";
+	private static final String REDIRECT_URI = "http://localhost:8080/ServerREST/myWebService/Google/getCode";
+	private static String _code = null;
+	private static String _token = null;
 		
-	String googleConfigFile = "#--------OAuth2.0 Client Configuration--------- \n" +
-			"scope=https://www.googleapis.com/auth/drive\n"+
-			"#state=\n"+
-			"grant_type=authorization_code\n"+
-			"#username=\n"+
-			"#password=\n"+
-			"client_id=927355833541-2sm1rvjbn75e2ai86umn197vfmse5dse.apps.googleusercontent.com\n"+
-			"client_secret=XSlr_yogrmX6VUnOlXx9AUq7\n"+
-			"#access_token=\n"+
-			"refresh_token=\n"+
-			"approval_prompt_key=approval_prompt\n"+
-			"approval_prompt_value=auto\n"+
-			"access_type_key=access_type\n"+
-			"access_type_value=offline\n"+
-			"redirect_uri=http://localhost:8080/ServerREST/myWebService/Google/getCode\n"+
-			"authentication_server_url=https://accounts.google.com/o/oauth2/auth\n"+
-			"token_endpoint_url=https://accounts.google.com/o/oauth2/token\n"+
-			"resource_server_url=https://www.googleapis.com/drive/v2/about\n"+
-			"#------------------------------------------------";
-
-	@SuppressWarnings("unchecked")
 	@GET
 	@Path("/connection")
-	@Produces(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.TEXT_HTML)
 	public Response connect() {
-		InputStream is;
-		String URLtoSend = null;
-		try {
-			is = new ByteArrayInputStream(googleConfigFile.getBytes("UTF-8"));
-			Properties config = new Properties();
-			config.load(is);
-			GoogleClient googleClient = new GoogleClient(config);
-			URLtoSend = googleClient.getAuthorizationCodeURL();
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		JSONObject res = new JSONObject();
-		res.put("url", URLtoSend);
-		return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(res.toJSONString()).build();
+		
+		MultivaluedMap<String, String> formData = new MultivaluedMapImpl();
+		formData.add("client_id", CLIENT_ID);
+		formData.add("redirect_uri", REDIRECT_URI);
+		formData.add("response_type", "code");
+		formData.add("scope", SCOPE);
+				
+		WebResource webResource = client.resource("https://accounts.google.com/o/oauth2/auth").queryParams(formData);
+		String res = webResource.get(ClientResponse.class).getEntity(String.class);
+		
+		return Response.status(200).entity(res).header("Access-Control-Allow-Origin", "*").build();
 	}
 	
 	@GET
 	@Path("/getCode")
-	public Response getCode(@QueryParam("code") String code) {
+	public Response getCode(@QueryParam("code") String code) throws JsonParseException, JsonMappingException, IOException {
 		_code=code;
 		URI location = null;
 		try {
@@ -75,37 +61,40 @@ public class Google {
 		} catch (URISyntaxException e) {
 			e.printStackTrace();
 		}
-		System.out.println(_code);
+		getToken();
 		return Response.temporaryRedirect(location).build();
 	}
 	
-	//TODO : rajouter id dans la requete de google
-	@SuppressWarnings("unchecked")
+	private void getToken() throws JsonParseException, JsonMappingException, IOException {
+		if (_token == null) {
+
+			MultivaluedMap<String, String> formDataToGetToken = new MultivaluedMapImpl();
+			formDataToGetToken.add("code", _code);
+			formDataToGetToken.add("grant_type", "authorization_code");
+			formDataToGetToken.add("client_id", CLIENT_ID);
+			formDataToGetToken.add("client_secret", CLIENT_SECRET);
+			formDataToGetToken.add("redirect_uri", REDIRECT_URI);
+
+			WebResource webResource = client.resource("https://accounts.google.com/o/oauth2/token");
+			String payload = webResource.post(ClientResponse.class, formDataToGetToken).getEntity(String.class);
+
+			_token = (String) new ObjectMapper().readValue(payload, JSONObject.class).get("access_token");
+
+		}
+	}
+		
 	@GET
 	@Path("/getFiles")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getFilesFolder() {
-		InputStream is;
-		try {
-			is = new ByteArrayInputStream(googleConfigFile.getBytes("UTF-8"));
-			Properties config = new Properties();
-			config.load(is);
-			GoogleClient googleClientWithCode = new GoogleClient(config);
-			googleClientWithCode.setAccessCode(_code);
-			String accessToken = googleClientWithCode.getAccessToken().get("access_token");
-			googleClientWithCode.getOAuth2Details().setAccessToken(accessToken);
-			//TODO : si temps faire pagination avec token page
-			googleClientWithCode.setURLRequest("https://www.googleapis.com/drive/v2/files?maxResults=1000");
-			JSONObject files = new JSONObject(googleClientWithCode.getProtectedResource());
-			JSONObject res = new JSONObject();
-			res.put("items", files.get("items"));
-			return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(res).build();
-		} catch (IOException e) {
-			JSONObject error = new JSONObject();
-			error.put("error", "internal error");
-			e.printStackTrace();
-			return Response.status(500).header("Access-Control-Allow-Origin", "*").entity(error).build();
-		}
+	public Response getFiles() {
+		WebResource webResource = client.resource("https://www.googleapis.com/drive/v2/files");
+				
+		ClientResponse clientResponse = webResource
+			.header("Authorization", "Bearer " + _token)
+			.get(ClientResponse.class);
+		
+		String res = clientResponse.getEntity(String.class);
+		return Response.status(200).entity(res).header("Access-Control-Allow-Origin", "*").build();
 	}
 	
 	//TODO : 

@@ -199,6 +199,7 @@ public class DropBox {
 								 @FormDataParam("file") FormDataContentDisposition fileDetail,
 								 @QueryParam("path")    String path ) throws Exception {
 	
+			
 		writeToFile(uploadedInputStream, fileDetail.getFileName());
 		
 		WebResource webResource = client.resource("https://content.dropboxapi.com/2/files/upload");
@@ -222,7 +223,7 @@ public class DropBox {
 				.post(ClientResponse.class);
 		
 		String res = clientResponse.getEntity(String.class);
-				
+						
 		return Response.status(200).entity(res).header("Access-Control-Allow-Origin", "*").build();
 	}
 	
