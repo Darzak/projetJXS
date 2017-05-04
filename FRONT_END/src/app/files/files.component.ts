@@ -57,7 +57,7 @@ export class FilesComponent implements OnInit {
    * Method to get files from server
    */
   getElements(id: string) {
-    //this.getElementsGoogle();
+    this.getElementsGoogle();
     this.getElementsDropbox(id);
 
   }
@@ -329,9 +329,9 @@ export class FilesComponent implements OnInit {
       key="";
     }
 
-    let name = "/"+this.newName;
+    let name = key + "/"+this.newName;
 
-    let newElement = {keys : {google : "", dropbox : key+name}, name : this.newName, taille :"", isFolder :false, sharedList :[], parent : undefined,drives: ["dropbox"]};
+    let newElement = {keys : {google : "", dropbox : name}, name : this.newName, taille :"", isFolder :false, sharedList :[], parent : undefined,drives: ["dropbox"]};
     this.currentDirMerged.push(newElement);
     console.log("FICHIER ENVOYE AU SERVICE :")
     this.elementService.createFileDropbox(name).subscribe(

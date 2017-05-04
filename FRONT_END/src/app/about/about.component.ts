@@ -1,22 +1,22 @@
 import { Component, OnInit } from '@angular/core';
-import {ElementService} from "../../service/element.service";
+import {AboutService} from "../../service/about.service";
 
 @Component({
   selector: 'app-about',
   templateUrl: './about.component.html',
   styleUrls: ['./about.component.css'],
-  providers: [ElementService],
+  providers: [AboutService],
 })
 export class AboutComponent implements OnInit {
   storage: string[];
   errorMessage: any;
-  constructor(private elementService: ElementService) { }
+  constructor(private aboutService: AboutService) { }
 
   ngOnInit() {
   }
 
   getStorageGoogle(){
-     this.elementService.getStorageGoogle()
+     this.aboutService.getStorageGoogle()
      .subscribe(
      elements => console.log(elements),
      error => this.errorMessage = <any>error);

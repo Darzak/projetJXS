@@ -21,7 +21,6 @@ export class ElementService{
 
   private URL_GETELEMENTSGOOGLE = '/getFiles';
   private URL_GETELEMENTSDROPBOX = '/getFiles';
-  private URL_GETSTORAGE = '/getStorage';
 
   private URL_CREATEELEMENT = '/createFiles';
   private URL_DELETEELEMENT = '/delete';
@@ -58,12 +57,6 @@ export class ElementService{
       .catch(this.handleError);
   }
 
-  getStorageGoogle(): Observable<string[]> {
-    return this.http.get(this.URL_GOOGLE+this.URL_GETSTORAGE)
-      .map(this.extractElement)
-      .catch(this.handleError);
-  }
-
   /*
    * Sends http post request with the name of the file to create and the id of it's parent
    */
@@ -88,7 +81,7 @@ export class ElementService{
     /*let params: URLSearchParams = new URLSearchParams();
     params.set('path', path);*/
 
-    console.log("CREATE SERVICE DROPBOX -- ENVOI DE LA REQUETE")
+    console.log("CREATE SERVICE DROPBOX -- ENVOI DE LA REQUETE"+path);
     return this.http.get(this.URL_DROPBOX+this.URL_CREATEELEMENT+"?path="+path)
       .map(this.extractElement)
       .catch(this.handleError);
