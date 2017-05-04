@@ -139,6 +139,8 @@ public class DropBox {
 		
 		WebResource webResource = client.resource("https://content.dropboxapi.com/2/files/upload");
 		
+		System.out.println(path);
+		
 		Map<String, Object> formDataToCreateFile = new HashMap<String, Object>();
 		formDataToCreateFile.put("path", path);
 		formDataToCreateFile.put("autorename", true);
@@ -170,7 +172,7 @@ public class DropBox {
 								@QueryParam("new_path")   String new_path ) throws JsonGenerationException, JsonMappingException, IOException {
 		
 		WebResource webResource = client.resource("https://api.dropboxapi.com/2/files/move");
-		
+				
 		Map<String, Object> formDataToChangeName = new HashMap<String, Object>();
 		formDataToChangeName.put("from_path", input_path);
 		formDataToChangeName.put("autorename", true);
@@ -199,7 +201,9 @@ public class DropBox {
 								 @FormDataParam("file") FormDataContentDisposition fileDetail,
 								 @QueryParam("path")    String path ) throws Exception {
 	
-			
+		System.out.println(uploadedInputStream);
+		System.out.println(fileDetail);
+		System.out.println(path);
 		writeToFile(uploadedInputStream, fileDetail.getFileName());
 		
 		WebResource webResource = client.resource("https://content.dropboxapi.com/2/files/upload");
@@ -213,6 +217,8 @@ public class DropBox {
 		File fileToUpload = new File(fileDetail.getFileName());
 		
 		String headerArgs = new ObjectMapper().writeValueAsString(formDataToUploadFile);
+		
+		System.out.println(headerArgs);
 				
 		ClientResponse clientResponse =
 				webResource
@@ -223,6 +229,8 @@ public class DropBox {
 				.post(ClientResponse.class);
 		
 		String res = clientResponse.getEntity(String.class);
+		
+		System.out.println(res);
 						
 		return Response.status(200).entity(res).header("Access-Control-Allow-Origin", "*").build();
 	}
