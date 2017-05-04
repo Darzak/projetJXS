@@ -20,7 +20,13 @@ export class AboutService {
   }
 
   getStorageGoogle(): Observable<number[]> {
-    return this.http.get(this.URL_GOOGLE+this.URL_GETSTORAGE)
+  return this.http.get(this.URL_GOOGLE+this.URL_GETSTORAGE)
+    .map(this.extractElement)
+    .catch(this.handleError);
+}
+
+  getStorageDropbox(): Observable<number[]> {
+    return this.http.get(this.URL_DROPBOX+this.URL_GETSTORAGE)
       .map(this.extractElement)
       .catch(this.handleError);
   }

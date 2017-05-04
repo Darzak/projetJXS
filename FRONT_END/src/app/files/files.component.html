@@ -47,10 +47,17 @@
   </div>
 </div>
 
+
 <div>
   <div class="gauche">
     <h3><span class="label label-default">Folders</span></h3>
     <div class="panel-body">
+      <div class="row">
+        <div class="col-sm-1">Type</div>
+        <div class="col-sm-1">Drives</div>
+        <div class="col-sm-9">Nom du fichier</div>
+        <div class="col-sm-1">Taille(Ko)</div>
+      </div>
       <div class="row">
         <div *ngFor="let file of currentDirMerged">
           <div class="panel-body" *ngIf="file.isFolder">
@@ -102,7 +109,7 @@
               {{file.name}}
               </div>
               <div class="col-sm-2">
-                {{file.taille}} KO
+                {{file.taille}}
               </div>
             </div>
           </div>
