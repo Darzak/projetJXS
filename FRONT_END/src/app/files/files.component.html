@@ -97,9 +97,13 @@
                   </div>
                 </div>
               </div>
-              <div class="col-sm-10" (click)="onSelect(file)"
+              <div class="col-sm-9" (click)="onSelect(file)"
                    (contextmenu)="detectRightMouseClick($event,file)">
-              {{file.name}}</div>
+              {{file.name}}
+              </div>
+              <div class="col-sm-1">
+                {{file.taille}} KO
+              </div>
             </div>
           </div>
         </div>

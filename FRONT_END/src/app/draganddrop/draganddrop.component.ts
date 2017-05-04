@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import {ElementService} from "../../service/element.service";
 //import { FileUploader } from 'ng2-file-upload';
 
 // const URL = '/api/';
@@ -7,13 +8,14 @@ const URL = 'https://evening-anchorage-3159.herokuapp.com/api/';
 @Component({
   selector: 'app-draganddrop',
   templateUrl: './draganddrop.component.html',
-  styleUrls: ['./draganddrop.component.css']
+  styleUrls: ['./draganddrop.component.css'],
+  providers: [ElementService]
 })
 export class DraganddropComponent implements OnInit {
     @Input() paths: string[];
     @Input() name: string;
     url: string;
-    constructor() { }
+    constructor(private elementService: ElementService) { }
 
     ngOnInit() {
     }
@@ -30,6 +32,10 @@ export class DraganddropComponent implements OnInit {
       this.url= this.url +res;
       console.log(this.url);
       return this.url;
+    }
+
+    post(){
+      //this.elementService.uploadDropbox(getPath());
     }
 
     fileEvent(fileInput: any){
