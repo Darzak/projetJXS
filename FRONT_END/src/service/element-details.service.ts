@@ -10,21 +10,18 @@ import {observable} from "rxjs/symbol/observable";
 
 
 @Injectable()
-export class UploadService {
+export class ElementDetailsService {
 
   private URL_GOOGLE = 'http://localhost:8080/ServerREST/myWebService/Google';
   private URL_DROPBOX = 'http://localhost:8080/ServerREST/myWebService/DropBox';
-  private URL_UPLOADELEMENT = '/uploadFiles?path=';
+  private URL_RENAMEELEMENT = "/rename"
 
   constructor(private http: Http) {
   }
 
-  uploadDropbox(path : string,file: any): Observable<Element> {
-    let input = new FormData();
-    console.log("yo" + path);
-    input.append("file", file);
-    console.log(this.URL_DROPBOX+this.URL_UPLOADELEMENT+path);
-    return this.http.post(this.URL_DROPBOX+this.URL_UPLOADELEMENT + path,input)
+  renameElementDropbox(path: string,newpath: string){
+    console.log(this.URL_GOOGLE+this.URL_RENAMEELEMENT+"?input_path=" + path +"&new_path="+ newpath);
+    return this.http.get(this.URL_DROPBOX+this.URL_RENAMEELEMENT+"?input_path=" + path +"&new_path="+ newpath)
       .map(this.extractElement)
       .catch(this.handleError);
   }

@@ -16,7 +16,6 @@ export class DraganddropComponent implements OnInit {
     @Input() name: string;
     @ViewChild("fileInput") fileInput;
     errorMessage: any;
-    url: string;
     constructor(private uploadService: UploadService) { }
 
     ngOnInit() {
@@ -30,10 +29,7 @@ export class DraganddropComponent implements OnInit {
         }
       }
       res+=this.name;
-      this.url="http://localhost:8080/ServerREST/myWebService/Dropbox/uploadFiles?path=";
-      this.url= this.url +res;
-      console.log(this.url);
-      return this.url;
+      return res;
     }
 
     post(){
