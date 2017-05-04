@@ -41,9 +41,9 @@ import com.sun.jersey.multipart.FormDataParam;
 public class DropBox {
 	
 	private static Client client = Client.create();
-	private static String APP_SECRET = "20639kgnd1ptrvt";
-	private static String APP_KEY = "dcye7rd3rthjeum";
-	private static String REDIRECT_URI = "http://localhost:8080/ServerREST/myWebService/DropBox/getCode";
+	private static final String APP_SECRET = "20639kgnd1ptrvt";
+	private static final String APP_KEY = "dcye7rd3rthjeum";
+	private static final String REDIRECT_URI = "http://localhost:8080/ServerREST/myWebService/DropBox/getCode";
 	private static String _code = null;
 	private static String token = null;
 	
