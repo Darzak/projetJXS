@@ -132,6 +132,23 @@ public class DropBox {
 		return Response.status(200).entity(res).header("Access-Control-Allow-Origin", "*").build();
 	}
 	
+	
+	@GET
+	@Path("/getStorage")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getStorage() throws JsonGenerationException, JsonMappingException, IOException {
+		WebResource webResource = client.resource("https://api.dropboxapi.com/2/users/get_space_usage");
+		ClientResponse clientResponse = webResource
+			.type(MediaType.APPLICATION_FORM_URLENCODED)
+			.header("Authorization", "Bearer " + token)
+			.header("Content-type", "application/json")
+			.post(ClientResponse.class);
+		String res = clientResponse.getEntity(String.class);	
+		return Response.status(200).entity(res).header("Access-Control-Allow-Origin", "*").build();
+	}
+	
+	
+	
 	@GET
 	@Path("/createFiles")
 	@Produces(MediaType.APPLICATION_JSON)

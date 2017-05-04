@@ -19,18 +19,21 @@ export class AboutService {
   constructor(private http: Http) {
   }
 
-  getStorageGoogle(): Observable<string[]> {
-    return this.http.get(this.URL_GOOGLE+this.URL_GETSTORAGE)
+  getStorageGoogle(): Observable<number[]> {
+  return this.http.get(this.URL_GOOGLE+this.URL_GETSTORAGE)
+    .map(this.extractElement)
+    .catch(this.handleError);
+}
+
+  getStorageDropbox(): Observable<number[]> {
+    return this.http.get(this.URL_DROPBOX+this.URL_GETSTORAGE)
       .map(this.extractElement)
       .catch(this.handleError);
   }
 
   private extractElement(res: Response) {
     let body = res.json();
-    console.log(body);
-    console.log(body.quotaBytesUsed);
-    console.log(body.quotaBytesTotal);
-    return {quotaBytesUsed: body.quotaBytesUsed,quotaBytesTotal: body.quotaBytesTotal } || { };
+    return [body.quotaBytesUsed,body.quotaBytesTotal] || { };
   }
 
   private handleError (error: Response | any) {
