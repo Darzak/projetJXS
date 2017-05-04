@@ -22,15 +22,14 @@ export class ElementService{
   private URL_GETELEMENTSGOOGLE = '/getFiles';
   private URL_GETELEMENTSDROPBOX = '/getFiles';
 
-  private URL_CREATEELEMENT = '/createFiles';
+  private URL_CREATEELEMENTFILE = '/createFile';
+  private URL_CREATEELEMENTFOLDER = '/createFolder';
   private URL_DELETEELEMENT = '/delete';
   private URL_COPYELEMENT ='/copy';
 
 
 
   constructor (private http: Http){ }
-
-
 
   getElementsDropbox(id : string){
     /*let params: URLSearchParams = new URLSearchParams();
@@ -71,18 +70,21 @@ export class ElementService{
     params.set('name', elementName);
     params.set('mimeType', elementType);
 
-    return this.http.post(this.URL_GOOGLE+this.URL_CREATEELEMENT, { search : params })
+    return this.http.post(this.URL_GOOGLE+this.URL_CREATEELEMENTFILE, { search : params })
       .map(this.extractElement)
       .catch(this.handleError);
   }
 
   createFileDropbox(path : string){
-    //GET
-    /*let params: URLSearchParams = new URLSearchParams();
-    params.set('path', path);*/
-
     console.log("CREATE SERVICE DROPBOX -- ENVOI DE LA REQUETE"+path);
-    return this.http.get(this.URL_DROPBOX+this.URL_CREATEELEMENT+"?path="+path)
+    return this.http.get(this.URL_DROPBOX+this.URL_CREATEELEMENTFILE+"?path="+path)
+      .map(this.extractElement)
+      .catch(this.handleError);
+  }
+
+  createFolderDropbox(path : string){
+    console.log("CREATE SERVICE DROPBOX -- ENVOI DE LA REQUETE"+path);
+    return this.http.get(this.URL_DROPBOX+this.URL_CREATEELEMENTFOLDER+"?path="+path)
       .map(this.extractElement)
       .catch(this.handleError);
   }
@@ -107,11 +109,8 @@ export class ElementService{
   /*
    * Sends id of the file to delete
    */
-  deleteElement(elementId : string){
-    let headers = new Headers({ 'Content-Type': 'application/json' });
-    let options = new RequestOptions({ headers: headers });
-
-    return this.http.post(this.URL_GOOGLE+this.URL_DELETEELEMENT, JSON.stringify({id : elementId}), options)
+  deleteElementDropbox(path : string){
+    return this.http.get(this.URL_DROPBOX+this.URL_DELETEELEMENT+"?path="+path)
       .map(this.extractElement)
       .catch(this.handleError);
   }
@@ -177,6 +176,7 @@ export class ElementService{
    * Method to use with .map to get data from JSON response
    */
   private extractElement(res: Response) {
+    console.log("yo" + res);
     let body = res.json();
     console.log("yo" + body);
     return body || { };

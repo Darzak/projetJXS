@@ -10,11 +10,14 @@ import {AboutService} from "../../service/about.service";
 export class AboutComponent implements OnInit {
   usedStorageGoogle: number;
   totalStorageGoogle: number;
+  usedStorageDropbox: number;
+  totalStorageDropbox: number;
   errorMessage: any;
   constructor(private aboutService: AboutService) { }
 
   ngOnInit() {
     this.getStorageGoogle();
+    this.getStorageDropbox();
   }
 
   getStorageGoogle(){
@@ -23,4 +26,12 @@ export class AboutComponent implements OnInit {
      elements => {this.usedStorageGoogle = elements[0]; this.totalStorageGoogle = elements[1]},
      error => this.errorMessage = <any>error);
   }
+
+  getStorageDropbox(){
+    this.aboutService.getStorageDropbox()
+      .subscribe(
+        elements => {console.log(elements)},
+        error => this.errorMessage = <any>error);
+  }
+  //this.usedStorageDropbox = elements[0]; this.totalStorageDropbox = elements[1]
 }

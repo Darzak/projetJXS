@@ -12,11 +12,11 @@
   </div>
   <div>
     <label>name: </label>
-    <input [(ngModel)]="element.name" (click)="name=element.name" placeholder="name">
+    <input [(ngModel)]="element.name" placeholder="name">
     <button (click)="validName()">valider</button>
   </div>
-  <div>
-    <label>taille: </label> {{element.taille}} KO
+  <div *ngIf="element.taille">
+    <label>taille: </label> {{element.taille/1024 | number: '1.1-2'}} Kb
   </div>
   <button (click)="deleteFile()" type="button" class="btn btn-danger">
     <span>Supprimer ce fichier</span>

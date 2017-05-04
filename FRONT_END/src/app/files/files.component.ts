@@ -181,11 +181,6 @@ export class FilesComponent implements OnInit {
    * Method used to delete an element
    */
   onRemove(element: Element) {
-
-    //TO DO REMOVE ON ALL DRIVES
-    let id = element.keys.google;
-
-    this.elementsGoogle.splice(this.elementsGoogle.indexOf(element), 1);
     if (this.rightClicked != null) {
       this.rightClicked = null;
       this.closeContextMenu();
@@ -193,8 +188,20 @@ export class FilesComponent implements OnInit {
       this.selectedElement = null;
     }
 
-    this.elementService.deleteElement(id).subscribe(
-      element => console.log("Fichier supprimé avec succès"),
+    //Si le dossier ouvert est présent sur google
+    if (element.drives.indexOf("google") != -1) {
+      //this.deleteGoogle();
+    }
+    //Si le dossier ouvert est présent sur dropbox
+    if (element.drives.indexOf("dropbox") != -1) {
+      this.deleteDropbox(element.keys.dropbox);
+      this.currentDirMerged.splice(this.currentDirMerged.indexOf(element), 1);
+    }
+  }
+
+  deleteDropbox(path: string){
+    this.elementService.deleteElementDropbox(path).subscribe(
+      element => alert("Fichier supprimé avec succès"),
       error => this.errorMessage = <any>error);
   }
 
@@ -297,7 +304,7 @@ export class FilesComponent implements OnInit {
     //On crée sur dropbox
     else if (dropboxLength > googleLength) {
       if (isFolder) {
-
+        this.createFolderOnDropbox();
       }
       else {
         this.createFileOnDropbox();
@@ -320,7 +327,6 @@ export class FilesComponent implements OnInit {
    * Method used to create simple file
    */
   createFileOnDropbox() {
-    console.log(this.newName + "fichier");
     let key : string;
     if(this.dropboxKeys.length>1){
       key = this.dropboxKeys[this.dropboxKeys.length-1];
@@ -333,9 +339,28 @@ export class FilesComponent implements OnInit {
 
     let newElement = {keys : {google : "", dropbox : name}, name : this.newName, taille :"", isFolder :false, sharedList :[], parent : undefined,drives: ["dropbox"]};
     this.currentDirMerged.push(newElement);
-    console.log("FICHIER ENVOYE AU SERVICE :")
     this.elementService.createFileDropbox(name).subscribe(
-      element => console.log("FICHIER CREE :"),
+      element => alert("Fichier créé avec succès :"),
+      error => this.errorMessage = <any>error);
+  }
+
+  createFolderOnDropbox() {
+    console.log(this.newName + "fichier");
+    let key : string;
+    if(this.dropboxKeys.length>1){
+      key = this.dropboxKeys[this.dropboxKeys.length-1];
+    }
+    else{
+      key="";
+    }
+
+    let name = key + "/"+this.newName;
+
+    let newElement = {keys : {google : "", dropbox : name}, name : this.newName, taille :"", isFolder :true, sharedList :[], parent : undefined,drives: ["dropbox"]};
+    this.currentDirMerged.push(newElement);
+    console.log("Dossier ENVOYE AU SERVICE :")
+    this.elementService.createFolderDropbox(name).subscribe(
+      element => alert("Dossier créé avec succès :"),
       error => this.errorMessage = <any>error);
   }
 

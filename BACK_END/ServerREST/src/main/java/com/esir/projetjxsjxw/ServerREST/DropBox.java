@@ -150,13 +150,11 @@ public class DropBox {
 	
 	
 	@GET
-	@Path("/createFiles")
+	@Path("/createFile")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response createFiles(@QueryParam("path") String path) throws JsonGenerationException, JsonMappingException, IOException {
 		
 		WebResource webResource = client.resource("https://content.dropboxapi.com/2/files/upload");
-		
-		System.out.println(path);
 		
 		Map<String, Object> formDataToCreateFile = new HashMap<String, Object>();
 		formDataToCreateFile.put("path", path);
@@ -181,6 +179,44 @@ public class DropBox {
 				
 		return Response.status(200).entity(res).header("Access-Control-Allow-Origin", "*").build();
 	}
+	
+	@GET
+	@Path("/createFolder")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response createFolder(@QueryParam("path") String path) throws JsonGenerationException, JsonMappingException, IOException {	
+		WebResource webResource = client.resource("https://api.dropboxapi.com/2/files/create_folder");
+		Map<String, Object> formDataToCreateFolder = new HashMap<String, Object>();
+		formDataToCreateFolder.put("path", path);
+		formDataToCreateFolder.put("autorename", true);
+		String payload = new ObjectMapper().writeValueAsString(formDataToCreateFolder);				
+		ClientResponse clientResponse =
+				webResource
+				.header("Authorization", "Bearer " + token)
+				.entity(payload, MediaType.APPLICATION_JSON_TYPE)
+				.post(ClientResponse.class);
+		
+		String res = clientResponse.getEntity(String.class);
+		return Response.status(200).entity(res).header("Access-Control-Allow-Origin", "*").build();
+	}
+	
+	@GET
+	@Path("/delete")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response delete(@QueryParam("path") String path) throws JsonGenerationException, JsonMappingException, IOException {	
+		WebResource webResource = client.resource("https://api.dropboxapi.com/2/files/delete");
+		Map<String, Object> formDataToDelete = new HashMap<String, Object>();
+		formDataToDelete.put("path", path);
+		String payload = new ObjectMapper().writeValueAsString(formDataToDelete);				
+		ClientResponse clientResponse =
+				webResource
+				.header("Authorization", "Bearer " + token)
+				.entity(payload, MediaType.APPLICATION_JSON_TYPE)
+				.post(ClientResponse.class);
+		
+		String res = clientResponse.getEntity(String.class);
+		return Response.status(200).entity(res).header("Access-Control-Allow-Origin", "*").build();
+	}
+	
 	
 	@GET
 	@Path("/rename")
