@@ -23,7 +23,7 @@ export class ElementService{
   private URL_GETELEMENTSDROPBOX = '/getFiles';
   private URL_GETSTORAGE = '/getStorage';
 
-  private URL_CREATEELEMENT = '/create';
+  private URL_CREATEELEMENT = '/createFiles';
   private URL_DELETEELEMENT = '/delete';
   private URL_COPYELEMENT ='/copy';
 
@@ -79,6 +79,17 @@ export class ElementService{
     params.set('mimeType', elementType);
 
     return this.http.post(this.URL_GOOGLE+this.URL_CREATEELEMENT, { search : params })
+      .map(this.extractElement)
+      .catch(this.handleError);
+  }
+
+  createFileDropbox(path : string){
+    //GET
+    /*let params: URLSearchParams = new URLSearchParams();
+    params.set('path', path);*/
+
+    console.log("CREATE SERVICE DROPBOX -- ENVOI DE LA REQUETE")
+    return this.http.get(this.URL_DROPBOX+this.URL_CREATEELEMENT+"?path="+path)
       .map(this.extractElement)
       .catch(this.handleError);
   }

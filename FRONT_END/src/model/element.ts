@@ -13,8 +13,9 @@ export class Element {
   sharedList: string[];
   parent: {id : string, isRoot: boolean};
 
-  constructor(key: string, name: string, taille: string, isFolder: boolean, sharedList: string[],parent: {id : string, isRoot: boolean}, drives: string[]) {
-    this.keys = { google : undefined, dropbox : undefined};
+  constructor(keys: {google, dropbox}, name: string, taille: string, isFolder: boolean, sharedList: string[],parent: {id : string, isRoot: boolean}, drives: string[]) {
+    this.keys.google= keys.google;
+    this.keys.dropbox = keys.dropbox;
     this.name = name;
     this.taille = taille;
     this.isFolder = isFolder;
