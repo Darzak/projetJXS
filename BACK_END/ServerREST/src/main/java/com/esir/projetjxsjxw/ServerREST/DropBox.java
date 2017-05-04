@@ -196,14 +196,15 @@ public class DropBox {
 	@Path("/uploadFiles")
 	@Consumes({MediaType.MULTIPART_FORM_DATA})
 	public Response uploadFile ( @FormDataParam("file") InputStream uploadedInputStream,
-								 @FormDataParam("file") FormDataContentDisposition fileDetail) throws Exception {
+								 @FormDataParam("file") FormDataContentDisposition fileDetail,
+								 @QueryParam("path")    String path ) throws Exception {
 	
 		writeToFile(uploadedInputStream, fileDetail.getFileName());
 		
 		WebResource webResource = client.resource("https://content.dropboxapi.com/2/files/upload");
 		
 		Map<String, Object> formDataToUploadFile = new HashMap<String, Object>();
-		formDataToUploadFile.put("path", "/test/test");
+		formDataToUploadFile.put("path", path);
 		formDataToUploadFile.put("autorename", true);
 		formDataToUploadFile.put("mute", false);
 		formDataToUploadFile.put("mode", "add");
