@@ -57,7 +57,7 @@ export class FilesComponent implements OnInit {
    * Method to get files from server
    */
   getElements(id: string) {
-    //this.getElementsGoogle();
+    this.getElementsGoogle();
     this.getElementsDropbox(id);
 
   }
