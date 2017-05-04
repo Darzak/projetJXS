@@ -158,27 +158,22 @@ export class FilesComponent implements OnInit {
    */
   onPaste(): void {
     if (this.copiedFile != null) {
-      let pastedFile = new Element(
-        {google:"", dropbox:""},
-        this.copiedFile.name + " (copy)",
-        this.copiedFile.taille,
-        this.copiedFile.isFolder,
-        this.copiedFile.sharedList,
-        this.copiedFile.parent,
-        this.copiedFile.drives
-      );
+      let pastedFile = {keys: {google : this.copiedFile.keys.google, dropbox : this.copiedFile.keys.dropbox},
+        name: this.copiedFile.name,isFolder : this.copiedFile.isFolder,
+        taille: this.copiedFile.taille,sharedList: this.copiedFile.sharedList, parent : this.copiedFile.parent,
+        drives: this.copiedFile.drives};
 
       this.currentDirMerged.push(pastedFile);
 
       //Si le dossier ouvert est présent sur google
       if (pastedFile.drives.indexOf("google") != -1) {
-        this.elementService.copyElement(pastedFile.keys.google).subscribe(
+        this.elementService.copyElementGoogle(pastedFile.keys.google,"").subscribe(
           element => alert("Fichier copié avec succés"),
           error => this.errorMessage = <any>error);
       }
       //Si le dossier ouvert est présent sur dropbox
       if (pastedFile.drives.indexOf("dropbox") != -1) {
-        this.elementService.copyElement(pastedFile.keys.dropbox).subscribe(
+        this.elementService.copyElementDropbox(pastedFile.keys.dropbox,this.dropboxKeys[this.dropboxKeys.length-1]+"/"+pastedFile.name).subscribe(
           element => alert("Fichier copié avec succés"),
           error => this.errorMessage = <any>error);
       }

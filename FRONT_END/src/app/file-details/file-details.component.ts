@@ -80,12 +80,12 @@ export class FileDetailsComponent implements OnInit {
 
 
   copyFile() {
-    //this.notify.emit(this.element);
+    this.notify.emit(this.element);
 
-    this.elementDetailsService.download(this.element.keys.dropbox).subscribe(
+    /*this.elementDetailsService.download(this.element.keys.dropbox).subscribe(
         element => alert("ça download 1"+element),
-         error => this.errorMessage = <any>error);
-      }
+         error => this.errorMessage = <any>error);*/
+  }
 
   /* ----- FINAL -----*/
 

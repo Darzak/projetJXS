@@ -25,7 +25,7 @@ export class ElementService{
   private URL_CREATEELEMENTFILE = '/createFile';
   private URL_CREATEELEMENTFOLDER = '/createFolder';
   private URL_DELETEELEMENT = '/delete';
-  private URL_COPYELEMENT ='/copy';
+  private URL_COPYELEMENT ='/paste';
 
 
 
@@ -92,16 +92,15 @@ export class ElementService{
   /*
    * Sends http post request with the name of the file to create and the id of it's parent
    */
-  copyElement(dirId : string ): Observable<Element> {
-    //POST
-    /*let headers = new Headers({ 'Content-Type': 'application/json' });
-     let options = new RequestOptions({ headers: headers });*/
+  copyElementGoogle(path : string, newpath: string){
+    return this.http.get(this.URL_GOOGLE+this.URL_COPYELEMENT+"?input_path=" + path +"&new_path="+ newpath)
+      .map(this.extractElement)
+      .catch(this.handleError);
+  }
 
-    //GET
-    let params: URLSearchParams = new URLSearchParams();
-    params.set('id', dirId);
-
-    return this.http.post(this.URL_GOOGLE+this.URL_COPYELEMENT, { search : params })
+  copyElementDropbox(path : string,newpath: string ){
+    console.log(this.URL_GOOGLE+this.URL_COPYELEMENT+"?input_path=" + path +"&new_path="+ newpath);
+    return this.http.get(this.URL_DROPBOX+this.URL_COPYELEMENT+"?input_path=" + path +"&new_path="+ newpath)
       .map(this.extractElement)
       .catch(this.handleError);
   }
@@ -139,11 +138,11 @@ export class ElementService{
 
 
       if(tmpElement.mimeType == "application/vnd.google-apps.folder"){
-        let tmpFolder: Element = {keys: {google : tmpElement.id, dropbox : undefined},name: tmpElement.title,isFolder : true, taille: tmpElement.fileSize,sharedList: [], parent : tmpParent,drives: ["google"]};
+        let tmpFolder: Element = {keys: {google : tmpElement.id, dropbox : ""},name: tmpElement.title,isFolder : true, taille: tmpElement.fileSize,sharedList: [], parent : tmpParent,drives: ["google"]};
         elements.push(<Element>tmpFolder);
       }
       else{
-        let tmpFile: Element = {keys: {google : tmpElement.id, dropbox : undefined},name: tmpElement.title,isFolder : false, taille: tmpElement.fileSize,sharedList: [], parent : tmpParent,drives: ["google"]};
+        let tmpFile: Element = {keys: {google : tmpElement.id, dropbox : ""},name: tmpElement.title,isFolder : false, taille: tmpElement.fileSize,sharedList: [], parent : tmpParent,drives: ["google"]};
         elements.push(<Element>tmpFile);
       }
     }
@@ -161,12 +160,12 @@ export class ElementService{
 
       if(tmpElement[".tag"] == "folder"){
         //console.log(body.items[i].title);
-        let tmpFolder: Element = {keys : {google : undefined, dropbox :tmpElement.path_display},name: tmpElement.name,isFolder : true, taille: "1",sharedList: [], parent : tmpParent,drives: ["dropbox"]};
+        let tmpFolder: Element = {keys : {google : "", dropbox :tmpElement.path_display},name: tmpElement.name,isFolder : true, taille: "1",sharedList: [], parent : tmpParent,drives: ["dropbox"]};
         elements.push(<Element>tmpFolder);
         console.log("DROPBOX : "+tmpElement.path_display)
       }
       else{
-        let tmpFile: Element = {keys : {google : undefined, dropbox :tmpElement.path_display},name: tmpElement.name,isFolder : false, taille: "1",sharedList: [], parent : tmpParent,drives: ["dropbox"]};
+        let tmpFile: Element = {keys : {google : "", dropbox :tmpElement.path_display},name: tmpElement.name,isFolder : false, taille: "1",sharedList: [], parent : tmpParent,drives: ["dropbox"]};
         elements.push(<Element>tmpFile);
       }
     }
