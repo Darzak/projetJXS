@@ -1,5 +1,2 @@
-<form action="http://localhost:8080/ServerREST/myWebService/Dropbox/uploadFiles?path=/test.txt" method="post" enctype="multipart/form-data">
-  <input type="file" name="fichier" (change)="fileEvent($event)">
-  <input type="submit" value="Envoyer">
-  <span class="glyphicon glyphicon-upload"></span>
-</form>
+<input #fileInput type="file"/>
+<button (click)="post()">Add</button>

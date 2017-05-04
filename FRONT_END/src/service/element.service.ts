@@ -127,9 +127,9 @@ export class ElementService{
   private extractsElementsGoogle(res: Response) {
     let body = res.json();
     let elements : Element[] = [];
-    for(let i = 0; i<body.items.length; i++){
+    for(let i = 0; i<body.length; i++){
 
-      let tmpElement = body.items[i];
+      let tmpElement = body[i];
       let tmpParents = tmpElement.parents;
 
       let tmpParent : {id : string, isRoot : boolean} = {id : "", isRoot : false};
