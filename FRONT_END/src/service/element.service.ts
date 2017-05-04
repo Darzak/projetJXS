@@ -26,6 +26,7 @@ export class ElementService{
   private URL_CREATEELEMENT = '/create';
   private URL_DELETEELEMENT = '/delete';
   private URL_COPYELEMENT ='/copy';
+  private URL_RENAMEELEMENT = "/rename"
 
 
   constructor (private http: Http){ }
@@ -63,6 +64,13 @@ export class ElementService{
       .catch(this.handleError);
   }
 
+
+  renameElementDropbox(path: string,newpath: string){
+    console.log(this.URL_GOOGLE+this.URL_RENAMEELEMENT+"?input_path=" + path +"&new_path="+ newpath);
+    return this.http.get(this.URL_DROPBOX+this.URL_RENAMEELEMENT+"?input_path=" + path +"&new_path="+ newpath)
+      .map(this.extractElement)
+      .catch(this.handleError);
+  }
 
   /*
    * Sends http post request with the name of the file to create and the id of it's parent
@@ -174,7 +182,7 @@ export class ElementService{
    */
   private extractElement(res: Response) {
     let body = res.json();
-
+    console.log("yo" + body);
     return body || { };
   }
 

@@ -29,6 +29,7 @@ export class DraganddropComponent implements OnInit {
       this.url="http://localhost:8080/ServerREST/myWebService/Dropbox/uploadFiles?path=";
       this.url= this.url +res;
       console.log(this.url);
+      return this.url;
     }
 
     fileEvent(fileInput: any){

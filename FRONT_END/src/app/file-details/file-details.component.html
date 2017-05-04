@@ -12,7 +12,8 @@
   </div>
   <div>
     <label>name: </label>
-    <input [(ngModel)]="element.name" placeholder="name">
+    <input [(ngModel)]="element.name" (click)="name=element.name" placeholder="name">
+    <button (click)="validName()">valider</button>
   </div>
   <div>
     <label>taille: </label> {{element.taille}}
