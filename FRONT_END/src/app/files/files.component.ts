@@ -79,10 +79,10 @@ export class FilesComponent implements OnInit {
   getImageSource(element: Element): string[] {
     let imagesSource: string[] = [];
     if (element.drives.indexOf("google") != -1) {
-      imagesSource.push("/src/app/image/google_drive_icon.jpg");
+      imagesSource.push("/src/app/image/google_drive.jpg");
     }
     if (element.drives.indexOf("dropbox") != -1) {
-      imagesSource.push("/src/app/image/dropbox_icon.png");
+      imagesSource.push("/src/app/image/dropbox.png");
     }
     return imagesSource;
   }
@@ -91,7 +91,7 @@ export class FilesComponent implements OnInit {
     this.currentDirMerged = [];
     let dropboxLength: number = this.dropboxKeys.length;
     let googleLength: number = this.googleKeys.length;
-    
+
     if (dropboxLength == googleLength) {
       this.updateDropBox();
       this.updateGoogle()
