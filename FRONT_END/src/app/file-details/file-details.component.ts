@@ -17,6 +17,7 @@ export class FileDetailsComponent implements OnInit {
   name: string;
   errorMessage: any;
   newShare: string = '';
+  link: string = "";
   @Input() element: Element;
   @Input() paths: string[];
   @Output() notify: EventEmitter<Element> = new EventEmitter<Element>();
@@ -65,7 +66,7 @@ export class FileDetailsComponent implements OnInit {
   share() {
     let path = this.getPath();
     this.elementDetailsService.shareDropbox(path+this.name).subscribe(
-      element => alert("Fichier renommé avec succés"),
+      element => {this.link=element; alert("Fichier partagé avec succés")},
       error => this.errorMessage = <any>error)
   }
 
@@ -84,7 +85,7 @@ export class FileDetailsComponent implements OnInit {
   copyFile() {
     this.notify.emit(this.element);
 
-   *this.elementDetailsService.download(this.element.keys.dropbox).subscribe(
+   /*this.elementDetailsService.download(this.element.keys.dropbox).subscribe(
         element => alert("ça download 1"+element),
          error => this.errorMessage = <any>error);*/
   }

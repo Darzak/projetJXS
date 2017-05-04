@@ -30,7 +30,7 @@ export class ElementDetailsService {
   shareDropbox(path: string){
     console.log(this.URL_DROPBOX+this.URL_SHAREELEMENT+"?path=" + path );
     return this.http.get(this.URL_DROPBOX+this.URL_SHAREELEMENT+"?path=" + path)
-      .map(this.extractElement)
+      .map(this.extractShare)
       .catch(this.handleError);
   }
 
@@ -44,6 +44,10 @@ export class ElementDetailsService {
   private extractElement(res: Response) {
     let body = res.json();
     return body || { };
+  }
+  private extractShare(res: Response) {
+    let body = res.json();
+    return body.url || { };
   }
 
   private handleError (error: Response | any) {
