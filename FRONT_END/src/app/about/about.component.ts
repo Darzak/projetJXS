@@ -9,6 +9,8 @@ import {AboutService} from "../../service/about.service";
 })
 export class AboutComponent implements OnInit {
   storage: string[];
+  usedStorageGoogle: number;
+  totalStorageGoogle: number;
   errorMessage: any;
   constructor(private aboutService: AboutService) { }
 
@@ -18,7 +20,7 @@ export class AboutComponent implements OnInit {
   getStorageGoogle(){
      this.aboutService.getStorageGoogle()
      .subscribe(
-     elements => console.log(elements),
+     elements => {console.log(elements)},
      error => this.errorMessage = <any>error);
   }
 }

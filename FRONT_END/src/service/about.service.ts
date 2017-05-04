@@ -27,8 +27,10 @@ export class AboutService {
 
   private extractElement(res: Response) {
     let body = res.json();
-    console.log("yo" + body);
-    return body || { };
+    console.log(body);
+    console.log(body.quotaBytesUsed);
+    console.log(body.quotaBytesTotal);
+    return {quotaBytesUsed: body.quotaBytesUsed,quotaBytesTotal: body.quotaBytesTotal } || { };
   }
 
   private handleError (error: Response | any) {

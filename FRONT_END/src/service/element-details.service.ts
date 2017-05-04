@@ -28,7 +28,6 @@ export class ElementDetailsService {
 
   private extractElement(res: Response) {
     let body = res.json();
-    console.log("yo" + body);
     return body || { };
   }
 
