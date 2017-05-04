@@ -24,6 +24,7 @@ import com.sun.jersey.core.util.MultivaluedMapImpl;
 
 
 @Path("/Google")
+@SuppressWarnings("unchecked")
 public class Google {
 	
 	private static Client client = Client.create();
@@ -34,9 +35,10 @@ public class Google {
 	private static String _code = null;
 	private static String _token = null;
 		
+	
 	@GET
 	@Path("/connection")
-	@Produces(MediaType.TEXT_HTML)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response connect() {
 		
 		MultivaluedMap<String, String> formData = new MultivaluedMapImpl();
@@ -46,7 +48,9 @@ public class Google {
 		formData.add("scope", SCOPE);
 				
 		WebResource webResource = client.resource("https://accounts.google.com/o/oauth2/auth").queryParams(formData);
-		String res = webResource.get(ClientResponse.class).getEntity(String.class);
+		
+		JSONObject res = new JSONObject();
+		res.put("url", webResource.getURI());
 		
 		return Response.status(200).entity(res).header("Access-Control-Allow-Origin", "*").build();
 	}
@@ -85,7 +89,6 @@ public class Google {
 		
 	@GET
 	@Path("/getFiles")
-	@Produces(MediaType.APPLICATION_JSON)
 	public Response getFiles() {
 		WebResource webResource = client.resource("https://www.googleapis.com/drive/v2/files");
 				
