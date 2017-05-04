@@ -32,16 +32,25 @@ export class DraganddropComponent implements OnInit {
       return res;
     }
 
-    post(){
+    postDropbox(){
       let fi = this.fileInput.nativeElement;
-      console.log(fi)
-      console.log(fi.files + fi.files[0])
       if (fi.files && fi.files[0]) {
         this.uploadService.uploadDropbox(this.getPath(),fi.files[0]).subscribe(
-          element => {alert("Fichier upload avec succés"); console.log(element)},
+          element => {alert("Fichier upload avec succés");},
           error => this.errorMessage = <any>error);
       }
     }
+
+  postGoogle(){
+    let fi = this.fileInput.nativeElement;
+    console.log(fi)
+    console.log(fi.files + fi.files[0])
+    if (fi.files && fi.files[0]) {
+      this.uploadService.uploadGoogle(this.getPath(),fi.files[0]).subscribe(
+        element => {alert("Fichier upload avec succés"); console.log(element)},
+        error => this.errorMessage = <any>error);
+    }
+  }
 
     fileEvent(fileInput: any){
       let file = fileInput.target.files[0];

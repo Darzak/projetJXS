@@ -21,10 +21,18 @@ export class UploadService {
 
   uploadDropbox(path : string,file: any): Observable<Element> {
     let input = new FormData();
+    input.append("file", file);
+    return this.http.post(this.URL_DROPBOX+this.URL_UPLOADELEMENT + path,input)
+      .map(this.extractElement)
+      .catch(this.handleError);
+  }
+
+  uploadGoogle(path : string,file: any): Observable<Element> {
+    let input = new FormData();
     console.log("yo" + path);
     input.append("file", file);
-    console.log(this.URL_DROPBOX+this.URL_UPLOADELEMENT+path);
-    return this.http.post(this.URL_DROPBOX+this.URL_UPLOADELEMENT + path,input)
+    console.log(this.URL_GOOGLE+this.URL_UPLOADELEMENT+path);
+    return this.http.post(this.URL_GOOGLE+this.URL_UPLOADELEMENT + path,input)
       .map(this.extractElement)
       .catch(this.handleError);
   }
