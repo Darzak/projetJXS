@@ -25,7 +25,7 @@ export class ElementService{
   private URL_CREATEELEMENTFILE = '/createFile';
   private URL_CREATEELEMENTFOLDER = '/createFolder';
   private URL_DELETEELEMENT = '/delete';
-  private URL_COPYELEMENT ='/copy';
+  private URL_COPYELEMENT ='/paste';
 
 
 
@@ -138,11 +138,11 @@ export class ElementService{
 
 
       if(tmpElement.mimeType == "application/vnd.google-apps.folder"){
-        let tmpFolder: Element = {keys: {google : tmpElement.id, dropbox : undefined},name: tmpElement.title,isFolder : true, taille: tmpElement.fileSize,sharedList: [], parent : tmpParent,drives: ["google"]};
+        let tmpFolder: Element = {keys: {google : tmpElement.id, dropbox : ""},name: tmpElement.title,isFolder : true, taille: tmpElement.fileSize,sharedList: [], parent : tmpParent,drives: ["google"]};
         elements.push(<Element>tmpFolder);
       }
       else{
-        let tmpFile: Element = {keys: {google : tmpElement.id, dropbox : undefined},name: tmpElement.title,isFolder : false, taille: tmpElement.fileSize,sharedList: [], parent : tmpParent,drives: ["google"]};
+        let tmpFile: Element = {keys: {google : tmpElement.id, dropbox : ""},name: tmpElement.title,isFolder : false, taille: tmpElement.fileSize,sharedList: [], parent : tmpParent,drives: ["google"]};
         elements.push(<Element>tmpFile);
       }
     }
@@ -160,12 +160,12 @@ export class ElementService{
 
       if(tmpElement[".tag"] == "folder"){
         //console.log(body.items[i].title);
-        let tmpFolder: Element = {keys : {google : undefined, dropbox :tmpElement.path_display},name: tmpElement.name,isFolder : true, taille: "1",sharedList: [], parent : tmpParent,drives: ["dropbox"]};
+        let tmpFolder: Element = {keys : {google : "", dropbox :tmpElement.path_display},name: tmpElement.name,isFolder : true, taille: "1",sharedList: [], parent : tmpParent,drives: ["dropbox"]};
         elements.push(<Element>tmpFolder);
         console.log("DROPBOX : "+tmpElement.path_display)
       }
       else{
-        let tmpFile: Element = {keys : {google : undefined, dropbox :tmpElement.path_display},name: tmpElement.name,isFolder : false, taille: "1",sharedList: [], parent : tmpParent,drives: ["dropbox"]};
+        let tmpFile: Element = {keys : {google : "", dropbox :tmpElement.path_display},name: tmpElement.name,isFolder : false, taille: "1",sharedList: [], parent : tmpParent,drives: ["dropbox"]};
         elements.push(<Element>tmpFile);
       }
     }
