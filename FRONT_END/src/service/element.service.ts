@@ -117,6 +117,13 @@ export class ElementService{
       .map(this.extractElement)
       .catch(this.handleError);
   }
+
+  deleteElementGoogle(id: string){
+    return this.http.get(this.URL_GOOGLE+this.URL_DELETEELEMENT+"?id="+id)
+      .map(this.extractElement)
+      .catch(this.handleError);
+  }
+
   /*-- Methods to use in http get or post requests--*/
 
   /*

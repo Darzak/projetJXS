@@ -193,7 +193,8 @@ export class FilesComponent implements OnInit {
 
     //Si le dossier ouvert est présent sur google
     if (element.drives.indexOf("google") != -1) {
-      //this.deleteGoogle();
+      this.deleteGoogle(element.keys.google);
+      this.getElementsGoogle();
     }
     //Si le dossier ouvert est présent sur dropbox
     if (element.drives.indexOf("dropbox") != -1) {
@@ -202,12 +203,17 @@ export class FilesComponent implements OnInit {
     }
   }
 
+  deleteGoogle(id : string){
+    this.elementService.deleteElementGoogle(id).subscribe(
+      element => alert("Fichier supprimé avec succès"),
+      error => this.errorMessage = <any>error);
+  }
+
   deleteDropbox(path: string){
     this.elementService.deleteElementDropbox(path).subscribe(
       element => alert("Fichier supprimé avec succès"),
       error => this.errorMessage = <any>error);
   }
-
 
   /*
    * Method used to navigate through a folder
@@ -407,7 +413,6 @@ export class FilesComponent implements OnInit {
 
 
   getElementsGoogle() {
-    let el: Element[];
     this.elementService.getElementsGoogle()
       .subscribe(
         elements => this.initElementsGoogle(elements),
@@ -415,7 +420,6 @@ export class FilesComponent implements OnInit {
   }
 
   getElementsDropbox(id: string) {
-    let el: Element[];
     this.elementService.getElementsDropbox(id)
       .subscribe(
         elements => this.initElementsDropbox(elements),
