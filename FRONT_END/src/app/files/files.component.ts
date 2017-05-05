@@ -204,6 +204,7 @@ export class FilesComponent implements OnInit {
   }
 
   deleteGoogle(id : string){
+  console.log("DELETE GOOGLE : ");
     this.elementService.deleteElementGoogle(id).subscribe(
       element => alert("Fichier supprimé avec succès"),
       error => this.errorMessage = <any>error);
