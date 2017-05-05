@@ -194,7 +194,7 @@ export class FilesComponent implements OnInit {
     //Si le dossier ouvert est présent sur google
     if (element.drives.indexOf("google") != -1) {
       this.deleteGoogle(element.keys.google);
-      this.getElementsGoogle();
+      this.currentDirMerged.splice(this.currentDirMerged.indexOf(element), 1);
     }
     //Si le dossier ouvert est présent sur dropbox
     if (element.drives.indexOf("dropbox") != -1) {
