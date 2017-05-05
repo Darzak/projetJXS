@@ -375,8 +375,10 @@ export class FilesComponent implements OnInit {
     console.log("CLIENT --- FILE -- CREATEGOOGLE")
     let newElement = {keys : {google : "", dropbox : ""}, name : this.newName, taille :"", isFolder :false, sharedList :[], parent : undefined,drives: ["google"]};
     this.currentDirMerged.push(newElement);
+    console.log("CLIENT CLE GOOGLE : " +  this.googleKeys[this.googleKeys.length-1])
     let dir : Element = this.currentDirMerged.find(element=> element.keys.google == this.googleKeys[this.googleKeys.length-1]);
-    this.elementService.createFileGoogle(name, this.googleKeys[this.googleKeys.length-1], dir.parent.isRoot).subscribe(
+    console.log("CLIENT CREATE FILE GOOGLE : " + dir);
+    this.elementService.createFileGoogle(name, this.googleKeys[this.googleKeys.length-1]).subscribe(
       element => console.log("CLIENTTO DOMODIFIER IDGROS"+ element),
       error => this.errorMessage = <any>error);
 

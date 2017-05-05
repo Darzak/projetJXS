@@ -75,8 +75,8 @@ export class ElementService{
       .catch(this.handleError);
   }
 
-  createFileGoogle(path : string, id: string, isFolder : boolean){
-    return this.http.get(this.URL_GOOGLE+this.URL_CREATEELEMENTFILE+"?title="+path+"&idFolder="+id+"&isRoot"+isFolder)
+  createFileGoogle(path : string, id: string){
+    return this.http.get(this.URL_GOOGLE+this.URL_CREATEELEMENTFILE+"?title="+path+"&idFolder="+id)
       .map(this.extractCreateGoogle)
       .catch(this.handleError);
   }
