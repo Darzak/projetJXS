@@ -22,7 +22,7 @@ export class ElementService{
   private URL_GETELEMENTSGOOGLE = '/getFiles';
   private URL_GETELEMENTSDROPBOX = '/getFiles';
 
-  private URL_CREATEELEMENTFILE = '/createFile';
+  private URL_CREATEELEMENTFILE = '/createFiles';
   private URL_CREATEELEMENTFOLDER = '/createFolder';
   private URL_DELETEELEMENT = '/delete';
   private URL_COPYELEMENT ='/paste';
@@ -72,6 +72,12 @@ export class ElementService{
 
     return this.http.post(this.URL_GOOGLE+this.URL_CREATEELEMENTFILE, { search : params })
       .map(this.extractElement)
+      .catch(this.handleError);
+  }
+
+  createFileGoogle(path : string, id: string, isFolder : boolean){
+    return this.http.get(this.URL_GOOGLE+this.URL_CREATEELEMENTFILE+"?title="+path+"&idFolder="+id+"&isRoot"+isFolder)
+      .map(this.extractCreateGoogle)
       .catch(this.handleError);
   }
 
@@ -180,6 +186,12 @@ export class ElementService{
   }
 
 
+  private extractCreateGoogle(res: Response) {
+    console.log("yo" + res);
+    let body = res.json();
+    console.log("yo" + body);
+    return body || { };
+  }
 
   /*
    * Methods to use with .catch to handle any error
