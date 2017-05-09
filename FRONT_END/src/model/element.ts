@@ -7,9 +7,6 @@ export class Element {
   taille: string;
   isFolder: boolean;
   drives: string[];
-
-
-
   sharedList: string[];
   parent: {id : string, isRoot: boolean};
 

@@ -7,9 +7,7 @@
       <img [src]="img" width="60" heigh="60"/>
     </div>
   </div>
-  <div>
-    <label>id: </label> {{element.key}}
-  </div>
+
   <div>
     <label>name: </label>
     <input [(ngModel)]="element.name" placeholder="name">
@@ -22,7 +20,7 @@
     <span>Supprimer ce fichier</span>
   </button>
   <button (click)="copyFile()" type="button" class="btn "btn-success>
-    <span>Copier ce fichier</span>
+    <span class="glyphicon glyphicon-copy"> Copier ce fichier</span>
   </button>
   <div>
     <button (click)="share()" type="button" class="btn btn-success">

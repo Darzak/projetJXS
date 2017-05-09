@@ -1,7 +1,6 @@
 import {Injectable} from "@angular/core";
-import {Headers, Http, RequestOptions, Response} from "@angular/http";
+import { Http,  Response} from "@angular/http";
 import {Observable} from "rxjs";
-import {Element} from "../model/element"
 
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map'
@@ -28,33 +27,27 @@ export class ElementDetailsService {
   }
 
   shareDropbox(path: string){
-    console.log(this.URL_DROPBOX+this.URL_SHAREELEMENT+"?path=" + path );
     return this.http.get(this.URL_DROPBOX+this.URL_SHAREELEMENT+"?path=" + path)
       .map(this.extractShare)
       .catch(this.handleError);
   }
 
   download(path: string){
-      console.log(this.URL_DROPBOX+this.URL_SHAREELEMENT+"?path=" + path );
       return this.http.get(this.URL_DROPBOX+this.URL_SHAREELEMENT+"?path=" + path)
         .map(this.getUrl)
         .catch(this.handleError);
     }
 
   private extractElement(res: Response) {
-    console.log(res)
     let body = res.json();
-    console.log(body)
     return body || { };
   }
   private extractShare(res: Response) {
     let body = res.json();
-    console.log(body);
     window.location.href = body.url;
     return body.url || { };
   }
   private getUrl(res: Response){
-    console.log(res);
     let body = res.json();
     window.location.href = body.url;
     return body.url || { };

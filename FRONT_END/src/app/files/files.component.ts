@@ -1,8 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {File} from '../../model/file';
-import {Folder} from '../../model/folder';
-import {FileService} from "../../service/file.service";
-import {FolderService} from "../../service/folder.service";
 import {Element} from '../../model/element';
 import {ElementService} from "../../service/element.service";
 
@@ -11,20 +7,17 @@ import {ElementService} from "../../service/element.service";
   selector: 'app-files',
   templateUrl: './files.component.html',
   styleUrls: ['./files.component.css'],
-  providers: [FileService, FolderService, ElementService]
+  providers: [ElementService]
 })
 
 export class FilesComponent implements OnInit {
 
   errorMessage: string;
   mode = 'Observable';
-  files: File[];
-  folders: Folder[];
 
   //Contains all the elements from google
   elementsGoogle: Element[];
   currentDirMerged: Element [];
-  processing: Element[];
 
 
   FOLDERTYPE = "application/vnd.google-apps.folder";
@@ -41,7 +34,7 @@ export class FilesComponent implements OnInit {
   newName: string = '';
   contextMenuPos: Object = {};
 
-  constructor(private elementService: ElementService, private fileService: FileService, private  folderService: FolderService) {
+  constructor(private elementService: ElementService,) {
     this.paths.push("root");
     this.dropboxKeys.push("root");
     this.concatPath();
@@ -114,8 +107,6 @@ export class FilesComponent implements OnInit {
 
       let dropboxLength: number = this.dropboxKeys.length;
       let googleLength: number = this.googleKeys.length;
-
-      console.log("ON COME BACK [LENGTH] DROPBOX :" + dropboxLength + "--- GOOGLE :" + googleLength);
       if (dropboxLength == googleLength) {
         this.googleKeys.pop();
         this.dropboxKeys.pop();
@@ -131,7 +122,6 @@ export class FilesComponent implements OnInit {
         this.update();
       }
     }
-
 
     this.selectedElement = null;
   }
@@ -204,7 +194,6 @@ export class FilesComponent implements OnInit {
   }
 
   deleteGoogle(id : string){
-  console.log("DELETE GOOGLE : ");
     this.elementService.deleteElementGoogle(id).subscribe(
       element => alert("Fichier supprimé avec succès"),
       error => this.errorMessage = <any>error);
@@ -299,10 +288,7 @@ export class FilesComponent implements OnInit {
     let dropboxLength: number = this.dropboxKeys.length;
     let googleLength: number = this.googleKeys.length;
 
-    console.log("ON CREATE [LENGTH] DROPBOX :" + dropboxLength + "--- GOOGLE :" + googleLength);
-    //On crée sur les deux ?
     if (dropboxLength == googleLength) {
-      console.log(isFolder);
       if (isFolder) {
           this.createFolderOnDropbox()
       }
@@ -328,12 +314,10 @@ export class FilesComponent implements OnInit {
 
       }
       else {
-        console.log("CLIENT -- FILE -- CREATE FILE ")
         this.createFileOnGoogle();
       }
     }
   }
-
 
   /*
    * Method used to create simple file
@@ -346,9 +330,7 @@ export class FilesComponent implements OnInit {
     else{
       key="";
     }
-
     let name = key + "/"+this.newName;
-
     let newElement = {keys : {google : "", dropbox : name}, name : this.newName, taille :"", isFolder :false, sharedList :[], parent : undefined,drives: ["dropbox"]};
     this.currentDirMerged.push(newElement);
     this.elementService.createFileDropbox(name).subscribe(
@@ -357,7 +339,6 @@ export class FilesComponent implements OnInit {
   }
 
   createFolderOnDropbox() {
-    console.log(this.newName + "fichier");
     let key : string;
     if(this.dropboxKeys.length>1){
       key = this.dropboxKeys[this.dropboxKeys.length-1];
@@ -365,39 +346,28 @@ export class FilesComponent implements OnInit {
     else{
       key="";
     }
-
     let name = key + "/"+this.newName;
-
     let newElement = {keys : {google : "", dropbox : name}, name : this.newName, taille :"", isFolder :true, sharedList :[], parent : undefined,drives: ["dropbox"]};
     this.currentDirMerged.push(newElement);
-    console.log("Dossier ENVOYE AU SERVICE :")
     this.elementService.createFolderDropbox(name).subscribe(
       element => alert("Dossier créé avec succès :"),
       error => this.errorMessage = <any>error);
   }
 
-  //TODO
   createFileOnGoogle() {
-
-    console.log("CLIENT --- FILE -- CREATEGOOGLE")
     let newElement = {keys : {google : "", dropbox : ""}, name : this.newName, taille :"", isFolder :false, sharedList :[], parent : undefined,drives: ["google"]};
     this.currentDirMerged.push(newElement);
-    console.log("CLIENT CLE GOOGLE : " +  this.googleKeys[this.googleKeys.length-1])
     let dir : Element = this.currentDirMerged.find(element=> element.keys.google == this.googleKeys[this.googleKeys.length-1]);
-    console.log("CLIENT CREATE FILE GOOGLE : " + dir);
     this.elementService.createFileGoogle(name, this.googleKeys[this.googleKeys.length-1]).subscribe(
       element => console.log("CLIENTTO DOMODIFIER IDGROS"+ element),
       error => this.errorMessage = <any>error);
 
   }
 
-  extractCreate(){
-  }
   /*
    * Methods used to create folder
    */
   createFolder() {
-    console.log(this.newName + "dossier");
     //this.elementsGoogle.push(new Element("", this.newName, "", true, [], undefined, ["TODO : mettre un DRIVE"]));
     this.createElement(this.FOLDERTYPE);
   }
@@ -463,8 +433,6 @@ export class FilesComponent implements OnInit {
 
   updateDropBox() {
     let thePath = this.dropboxKeys[this.dropboxKeys.length - 1];
-
-    console.log("DROPBOX PATH :" + thePath)
     this.getElementsDropbox(thePath);
   }
 

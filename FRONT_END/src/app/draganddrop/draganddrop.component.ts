@@ -1,9 +1,5 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import {UploadService} from "../../service/upload.service";
-//import { FileUploader } from 'ng2-file-upload';
-
-// const URL = '/api/';
-const URL = 'https://evening-anchorage-3159.herokuapp.com/api/';
 
 @Component({
   selector: 'app-draganddrop',
@@ -43,11 +39,9 @@ export class DraganddropComponent implements OnInit {
 
   postGoogle(){
     let fi = this.fileInput.nativeElement;
-    console.log(fi)
-    console.log(fi.files + fi.files[0])
     if (fi.files && fi.files[0]) {
       this.uploadService.uploadGoogle(this.getPath(),fi.files[0]).subscribe(
-        element => {alert("Fichier upload avec succés"); console.log(element)},
+        element => alert("Fichier upload avec succés"),
         error => this.errorMessage = <any>error);
     }
   }
@@ -56,6 +50,5 @@ export class DraganddropComponent implements OnInit {
       let file = fileInput.target.files[0];
       this.name = file.name;
     }
-  //public uploader:FileUploader = new FileUploader({url: URL});
 
 }

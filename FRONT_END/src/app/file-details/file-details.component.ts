@@ -1,22 +1,17 @@
 import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
-import {File} from '../../model/file';
-import {FileService} from "../../service/file.service";
-import {FolderService} from "../../service/folder.service";
 import {ElementDetailsService} from "../../service/element-details.service";
 import {Element} from "../../model/element";
-import {Folder} from '../../model/folder';
 
 
 @Component({
   selector: 'file-details',
   templateUrl: './file-details.component.html',
   styleUrls: ['./file-details.component.css'],
-  providers: [FileService, FolderService, ElementDetailsService]
+  providers: [ElementDetailsService]
 })
 export class FileDetailsComponent implements OnInit {
   name: string;
   errorMessage: any;
-  newShare: string = '';
   link: string = "";
   url: string= "";
   @Input() element: Element;
@@ -24,7 +19,7 @@ export class FileDetailsComponent implements OnInit {
   @Output() notify: EventEmitter<Element> = new EventEmitter<Element>();
   @Output() remove: EventEmitter<Element> = new EventEmitter<Element>();
 
-  constructor(private fileService: FileService, private folderService: FolderService, private elementDetailsService: ElementDetailsService) {
+  constructor(private elementDetailsService: ElementDetailsService) {
   }
 
   ngOnInit() {
@@ -71,16 +66,6 @@ export class FileDetailsComponent implements OnInit {
       error => this.errorMessage = <any>error)
   }
 
-  addShare() {
-    if (this.element.isFolder) {
-      let folder = <Folder> this.element;
-      this.folderService.addShare(folder, this.newShare);
-    } else {
-      this.fileService.addShare(<File> this.element, this.newShare);
-    }
-    this.newShare = '';
-  }
-
   download(){
     this.elementDetailsService.download(this.element.keys.dropbox).subscribe(
      element => {this.url=element; alert("ça télécharge ...")},
@@ -97,12 +82,6 @@ export class FileDetailsComponent implements OnInit {
    * Sends an even to files.component with the id of the file to delete
    */
   deleteFile() {
-    /*if(this.element.isFolder){
-     let folder = <Folder> this.element;
-     this.folderService.deleteFolder(folder);
-     }else{
-     this.fileService.deleteFile(<File> this.element/*,undefined);
-     }*/
     this.remove.emit(this.element);
   }
 
