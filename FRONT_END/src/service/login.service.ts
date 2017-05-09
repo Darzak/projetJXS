@@ -25,7 +25,6 @@ export class LoginService {
       connectionUrl = this.URL_GOOGLE
     }
     else if(drive.toString() == "dropbox"){
-      console.log("CONNECT TO DROPBOX");
       connectionUrl = this.URL_DROPBOX
     }
     return this.http.get(connectionUrl+this.URL_CONNECT)
@@ -42,7 +41,6 @@ export class LoginService {
 
   private extractData(res: Response) {
     let body = res.json();
-    console.log("body"+body);
     return body.data || { };
   }
 

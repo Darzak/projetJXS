@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {Headers, Http, RequestOptions, Response} from "@angular/http";
+import { Http,  Response} from "@angular/http";
 import {Observable} from "rxjs";
 import {Element} from "../model/element"
 
@@ -29,9 +29,7 @@ export class UploadService {
 
   uploadGoogle(path : string,file: any): Observable<Element> {
     let input = new FormData();
-    console.log("yo" + path);
     input.append("file", file);
-    console.log(this.URL_GOOGLE+this.URL_UPLOADELEMENT+path);
     return this.http.post(this.URL_GOOGLE+this.URL_UPLOADELEMENT + path,input)
       .map(this.extractElement)
       .catch(this.handleError);
@@ -39,7 +37,6 @@ export class UploadService {
 
   private extractElement(res: Response) {
     let body = res.json();
-    console.log("yo" + body);
     return body || { };
   }
 
